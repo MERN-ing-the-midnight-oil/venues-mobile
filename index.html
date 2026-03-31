@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BG Venues">
+<meta name="theme-color" content="#12141a">
+<title>BG Venues — MeepleUp Outreach</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0b0f;--surface:#12141a;--card:#181b24;--card2:#1e2230;
+  --border:#252a38;--border2:#2e3448;
+  --accent:#f5a623;--accent-dim:#c47d0e;--green:#22d47a;--red:#e05252;--blue:#5b9cf6;
+  --muted:#5a6278;--sub:#8b93a8;--text:#dde2f0;
+  --cafe-bg:#0f2040;--cafe-fg:#6faee8;--store-bg:#0e2a1a;--store-fg:#4fd48a;
+  --r:14px;--tap:48px;
+  --font:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono","Courier New",monospace;
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 80px)}
+#hdr{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 0}
+#hdr h1{font-size:1.1rem;font-weight:800;background:linear-gradient(120deg,var(--accent),#f7c96e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em}
+#hdr-sub{font-size:.65rem;color:var(--muted);margin-top:1px;margin-bottom:10px}
+#hdr-btns{display:flex;gap:7px;margin-bottom:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+#hdr-btns::-webkit-scrollbar{display:none}
+.hbtn{flex-shrink:0;height:36px;padding:0 14px;border-radius:20px;border:1px solid var(--border2);background:var(--card);color:var(--sub);font-family:var(--font);font-size:.74rem;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.hbtn:active{opacity:.7}
+.hbtn.active{background:#261d04;border-color:var(--accent);color:var(--accent)}
+.hbtn.danger{color:var(--red)}
+#srch-wrap{position:relative;margin-bottom:12px}
+#srch-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);width:16px;height:16px;pointer-events:none}
+#srchBox{width:100%;height:40px;padding:0 12px 0 36px;background:var(--bg);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:var(--font);font-size:.85rem;-webkit-appearance:none;outline:none}
+#srchBox:focus{border-color:var(--accent)}
+#srchBox::placeholder{color:var(--muted)}
+#stats-bar{display:flex;gap:6px;padding:9px 16px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--bg)}
+#stats-bar::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--card);font-size:.7rem;color:var(--sub);white-space:nowrap}
+.chip em{font-style:normal;font-weight:700;color:var(--accent)}
+.chip.g em{color:var(--green)}.chip.r em{color:var(--red)}
+#tplPanel{background:var(--surface);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;transition:max-height .3s ease}
+#tplPanel.open{max-height:420px}
+#tplInner{padding:16px}
+#tplInner h3{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:12px}
+.tpl-lbl{font-size:.68rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px}
+.tpl-inp{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font);font-size:.82rem;padding:8px 11px;resize:none;outline:none;margin-bottom:10px}
+.tpl-inp:focus{border-color:var(--accent)}
+.tpl-btns{display:flex;gap:8px;align-items:center}
+.btn-save{background:var(--accent);color:#0a0b0f;border:none;padding:0 18px;height:var(--tap);border-radius:10px;font-family:var(--font);font-size:.8rem;font-weight:700;cursor:pointer}
+.btn-clear{background:none;border:1px solid var(--border2);color:var(--muted);padding:0 14px;height:var(--tap);border-radius:10px;font-family:var(--font);font-size:.78rem;cursor:pointer}
+#tplFlash{font-size:.72rem;color:var(--green);display:none}
+#idx{padding:10px 16px 12px;background:var(--surface);border-bottom:1px solid var(--border)}
+#idx-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:8px}
+#idx-links{display:flex;flex-wrap:wrap;gap:6px}
+.ibtn{padding:0 12px;height:34px;border-radius:17px;background:var(--card);border:1px solid var(--border2);color:var(--sub);font-family:var(--font);font-size:.71rem;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center}
+.ibtn:active{opacity:.7}
+.ibtn.done{background:#0a2015;border-color:var(--green);color:var(--green)}
+.ibtn.partial{background:#1a1504;border-color:var(--accent-dim);color:var(--accent)}
+.city-sec{border-bottom:3px solid var(--bg)}
+.city-top{padding:18px 16px 0;display:flex;align-items:flex-start;gap:10px}
+.city-name{font-size:1rem;font-weight:800;letter-spacing:-.02em;flex:1;line-height:1.2}
+.city-cnt{font-size:.67rem;color:var(--muted);padding-top:4px;white-space:nowrap}
+.city-tags{display:flex;flex-wrap:wrap;gap:5px;padding:8px 16px 12px}
+.tag{font-size:.6rem;padding:2px 9px;border-radius:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.tag-major{background:#251a00;color:var(--accent)}.tag-college{background:#0d2615;color:#5ce890}.tag-conv{background:#1a0f00;color:#f0b84a}
+.prog-wrap{height:3px;background:var(--bg);margin:0 16px 16px;border-radius:3px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--accent),#f7c96e);border-radius:3px;transition:width .4s}
+.sub-lbl{font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;padding:4px 16px 6px;display:flex;align-items:center;gap:8px}
+.sub-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+.vc{margin:0 12px 12px;border-radius:var(--r);background:var(--card);border:1px solid var(--border);overflow:hidden;transition:border-color .2s,opacity .2s}
+.vc.is-done{border-color:#1a3d25}.vc.is-skip{border-color:#3d1a1a;opacity:.55}
+.vc-top{padding:11px 14px 10px;background:var(--card2);display:flex;align-items:flex-start;gap:8px}
+.vc-name{font-weight:700;font-size:.87rem;flex:1;line-height:1.3;color:var(--text);min-width:0}
+.vc-sub{font-size:.69rem;color:var(--sub);margin-top:2px;font-weight:400;line-height:1.35}
+.vc-pill{flex-shrink:0;font-size:.6rem;padding:3px 9px;border-radius:10px;font-weight:700;margin-top:2px;white-space:nowrap;letter-spacing:.03em;text-transform:uppercase}
+.pill-cafe{background:var(--cafe-bg);color:var(--cafe-fg)}.pill-store{background:var(--store-bg);color:var(--store-fg)}
+.vc.is-done .vc-top{background:#0d2018}.vc.is-skip .vc-top{background:#200d0d}
+.vc-rows{padding:0 14px 6px;display:flex;flex-direction:column}
+.crow{display:flex;flex-direction:column;border-bottom:1px solid var(--border)}
+.crow:last-child{border-bottom:none}
+.crow-main{display:flex;align-items:center;gap:9px;min-height:var(--tap);padding:2px 0}
+.crow-chk{width:22px;height:22px;flex-shrink:0;border:2px solid var(--border2);border-radius:6px;background:var(--bg);-webkit-appearance:none;appearance:none;cursor:pointer;position:relative;transition:background .12s,border-color .12s}
+.crow-chk:checked{background:var(--accent);border-color:var(--accent)}
+.crow-chk:checked::after{content:'v';position:absolute;top:-1px;left:3px;font-size:13px;font-weight:800;color:#0a0b0f}
+.skip-chk:checked{background:var(--red);border-color:var(--red)}
+.crow-lbl{font-size:.69rem;color:var(--muted);width:58px;flex-shrink:0;font-weight:600;line-height:1.2}
+.skip-row .crow-lbl{color:var(--red)}
+.crow-val{flex:1;font-size:.79rem;color:var(--sub);overflow:hidden;min-width:0}
+.crow-val a{color:var(--blue);text-decoration:none;word-break:break-all}
+.crow-val.na{color:var(--border2);font-style:italic;font-size:.73rem}
+.crow-date{font-size:.62rem;color:var(--accent);white-space:nowrap;flex-shrink:0;font-family:var(--mono)}
+.crow-date.skip-dt{color:var(--red)}
+.crow-note{display:none;margin-left:31px;padding:0 0 8px;gap:6px;align-items:flex-start}
+.crow-note.open{display:flex}
+.note-dt{font-size:.61rem;color:var(--muted);white-space:nowrap;padding-top:6px;font-family:var(--mono)}
+.note-ta{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:.75rem;padding:6px 9px;resize:none;height:34px;outline:none}
+.note-ta:focus{border-color:var(--accent)}
+.eadd-wrap{display:none;margin-left:31px;padding:4px 0 10px;gap:6px;align-items:center}
+.eadd-wrap.open{display:flex}
+.eadd-inp{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:.75rem;padding:7px 9px;outline:none;height:36px;min-width:0}
+.eadd-inp:focus{border-color:var(--accent)}
+.eadd-btn{flex-shrink:0;background:var(--accent);color:#0a0b0f;border:none;border-radius:7px;padding:0 13px;height:36px;font-family:var(--font);font-size:.75rem;font-weight:700;cursor:pointer}
+.add-email-btn{flex-shrink:0;background:none;border:1px solid var(--border2);color:var(--muted);border-radius:6px;width:28px;height:28px;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#fab{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);right:16px;z-index:300}
+#fab-next{background:var(--accent);color:#0a0b0f;border:none;border-radius:28px;padding:0 20px;height:52px;font-family:var(--font);font-size:.85rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 24px rgba(245,166,35,.4)}
+#fab-next:active{opacity:.85}
+#all-done{display:none;flex-direction:column;align-items:center;padding:60px 32px;text-align:center;gap:12px}
+#all-done.show{display:flex}
+#all-done .big{font-size:3rem}
+#all-done h2{font-size:1.1rem;font-weight:800;color:var(--green)}
+#all-done p{font-size:.82rem;color:var(--sub);line-height:1.6}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <h1>&#127922; Board Game Venues</h1>
+  <div id="hdr-sub">Mobile outreach tracker</div>
+  <div id="hdr-btns">
+    <button class="hbtn" id="tplToggle" onclick="toggleTpl()">&#9993; Template</button>
+    <button class="hbtn" id="saveBtn" onclick="downloadHTML()">&#10003; Save progress</button>
+    <button class="hbtn danger" onclick="resetAll()">&#8635; Reset</button>
+  </div>
+  <div id="srch-wrap">
+    <svg id="srch-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="srchBox" placeholder="Search venues or cities...">
+  </div>
+</div>
+<div id="stats-bar">
+  <div class="chip" id="s-total"><em>0</em> venues</div>
+  <div class="chip g" id="s-done"><em>0</em> contacted</div>
+  <div class="chip r" id="s-skip"><em>0</em> skipped</div>
+  <div class="chip" id="s-left"><em>0</em> remaining</div>
+</div>
+<div id="tplPanel">
+  <div id="tplInner">
+    <h3>Gmail Compose Template</h3>
+    <label class="tpl-lbl">Subject</label>
+    <input type="text" class="tpl-inp" id="tplSub" placeholder="e.g. Partnership opportunity - MeepleUp">
+    <label class="tpl-lbl">Body</label>
+    <textarea class="tpl-inp" id="tplBody" rows="5" placeholder="Hi [Name],&#10;&#10;I wanted to reach out about...&#10;&#10;Best,&#10;[Your name]"></textarea>
+    <div class="tpl-btns">
+      <button class="btn-save" onclick="saveTpl()">Save</button>
+      <button class="btn-clear" onclick="clearTpl()">Clear</button>
+      <span id="tplFlash">Saved!</span>
+    </div>
+  </div>
+</div>
+<div id="idx">
+  <div id="idx-lbl">Jump to City</div>
+  <div id="idx-links"></div>
+</div>
+<div id="container"></div>
+<div id="all-done">
+  <div class="big">&#127881;</div>
+  <h2>All venues handled!</h2>
+  <p>Every venue has been contacted or skipped.</p>
+</div>
+<div id="fab">
+  <button id="fab-next" onclick="scrollToNext()">&#8250; Next venue</button>
+</div>
+<script>
+var CITIES=[
+  {id:"slc",name:"Salt Lake City, UT",tags:["major","college"],
+   cafes:[{id:"gamehaven",name:"Game Haven Sandy",subloc:"Sandy (S 700 E) - Battle Grounds Coffee inside, events & private rooms",phone:"(801) 849-0945",email:"",website:"yourgamehaven.com",emailNote:"Contact form on site - 5 Utah locations"}],
+   stores:[
+     {id:"gamenightgames",name:"Game Night Games",subloc:"Sugar House (S 900 E)",phone:"(801) 467-2400",email:"",website:"gamenightgames.com",emailNote:"No public email - call"},
+     {id:"oasisgames",name:"Oasis Games",subloc:"Downtown (275 E 400 S) - MTG singles + board game library",phone:"(801) 738-4413",email:"",website:"oasisgamesslc.com",emailNote:"Contact form on site"},
+     {id:"hasturgames",name:"Hastur Games",subloc:"Midvale (S State St) - serving SLC since 1995",phone:"(801) 352-2605",email:"support@hasturgames.com",website:"hasturgames.com"}
+   ]},
+  {id:"abq",name:"Albuquerque, NM",tags:["major","college"],
+   cafes:[{id:"empirebgl",name:"Empire Board Game Library",subloc:"Nob Hill (Central Ave NE) - 1000+ game library + cafe",phone:"(505) 232-4263",email:"empirebgl@gmail.com",website:"empireboardgamelibrary.com"}],
+   stores:[
+     {id:"ettingames",name:"Ettin Games and Hobbies",subloc:"Montgomery Blvd NE",phone:"(505) 503-6993",email:"EttinGamesABQ@gmail.com",website:"EttinGamesABQ.com"},
+     {id:"oldtownhobby",name:"Old Town Hobbies and Games",subloc:"Old Town (Rio Grande Blvd NW)",phone:"(505) 340-5651",email:"",website:"oldtownhobbiesandgames.com",emailNote:"No public email - call"}
+   ]},
+  {id:"oma",name:"Omaha, NE",tags:["major","college"],
+   cafes:[{id:"spielbound",name:"Spielbound Board Game Cafe",subloc:"Midtown (Harney St) - 3700+ game library, nonprofit",phone:"(402) 763-8444",email:"",website:"spielbound.org",emailNote:"Contact form on site"}],
+   stores:[
+     {id:"geekroom",name:"The Geek Room Hobbies & Games",subloc:"West Omaha (S 180th St)",phone:"(402) 933-6080",email:"jason@geekroomgames.com",website:"geekroomgames.com"},
+     {id:"gameshoppe-bel",name:"The Game Shoppe",subloc:"Bellevue (Harlan Dr) - 20+ years, game nights twice/week",phone:"(402) 292-4263",email:"gamegeekbellevue@thegameshoppe.com",website:"thegameshoppe.com"},
+     {id:"gameshoppe-oma",name:"The Game Shoppe Omaha",subloc:"West Omaha (N 144th St)",phone:"(402) 991-8699",email:"gamegeekomaha@thegameshoppe.com",website:"thegameshoppe.com"}
+   ]},
+  {id:"lex",name:"Lexington, KY",tags:["major","college","convention"],
+   cafes:[
+     {id:"chaoticgood",name:"Chaotic Good: Coffee, Comics & Games",subloc:"S Broadway (near U of Kentucky) - woman/LGBTQ/veteran owned",phone:"(859) 303-8668",email:"",website:"chaoticgoodlex.com",emailNote:"Contact via website"},
+     {id:"villainous",name:"Villainous",subloc:"Downtown (Jefferson St) - tabletop gaming pub",phone:"",email:"",website:"villainous.club",emailNote:"Contact form on site"}
+   ],
+   stores:[
+     {id:"rustyscabbard",name:"The Rusty Scabbard",subloc:"Lane Allen Rd - Lexington staple since 1982",phone:"(859) 278-6634",email:"",website:"",emailNote:"Facebook only: rustyscabbard82"},
+     {id:"legendarygameslex",name:"Legendary Games",subloc:"N Ashland Ave - largest play space in area",phone:"(859) 523-9430",email:"",website:"legendarygameslexington.square.site",emailNote:"Facebook: LegendaryGamesLexington"}
+   ]},
+  {id:"boi",name:"Boise, ID",tags:["major","college"],
+   cafes:[{id:"chitsandchats",name:"Chits & Chats",subloc:"Boise Bench (W Overland Rd) - board game pub opened Sept 2025",phone:"(208) 695-5327",email:"",website:"chitsandchats.com",emailNote:"Contact via website"}],
+   stores:[
+     {id:"fantasticgames",name:"Fantastic Games",subloc:"Downtown Boise (N 8th St) - largest NW board game selection",phone:"(208) 345-0204",email:"",website:"fantasticgamesboise.com",emailNote:"Contact via phone"},
+     {id:"allaboutgames",name:"All About Games",subloc:"SW Boise (W Overland Rd) - 150+ demo games, weekly events",phone:"(208) 343-5653",email:"",website:"",emailNote:"Facebook: AllAboutGames365"}
+   ]},
+  {id:"ric",name:"Richmond, VA",tags:["major","college"],
+   cafes:[{id:"unpluggedrva",name:"Unplugged Games Cafe",subloc:"Midlothian (Sycamore Square) - 1000+ game library, full restaurant",phone:"(804) 893-3793",email:"info@unpluggedrva.com",website:"unpluggedrva.com"}],
+   stores:[{id:"oneeyedjacques",name:"One Eyed Jacques",subloc:"Carytown (W Cary St)",phone:"(804) 359-5163",email:"contact@oneeyedjacques.com",website:"oneeyedjacques.com"}]
+  },
+  {id:"tus",name:"Tucson & Flagstaff, AZ",tags:["major","college","convention"],
+   cafes:[
+     {id:"shortresttavern",name:"Short Rest Tavern",subloc:"Tucson Mall (N Oracle Rd, Level 2) - medieval mead hall inside TG&G",phone:"(520) 460-6891",email:"tucsongamesandgadgets@gmail.com",website:"shortresttavern.com"},
+     {id:"goodgamecafe",name:"Good Game Cafe",subloc:"Flagstaff (N Humphreys St) - 800+ game library, opened Nov 2024",phone:"(928) 224-2927",email:"sales@goodgame.cafe",website:"goodgame.cafe"}
+   ],
+   stores:[
+     {id:"isleofgames",name:"Isle of Games",subloc:"East Tucson (E Broadway Blvd) - large game library + play space",phone:"(520) 886-4263",email:"store@isleofgamesaz.com",website:"isleofgamesaz.com"},
+     {id:"tucsongag",name:"Tucson Games & Gadgets",subloc:"Multiple Tucson locations - hosts Short Rest Tavern",phone:"(520) 603-4037",email:"tucsongamesandgadgets@gmail.com",website:"tucsongamesandgadgets.com"}
+   ]}
+];
+
+var S={},CE={};
+var DEFAULT_SUBJECT="Introducing MeepleUp - Free App for Tabletop Gaming Groups";
+var DEFAULT_BODY="Hi,\n\nI'm an indie developer who just launched MeepleUp, a free app that helps tabletop gaming groups coordinate. It handles RSVPs, owned game title browsing and voting, and event messaging all in one place.\n\nGaming groups that you host will probably like it. Please visit https://meepleup.com to learn more, or just dive right in and download \"MeepleUp\" on the App Store or Google Play.\n\nThank you so much for any feedback you can provide. I've spent over a thousand hours building this app. It would mean so much to me to get it in the hands of people who might appreciate it.\n\nSincerely,\nRhys Smoker";
+var TPL={subject:DEFAULT_SUBJECT,body:DEFAULT_BODY};
+function SK(v,f){return v+"__"+f;}
+function gS(v,f){return S[SK(v,f)]||{checked:false,date:"",note:""};}
+function persist(){try{localStorage.setItem("bgv_state",JSON.stringify({s:S,ce:CE,tpl:TPL}));}catch(e){}}
+function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
+function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
+function gmailUrl(email){var u="https://mail.google.com/mail/?view=cm&to="+encodeURIComponent(email);if(TPL.subject)u+="&su="+encodeURIComponent(TPL.subject);if(TPL.body)u+="&body="+encodeURIComponent(TPL.body);return u;}
+
+function loadState(){
+  try{
+    var raw=localStorage.getItem("bgv_state");
+    if(raw){
+      var emb=JSON.parse(raw);
+      if(emb.s) S=emb.s;
+      if(emb.ce) CE=emb.ce;
+      if(emb.tpl){
+        TPL.subject=emb.tpl.subject||DEFAULT_SUBJECT;
+        TPL.body=emb.tpl.body||DEFAULT_BODY;
+      }
+    }
+  }catch(e){}
+}
+
+function allVenues(){var out=[];for(var i=0;i<CITIES.length;i++){var c=CITIES[i];if(c.cafes)for(var j=0;j<c.cafes.length;j++)out.push(c.cafes[j]);if(c.stores)for(var j=0;j<c.stores.length;j++)out.push(c.stores[j]);}return out;}
+function isDone(vid){var fs=["phone","email","website","facebook"];for(var i=0;i<fs.length;i++)if(gS(vid,fs[i]).checked)return true;return false;}
+function isSkipped(vid){return gS(vid,"skip").checked;}
+function isFresh(vid){return !isDone(vid)&&!isSkipped(vid);}
+
+function updateUI(){
+  var all=allVenues(),done=0,skip=0;
+  for(var i=0;i<all.length;i++){if(isDone(all[i].id))done++;else if(isSkipped(all[i].id))skip++;}
+  var left=all.length-done-skip;
+  document.getElementById("s-total").innerHTML="<em>"+all.length+"</em> venues";
+  document.getElementById("s-done").innerHTML="<em>"+done+"</em> contacted";
+  document.getElementById("s-skip").innerHTML="<em>"+skip+"</em> skipped";
+  document.getElementById("s-left").innerHTML="<em>"+left+"</em> remaining";
+  for(var i=0;i<CITIES.length;i++){
+    var c=CITIES[i],arr=[],d=0,s=0;
+    if(c.cafes)arr=arr.concat(c.cafes);if(c.stores)arr=arr.concat(c.stores);
+    for(var j=0;j<arr.length;j++){if(isDone(arr[j].id))d++;else if(isSkipped(arr[j].id))s++;}
+    var pct=arr.length?Math.round((d+s)/arr.length*100):0;
+    var pb=document.getElementById("pb_"+c.id);if(pb)pb.style.width=pct+"%";
+  }
+  for(var i=0;i<all.length;i++){
+    var el=document.getElementById("vc_"+all[i].id);if(!el)continue;
+    el.className="vc"+(isDone(all[i].id)&&!isSkipped(all[i].id)?" is-done":isSkipped(all[i].id)?" is-skip":"");
+  }
+  buildIdx();
+  var gone=(left===0);
+  document.getElementById("all-done").style.display=gone?"flex":"none";
+  document.getElementById("fab").style.display=gone?"none":"";
+}
+
+function buildIdx(){
+  var html="";
+  for(var i=0;i<CITIES.length;i++){
+    var c=CITIES[i],arr=[],d=0,s=0;
+    if(c.cafes)arr=arr.concat(c.cafes);if(c.stores)arr=arr.concat(c.stores);
+    for(var j=0;j<arr.length;j++){if(isDone(arr[j].id))d++;else if(isSkipped(arr[j].id))s++;}
+    var tot=arr.length,allDone=(d+s===tot&&tot>0),partial=(d+s>0&&!allDone);
+    var cls=allDone?"done":partial?"partial":"";
+    var badge=allDone?" v":partial?" "+(d+s)+"/"+tot:"";
+    html+="<button class='ibtn "+cls+"' onclick=\"jumpTo('city_"+c.id+"')\">"+c.name.split(",")[0]+badge+"</button>";
+  }
+  document.getElementById("idx-links").innerHTML=html;
+}
+function jumpTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+function scrollToNext(){
+  var all=allVenues();
+  for(var i=0;i<all.length;i++){
+    if(isFresh(all[i].id)){
+      var el=document.getElementById("vc_"+all[i].id);
+      if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.style.outline="2px solid #f5a623";setTimeout(function(e){e.style.outline="";}.bind(null,el),1400);}
+      return;
+    }
+  }
+}
+
+function toggle(vid,field){
+  var chk=document.getElementById("chk_"+vid+"_"+field);if(!chk)return;
+  var isChk=chk.checked,d=isChk?today():"";
+  sS(vid,field,{checked:isChk,date:d});
+  var nw=document.getElementById("note_"+vid+"_"+field);if(nw)nw.className="crow-note"+(isChk?" open":"");
+  var dt=document.getElementById("dt_"+vid+"_"+field);if(dt){dt.textContent=d;dt.style.display=isChk?"":"none";}
+  if(field==="skip"&&isChk){
+    var fs=["phone","email","website","facebook"];
+    for(var i=0;i<fs.length;i++){var c2=document.getElementById("chk_"+vid+"_"+fs[i]);if(c2&&c2.checked){c2.checked=false;sS(vid,fs[i],{checked:false,date:""});var n2=document.getElementById("note_"+vid+"_"+fs[i]);if(n2)n2.className="crow-note";var d2=document.getElementById("dt_"+vid+"_"+fs[i]);if(d2){d2.textContent="";d2.style.display="none";}}}
+  }
+  if(field!=="skip"&&isChk){var sc=document.getElementById("chk_"+vid+"_skip");if(sc&&sc.checked){sc.checked=false;sS(vid,"skip",{checked:false,date:""});var ns=document.getElementById("note_"+vid+"_skip");if(ns)ns.className="crow-note";var ds=document.getElementById("dt_"+vid+"_skip");if(ds){ds.textContent="";ds.style.display="none";}}}
+  updateUI();
+}
+function saveNote(vid,field,val){sS(vid,field,{note:val});}
+
+function toggleEmailAdd(vid){var w=document.getElementById("eadd_"+vid);if(!w)return;var op=!w.classList.contains("open");w.className="eadd-wrap"+(op?" open":"");if(op){var inp=document.getElementById("eadd_inp_"+vid);if(inp)setTimeout(function(){inp.focus();},50);}}
+function saveCustomEmail(vid){var inp=document.getElementById("eadd_inp_"+vid);if(!inp)return;var val=inp.value.trim();if(!val)return;CE[vid]=val;persist();var row=document.getElementById("erow_"+vid);if(row)row.innerHTML=buildEmailMain(vid);var w=document.getElementById("eadd_"+vid);if(w)w.className="eadd-wrap";}
+function getVenue(vid){var all=allVenues();for(var i=0;i<all.length;i++)if(all[i].id===vid)return all[i];return null;}
+
+function buildEmailMain(vid){
+  var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"",s=gS(vid,"email");
+  var dtStyle=s.checked&&s.date?"":"display:none";
+  var valHtml=email
+    ? "<span class='crow-val'><a href='#' onclick=\"event.preventDefault();window.open(gmailUrl('"+email+"'),'_blank')\">"+email+"</a></span>"
+    : "<span class='crow-val na'>"+(v&&v.emailNote?v.emailNote:"No email found")+"</span>";
+  return "<input type='checkbox' class='crow-chk' id='chk_"+vid+"_email'"+(s.checked?" checked":"")+" onchange=\"toggle('"+vid+"','email')\">"
+    +"<span class='crow-lbl'>Email</span>"+valHtml
+    +"<button class='add-email-btn' onclick=\"toggleEmailAdd('"+vid+"')\" title='Add email'>+</button>"
+    +"<span class='crow-date' id='dt_"+vid+"_email' style='"+dtStyle+"'>"+s.date+"</span>";
+}
+
+function buildRow(vid,field,label,value,isLink,linkUrl,fallback){
+  var s=gS(vid,field),isSkip=(field==="skip"),hasVal=!!(value&&value.trim());
+  var valHtml="";
+  if(!hasVal&&fallback){valHtml="<span class='crow-val na'>"+fallback+"</span>";}
+  else if(isLink&&hasVal){var href=linkUrl.indexOf("http")===0?linkUrl:"https://"+linkUrl;valHtml="<span class='crow-val'><a href='"+href+"' target='_blank' rel='noopener'>"+value+"</a></span>";}
+  else if(hasVal){valHtml="<span class='crow-val'>"+value+"</span>";}
+  else{valHtml="<span class='crow-val'>-</span>";}
+  var dtStyle=s.checked&&s.date?"":"display:none";
+  var dtCls="crow-date"+(isSkip?" skip-dt":"");
+  var chkCls="crow-chk"+(isSkip?" skip-chk":"");
+  var rowCls="crow"+(isSkip?" skip-row":"");
+  return "<div class='"+rowCls+"'>"
+    +"<div class='crow-main'>"
+    +"<input type='checkbox' class='"+chkCls+"' id='chk_"+vid+"_"+field+"'"+(s.checked?" checked":"")+" onchange=\"toggle('"+vid+"','"+field+"')\">"
+    +"<span class='crow-lbl'>"+label+"</span>"+valHtml
+    +"<span class='"+dtCls+"' id='dt_"+vid+"_"+field+"' style='"+dtStyle+"'>"+s.date+"</span>"
+    +"</div>"
+    +"<div class='crow-note"+(s.checked?" open":"")+"' id='note_"+vid+"_"+field+"'>"
+    +"<span class='note-dt'>"+s.date+"</span>"
+    +"<textarea class='note-ta' placeholder='Add note...' oninput=\"saveNote('"+vid+"','"+field+"',this.value)\">"+s.note+"</textarea>"
+    +"</div></div>";
+}
+
+function buildVenue(v,type){
+  var pillCls=type==="cafe"?"pill-cafe":"pill-store";
+  var pillLbl=type==="cafe"?"Cafe":"Store";
+  var webUrl=v.website?(v.website.indexOf("http")===0?v.website:"https://"+v.website):"";
+  var eS=gS(v.id,"email");
+  var doneCls=(isDone(v.id)&&!isSkipped(v.id))?" is-done":isSkipped(v.id)?" is-skip":"";
+  return "<div class='vc"+doneCls+"' id='vc_"+v.id+"'>"
+    +"<div class='vc-top'>"
+    +"<div style='flex:1;min-width:0'><div class='vc-name'>"+v.name+"</div><div class='vc-sub'>"+v.subloc+"</div></div>"
+    +"<span class='vc-pill "+pillCls+"'>"+pillLbl+"</span>"
+    +"</div><div class='vc-rows'>"
+    +buildRow(v.id,"phone","Phone",v.phone||"",false,"",v.phone?"":"No phone found")
+    +"<div class='crow'>"
+    +"<div class='crow-main' id='erow_"+v.id+"'>"+buildEmailMain(v.id)+"</div>"
+    +"<div class='crow-note"+(eS.checked?" open":"")+"' id='note_"+v.id+"_email'>"
+    +"<span class='note-dt'>"+eS.date+"</span>"
+    +"<textarea class='note-ta' placeholder='Add note...' oninput=\"saveNote('"+v.id+"','email',this.value)\">"+eS.note+"</textarea>"
+    +"</div></div>"
+    +"<div class='eadd-wrap' id='eadd_"+v.id+"'>"
+    +"<input class='eadd-inp' type='email' id='eadd_inp_"+v.id+"' placeholder='Enter email address...' value='"+(CE[v.id]||v.email||"")+"' onkeydown=\"if(event.key==='Enter')saveCustomEmail('"+v.id+"')\">"
+    +"<button class='eadd-btn' onclick=\"saveCustomEmail('"+v.id+"')\">Save</button>"
+    +"</div>"
+    +buildRow(v.id,"website","Website",v.website||"",!!v.website,webUrl,v.emailNote||"No website")
+    +buildRow(v.id,"facebook","FB Msg","",false,"","Mark when FB messaged")
+    +buildRow(v.id,"skip","Skip","",false,"","Mark to skip this venue")
+    +"</div></div>";
+}
+
+function buildCity(c){
+  var arr=[],d=0,s=0;
+  if(c.cafes)arr=arr.concat(c.cafes);if(c.stores)arr=arr.concat(c.stores);
+  for(var i=0;i<arr.length;i++){if(isDone(arr[i].id))d++;else if(isSkipped(arr[i].id))s++;}
+  var pct=arr.length?Math.round((d+s)/arr.length*100):0;
+  var tagMap={major:["tag-major","Metro"],college:["tag-college","College"],convention:["tag-conv","Conv."]};
+  var tagHtml="";for(var i=0;i<c.tags.length;i++){var t=tagMap[c.tags[i]];if(t)tagHtml+="<span class='tag "+t[0]+"'>"+t[1]+"</span>";}
+  var body="";
+  if(c.cafes&&c.cafes.length){body+="<div class='sub-lbl'>Cafes &amp; Pubs ("+c.cafes.length+")</div>";for(var i=0;i<c.cafes.length;i++)body+=buildVenue(c.cafes[i],"cafe");}
+  if(c.stores&&c.stores.length){body+="<div class='sub-lbl' style='margin-top:4px'>Stores ("+c.stores.length+")</div>";for(var i=0;i<c.stores.length;i++)body+=buildVenue(c.stores[i],"store");}
+  return "<div class='city-sec' id='city_"+c.id+"'>"
+    +"<div class='city-top'><div class='city-name'>"+c.name+"</div><div class='city-cnt'>"+arr.length+" venues</div></div>"
+    +"<div class='city-tags'>"+tagHtml+"</div>"
+    +body
+    +"<div class='prog-wrap'><div class='prog-bar' id='pb_"+c.id+"' style='width:"+pct+"%'></div></div>"
+    +"</div>";
+}
+
+function initSearch(){
+  document.getElementById("srchBox").addEventListener("input",function(){
+    var q=this.value.toLowerCase().trim();
+    var cards=document.querySelectorAll(".vc");
+    for(var i=0;i<cards.length;i++)cards[i].style.display=(!q||cards[i].textContent.toLowerCase().indexOf(q)>=0)?"":"none";
+    var secs=document.querySelectorAll(".city-sec");
+    for(var i=0;i<secs.length;i++){var vcs=secs[i].querySelectorAll(".vc"),vis=false;for(var j=0;j<vcs.length;j++)if(vcs[j].style.display!=="none"){vis=true;break;}secs[i].style.display=vis?"":"none";}
+  });
+}
+
+function toggleTpl(){
+  var p=document.getElementById("tplPanel"),b=document.getElementById("tplToggle");
+  var open=p.classList.toggle("open");
+  b.className="hbtn"+(open?" active":"");
+  if(open){
+    document.getElementById("tplSub").value=TPL.subject;
+    document.getElementById("tplBody").value=TPL.body;
+  }
+}
+function saveTpl(){TPL.subject=document.getElementById("tplSub").value;TPL.body=document.getElementById("tplBody").value;persist();var f=document.getElementById("tplFlash");f.style.display="inline";setTimeout(function(){f.style.display="none";},2000);}
+function clearTpl(){TPL={subject:"",body:""};document.getElementById("tplSub").value="";document.getElementById("tplBody").value="";}
+function resetAll(){if(!confirm("Reset all outreach progress? This cannot be undone."))return;S={};CE={};var c=document.getElementById("container");c.innerHTML="";for(var i=0;i<CITIES.length;i++)c.innerHTML+=buildCity(CITIES[i]);buildIdx();updateUI();}
+function downloadHTML(){
+  // On GitHub Pages we use localStorage — auto-saves on every change
+  // This button just confirms to the user that progress is saved
+  persist();
+  var b=document.getElementById("saveBtn");
+  var orig=b.innerHTML;
+  b.innerHTML="&#10003; Saved!";
+  b.style.color="var(--green)";
+  setTimeout(function(){b.innerHTML=orig;b.style.color="";},2000);
+}
+
+// INIT - runs immediately, no DOMContentLoaded needed since script is at end of body
+loadState();
+var container=document.getElementById("container");
+var html="";
+for(var i=0;i<CITIES.length;i++)html+=buildCity(CITIES[i]);
+container.innerHTML=html;
+buildIdx();
+updateUI();
+initSearch();
+setTimeout(scrollToNext,400);
+</script>
+</body>
+</html>
