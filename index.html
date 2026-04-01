@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="BG Venues">
 <meta name="theme-color" content="#f0f2f5">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
 <title>BG Venues — MeepleUp Outreach</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -234,12 +236,10 @@ function gS(v,f){return S[SK(v,f)]||{checked:false,date:"",note:""};}
 function persist(){try{localStorage.setItem("bgv_state",JSON.stringify({s:S,ce:CE,tpl:TPL}));}catch(e){}}
 function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
 function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
-/** Web: /mail/u/0/ + tf=cm (legacy view=cm loses fields). Mobile: mailto (Gmail web often opens inbox only). */
-function isMobileMailClient(){return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);}
 function getComposeSubjectBody(){var p=document.getElementById("tplPanel"),sub,bod;if(p&&p.classList.contains("open")){var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");sub=se?se.value:"";bod=be?be.value:"";}else{sub=TPL.subject||"";bod=TPL.body||"";}return{subject:(sub||"").trim(),body:(bod||"").trim()};}
-function mailtoComposeUrl(email){var t=getComposeSubjectBody(),q=[];if(t.subject)q.push("subject="+encodeURIComponent(t.subject));if(t.body)q.push("body="+encodeURIComponent(t.body));return "mailto:"+email+(q.length?"?"+q.join("&"):"");}
+/** Always Gmail web compose (/mail/u/0/ … &tf=cm). User must be signed into Gmail in that browser. */
 function gmailWebComposeUrl(email){var t=getComposeSubjectBody(),u="https://mail.google.com/mail/u/0/?to="+encodeURIComponent(email);if(t.subject)u+="&su="+encodeURIComponent(t.subject);if(t.body)u+="&body="+encodeURIComponent(t.body);u+="&tf=cm";return u;}
-function openVenueEmail(email){if(!email)return;var url=isMobileMailClient()?mailtoComposeUrl(email):gmailWebComposeUrl(email);if(url.indexOf("mailto:")===0){var a=document.createElement("a");a.href=url;a.rel="noopener noreferrer";document.body.appendChild(a);a.click();document.body.removeChild(a);}else{window.open(url,"_blank","noopener,noreferrer");}}
+function openVenueEmail(email){if(!email)return;window.open(gmailWebComposeUrl(email),"_blank","noopener,noreferrer");}
 function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email);}
 
 function showVenueToast(msg){
