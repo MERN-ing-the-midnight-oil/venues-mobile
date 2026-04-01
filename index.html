@@ -237,9 +237,27 @@ function persist(){try{localStorage.setItem("bgv_state",JSON.stringify({s:S,ce:C
 function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
 function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
 function getComposeSubjectBody(){var p=document.getElementById("tplPanel"),sub,bod;if(p&&p.classList.contains("open")){var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");sub=se?se.value:"";bod=be?be.value:"";}else{sub=TPL.subject||"";bod=TPL.body||"";}return{subject:(sub||"").trim(),body:(bod||"").trim()};}
-/** Always Gmail web compose (/mail/u/0/ … &tf=cm). User must be signed into Gmail in that browser. */
-function gmailWebComposeUrl(email){var t=getComposeSubjectBody(),u="https://mail.google.com/mail/u/0/?to="+encodeURIComponent(email);if(t.subject)u+="&su="+encodeURIComponent(t.subject);if(t.body)u+="&body="+encodeURIComponent(t.body);u+="&tf=cm";return u;}
-function openVenueEmail(email){if(!email)return;window.open(gmailWebComposeUrl(email),"_blank","noopener,noreferrer");}
+/**
+ * Direct Gmail compose: /mail/u/0/?to=…&su=…&body=…&tf=cm (extsrc=mailto often opened inbox without compose).
+ */
+function gmailWebComposeUrl(email){
+  var t=getComposeSubjectBody();
+  var u="https://mail.google.com/mail/u/0/?to="+encodeURIComponent(email);
+  if(t.subject)u+="&su="+encodeURIComponent(t.subject);
+  if(t.body)u+="&body="+encodeURIComponent(t.body);
+  u+="&tf=cm";
+  return u;
+}
+function openVenueEmail(email){
+  if(!email)return;
+  window.open(gmailWebComposeUrl(email),"_blank","noopener,noreferrer");
+  try{
+    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&!sessionStorage.getItem("bgv_gmailWebTip")){
+      sessionStorage.setItem("bgv_gmailWebTip","1");
+      showVenueToast("If Gmail asks to use the app, choose the option to use Gmail in the browser.");
+    }
+  }catch(e){}
+}
 function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email);}
 
 function showVenueToast(msg){
