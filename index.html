@@ -175,52 +175,73 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 <script>
 var CITIES=[
   {id:"slc",name:"Salt Lake City, UT",tags:["major","college"],
-   cafes:[{id:"gamehaven",name:"Game Haven Sandy",subloc:"Sandy (S 700 E) - Battle Grounds Coffee inside, events & private rooms",phone:"(801) 849-0945",email:"",website:"yourgamehaven.com",emailNote:"Contact form on site - 5 Utah locations"}],
+   cafes:[
+     {id:"gamehaven",name:"Game Haven Sandy",subloc:"Sandy (S 700 E) - Battle Grounds Coffee inside, private rooms, weekly events",phone:"(801) 849-0945",email:"",website:"yourgamehaven.com",emailNote:"Contact form on site - 5 Utah locations"},
+     {id:"legendarium",name:"The Legendarium",subloc:"Downtown SLC (E 900 S) - sci-fi/fantasy bookstore & cafe with games",phone:"(385) 222-7788",email:"",website:"",emailNote:"Contact via Facebook or call"}
+   ],
    stores:[
-     {id:"gamenightgames",name:"Game Night Games",subloc:"Sugar House (S 900 E)",phone:"(801) 467-2400",email:"",website:"gamenightgames.com",emailNote:"No public email - call"},
-     {id:"oasisgames",name:"Oasis Games",subloc:"Downtown (275 E 400 S) - MTG singles + board game library",phone:"(801) 738-4413",email:"",website:"oasisgamesslc.com",emailNote:"Contact form on site"},
-     {id:"hasturgames",name:"Hastur Games",subloc:"Midvale (S State St) - serving SLC since 1995",phone:"(801) 352-2605",email:"support@hasturgames.com",website:"hasturgames.com"}
+     {id:"gamenightgames",name:"Game Night Games",subloc:"Sugar House (S 900 E) - board game specialist since 2004",phone:"(801) 467-2400",email:"info@gamenightgames.com",website:"gamenightgames.com",emailNote:"Also on /service/ for order support"},
+     {id:"oasisgames",name:"Oasis Games",subloc:"Downtown (275 E 400 S) - MTG singles + board game library, LGBTQ+ events",phone:"(801) 738-4413",email:"alex@oasisgamesslc.com",website:"oasisgamesslc.com",emailNote:"Listed on store systems; contact page"},
+     {id:"hasturgames",name:"Hastur Games",subloc:"Midvale (S State St) - serving SLC since 1995",phone:"(801) 352-2605",email:"support@hasturgames.com",website:"hasturgames.com"},
+     {id:"saltcitygames",name:"Salt City Games",subloc:"West SLC (W 4700 S) - board games, TCGs, miniatures, RC cars",phone:"(801) 964-4031",email:"",website:"saltcitygames.shop",emailNote:"Contact form on site"},
+     {id:"paragoncitygames",name:"Paragon City Games",subloc:"Sandy (S 1300 E) - largest play space, tournaments, private streaming room",phone:"(801) 727-2466",email:"pcgfrontcounter@gmail.com",website:"paragoncitygames.com"},
+     {id:"riftgategames",name:"Riftgate Games",subloc:"Murray (S 900 E) - RPG dice specialty + board games + TCGs",phone:"",email:"",website:"riftgate.com",emailNote:"Contact form on site"},
+     {id:"mindgames",name:"Mind Games",subloc:"West Valley City (W 3500 S) - Warhammer specialist + board games, 5 gaming tables",phone:"(801) 968-6365",email:"",website:"mind-games.com",emailNote:"No public email - call"}
    ]},
   {id:"abq",name:"Albuquerque, NM",tags:["major","college"],
-   cafes:[{id:"empirebgl",name:"Empire Board Game Library",subloc:"Nob Hill (Central Ave NE) - 1000+ game library + cafe",phone:"(505) 232-4263",email:"empirebgl@gmail.com",website:"empireboardgamelibrary.com"}],
+   cafes:[
+     {id:"empirebgl",name:"Empire Board Game Library",subloc:"Nob Hill (Central Ave NE) - 1000+ game library + cafe",phone:"(505) 232-4263",email:"empirebgl@gmail.com",website:"empireboardgamelibrary.com"},
+     {id:"sliceanddice-w",name:"Slice and Dice Pizzeria (West)",subloc:"West Albuquerque (McMahon Blvd NW) - board game pizzeria with full library",phone:"(505) 361-2058",email:"",website:"sliceanddicepizzeria.com",emailNote:"Contact form on site"},
+     {id:"sliceanddice-e",name:"Slice and Dice Pizzeria (East)",subloc:"East Albuquerque (Wyoming Blvd NE) - 2nd location, same concept",phone:"(505) 361-2058",email:"",website:"sliceanddicepizzeria.com",emailNote:"Same contact as West location"}
+   ],
    stores:[
      {id:"ettingames",name:"Ettin Games and Hobbies",subloc:"Montgomery Blvd NE",phone:"(505) 503-6993",email:"EttinGamesABQ@gmail.com",website:"EttinGamesABQ.com"},
-     {id:"oldtownhobby",name:"Old Town Hobbies and Games",subloc:"Old Town (Rio Grande Blvd NW)",phone:"(505) 340-5651",email:"",website:"oldtownhobbiesandgames.com",emailNote:"No public email - call"}
+     {id:"oldtownhobby",name:"Old Town Hobbies and Games",subloc:"Old Town (Rio Grande Blvd NW)",phone:"(505) 340-5651",email:"oldtownhobbiesandgames@gmail.com",website:"oldtownhobbiesandgames.com",emailNote:"Visit Albuquerque / local listings"},
+     {id:"dukecitygames-l",name:"Duke City Games (Lomas)",subloc:"East Albuquerque (Lomas Blvd NE) - top NM store for MTG, Pokemon, board games",phone:"(505) 340-9668",email:"",website:"dukecity.games",emailNote:"Contact form on site"},
+     {id:"dukecitygames-h",name:"Duke City Games (High Street)",subloc:"Downtown ABQ (Central Ave SE) - 2nd location in Warehouse District",phone:"(505) 527-5500",email:"",website:"dukecity.games",emailNote:"Contact form on site - same as Lomas location"}
    ]},
   {id:"oma",name:"Omaha, NE",tags:["major","college"],
-   cafes:[{id:"spielbound",name:"Spielbound Board Game Cafe",subloc:"Midtown (Harney St) - 3700+ game library, nonprofit",phone:"(402) 763-8444",email:"",website:"spielbound.org",emailNote:"Contact form on site"}],
+   cafes:[{id:"spielbound",name:"Spielbound Board Game Cafe",subloc:"Midtown (Harney St) - 3700+ game library, nonprofit",phone:"(402) 763-8444",email:"kaleb@spielbound.org",website:"spielbound.org",emailNote:"Director — general inquiries (spielbound.org/contact-us)"}],
    stores:[
      {id:"geekroom",name:"The Geek Room Hobbies & Games",subloc:"West Omaha (S 180th St)",phone:"(402) 933-6080",email:"jason@geekroomgames.com",website:"geekroomgames.com"},
      {id:"gameshoppe-bel",name:"The Game Shoppe",subloc:"Bellevue (Harlan Dr) - 20+ years, game nights twice/week",phone:"(402) 292-4263",email:"gamegeekbellevue@thegameshoppe.com",website:"thegameshoppe.com"},
-     {id:"gameshoppe-oma",name:"The Game Shoppe Omaha",subloc:"West Omaha (N 144th St)",phone:"(402) 991-8699",email:"gamegeekomaha@thegameshoppe.com",website:"thegameshoppe.com"}
+     {id:"gameshoppe-oma",name:"The Game Shoppe Omaha",subloc:"West Omaha (N 144th St)",phone:"(402) 991-8699",email:"gamegeekomaha@thegameshoppe.com",website:"thegameshoppe.com"},
+     {id:"dragonslairblondo",name:"Dragon's Lair Comics & Games (Blondo)",subloc:"Omaha (N 90th St) - serving Omaha since 1975, weekly game nights",phone:"(402) 399-9141",email:"lair@dragons-lair.com",website:"dragons-lair.com"},
+     {id:"dragonslairmill",name:"Dragon's Lair Comics & Games (Millard)",subloc:"Millard (W Center Rd) - 2nd Omaha location",phone:"(402) 895-5653",email:"lair@dragons-lair.com",website:"dragons-lair.com"}
    ]},
   {id:"lex",name:"Lexington, KY",tags:["major","college","convention"],
    cafes:[
-     {id:"chaoticgood",name:"Chaotic Good: Coffee, Comics & Games",subloc:"S Broadway (near U of Kentucky) - woman/LGBTQ/veteran owned",phone:"(859) 303-8668",email:"",website:"chaoticgoodlex.com",emailNote:"Contact via website"},
-     {id:"villainous",name:"Villainous",subloc:"Downtown (Jefferson St) - tabletop gaming pub",phone:"",email:"",website:"villainous.club",emailNote:"Contact form on site"}
+     {id:"chaoticgood",name:"Chaotic Good: Coffee, Comics & Games",subloc:"S Broadway (near U of Kentucky) - woman/LGBTQ/veteran owned, D&D one-shots weekly",phone:"(859) 303-8668",email:"chaoticgoodcg@gmail.com",website:"chaoticgoodlex.com",emailNote:"On About page"},
+     {id:"villainous",name:"Villainous",subloc:"Downtown (Jefferson St) - tabletop gaming pub, from-scratch pizza, reservable tables",phone:"",email:"drapplejuice@villainous.club",website:"villainous.club",emailNote:"VisitLex listing mailto"}
    ],
    stores:[
-     {id:"rustyscabbard",name:"The Rusty Scabbard",subloc:"Lane Allen Rd - Lexington staple since 1982",phone:"(859) 278-6634",email:"",website:"",emailNote:"Facebook only: rustyscabbard82"},
-     {id:"legendarygameslex",name:"Legendary Games",subloc:"N Ashland Ave - largest play space in area",phone:"(859) 523-9430",email:"",website:"legendarygameslexington.square.site",emailNote:"Facebook: LegendaryGamesLexington"}
+     {id:"rustyscabbard",name:"The Rusty Scabbard",subloc:"Lane Allen Rd - Lexington staple since 1982, 50+ game library, Wed game nights",phone:"(859) 278-6634",email:"",website:"",emailNote:"Some directories list old ISP addresses (unverified); Facebook rustyscabbard82"},
+     {id:"legendarygameslex",name:"Legendary Games",subloc:"N Ashland Ave (Warehouse Block) - largest play space in area",phone:"(859) 523-9430",email:"legendarygameslexington@yahoo.com",website:"legendarygameslexington.square.site",emailNote:"VisitLex listing"},
+     {id:"d20hobbies",name:"D20 Hobbies",subloc:"Southland Dr - board games, TCGs, hobby supplies",phone:"(859) 280-3865",email:"",website:"",emailNote:"No public email or website found - call"}
    ]},
   {id:"boi",name:"Boise, ID",tags:["major","college"],
-   cafes:[{id:"chitsandchats",name:"Chits & Chats",subloc:"Boise Bench (W Overland Rd) - board game pub opened Sept 2025",phone:"(208) 695-5327",email:"",website:"chitsandchats.com",emailNote:"Contact via website"}],
+   cafes:[{id:"chitsandchats",name:"Chits & Chats",subloc:"Boise Bench (W Overland Rd) - neighborhood board game pub opened Sept 2025",phone:"(208) 695-5327",email:"",website:"chitsandchats.com",emailNote:"Contact via website"}],
    stores:[
-     {id:"fantasticgames",name:"Fantastic Games",subloc:"Downtown Boise (N 8th St) - largest NW board game selection",phone:"(208) 345-0204",email:"",website:"fantasticgamesboise.com",emailNote:"Contact via phone"},
-     {id:"allaboutgames",name:"All About Games",subloc:"SW Boise (W Overland Rd) - 150+ demo games, weekly events",phone:"(208) 343-5653",email:"",website:"",emailNote:"Facebook: AllAboutGames365"}
+     {id:"abugames",name:"ABU Games",subloc:"SW Boise (W Colonial St) - world-class MTG retailer + huge board game floor + free play",phone:"(208) 376-6019",email:"abu@abugames.com",website:"abugames.com"},
+     {id:"fantasticgames",name:"Fantastic Games",subloc:"Downtown Boise (N 8th St) - largest NW board game + puzzle selection",phone:"(208) 345-0204",email:"",website:"fantasticgamesboise.com",emailNote:"Contact via phone or website"},
+     {id:"allaboutgames",name:"All About Games",subloc:"SW Boise (W Overland Rd) - 150+ demo games, wargame tables, weekly events",phone:"(208) 343-5653",email:"info@aagboise.com",website:"allaboutgames.com",emailNote:"Contact page — Overland"}
    ]},
   {id:"ric",name:"Richmond, VA",tags:["major","college"],
    cafes:[{id:"unpluggedrva",name:"Unplugged Games Cafe",subloc:"Midlothian (Sycamore Square) - 1000+ game library, full restaurant",phone:"(804) 893-3793",email:"info@unpluggedrva.com",website:"unpluggedrva.com"}],
-   stores:[{id:"oneeyedjacques",name:"One Eyed Jacques",subloc:"Carytown (W Cary St)",phone:"(804) 359-5163",email:"contact@oneeyedjacques.com",website:"oneeyedjacques.com"}]
-  },
+   stores:[
+     {id:"oneeyedjacques",name:"One Eyed Jacques",subloc:"Carytown (W Cary St) - Carytown landmark, board games + MTG + D&D",phone:"(804) 359-5163",email:"contact@oneeyedjacques.com",website:"oneeyedjacques.com"},
+     {id:"battlegroundsrva",name:"Battlegrounds",subloc:"Midlothian Turnpike - 100+ player free gaming space daily, tabletop hub",phone:"(804) 464-1873",email:"",website:"battlegroundsrva.com",emailNote:"Contact via website or Discord"},
+     {id:"moderntabletop",name:"Modern Tabletop Gaming",subloc:"Chesterfield (Route 1 South) - TCG events daily, D&D nights, large play space",phone:"(804) 768-1314",email:"ModernTableTopRVA@gmail.com",website:"moderntabletoprva.com"},
+     {id:"waterloogames",name:"Waterloo Games",subloc:"Mechanicsville Turnpike - wargames specialty (Warhammer, historical), welcoming community",phone:"(804) 466-1172",email:"",website:"waterloogames.com",emailNote:"Contact form on site"}
+   ]},
   {id:"tus",name:"Tucson & Flagstaff, AZ",tags:["major","college","convention"],
    cafes:[
-     {id:"shortresttavern",name:"Short Rest Tavern",subloc:"Tucson Mall (N Oracle Rd, Level 2) - medieval mead hall inside TG&G",phone:"(520) 460-6891",email:"tucsongamesandgadgets@gmail.com",website:"shortresttavern.com"},
-     {id:"goodgamecafe",name:"Good Game Cafe",subloc:"Flagstaff (N Humphreys St) - 800+ game library, opened Nov 2024",phone:"(928) 224-2927",email:"sales@goodgame.cafe",website:"goodgame.cafe"}
+     {id:"shortresttavern",name:"Short Rest Tavern",subloc:"Tucson Mall (N Oracle Rd, Level 2) - medieval mead hall inside TG&G, 600+ games",phone:"(520) 460-6891",email:"tucsongamesandgadgets@gmail.com",website:"shortresttavern.com",emailNote:"Email is TG&G parent store"},
+     {id:"goodgamecafe",name:"Good Game Cafe",subloc:"Flagstaff (N Humphreys St) - 800+ game library, espresso + BYOB, opened Nov 2024",phone:"(928) 224-2927",email:"sales@goodgame.cafe",website:"goodgame.cafe"}
    ],
    stores:[
      {id:"isleofgames",name:"Isle of Games",subloc:"East Tucson (E Broadway Blvd) - large game library + play space",phone:"(520) 886-4263",email:"store@isleofgamesaz.com",website:"isleofgamesaz.com"},
-     {id:"tucsongag",name:"Tucson Games & Gadgets",subloc:"Multiple Tucson locations - hosts Short Rest Tavern",phone:"(520) 603-4037",email:"tucsongamesandgadgets@gmail.com",website:"tucsongamesandgadgets.com"}
+     {id:"tucsongag",name:"Tucson Games & Gadgets",subloc:"Multiple Tucson locations (Broadway + Oracle Mall) - hosts Short Rest Tavern",phone:"(520) 603-4037",email:"tucsongamesandgadgets@gmail.com",website:"tucsongamesandgadgets.com"}
    ]}
 ];
 
