@@ -242,17 +242,6 @@ function gmailWebComposeUrl(email){var t=getComposeSubjectBody(),u="https://mail
 function openVenueEmail(email){if(!email)return;var url=isMobileMailClient()?mailtoComposeUrl(email):gmailWebComposeUrl(email);if(url.indexOf("mailto:")===0){var a=document.createElement("a");a.href=url;a.rel="noopener noreferrer";document.body.appendChild(a);a.click();document.body.removeChild(a);}else{window.open(url,"_blank","noopener,noreferrer");}}
 function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email);}
 
-function getTemplateClipboardText(){
-  var p=document.getElementById("tplPanel"),sub,bod;
-  if(p&&p.classList.contains("open")){
-    var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");
-    sub=se?se.value:"";bod=be?be.value:"";
-  }else{sub=TPL.subject||"";bod=TPL.body||"";}
-  sub=(sub||"").trim();bod=(bod||"").trim();
-  if(sub&&bod)return sub+"\n\n"+bod;
-  if(bod)return bod;
-  return sub;
-}
 function showVenueToast(msg){
   var el=document.getElementById("venue-toast");if(!el)return;
   el.textContent=msg;el.className="show";
@@ -270,7 +259,7 @@ function fallbackCopyText(text,cb){
 function openVenueWebsite(e,a){
   if(e)e.preventDefault();
   var href=a&&a.href;if(!href)return false;
-  var text=getTemplateClipboardText();
+  var text=getComposeSubjectBody().body;
   function afterCopy(){
     window.open(href,"_blank","noopener,noreferrer");
     if(OPEN_GOOGLE_CONTACT_SITE_SEARCH){
@@ -282,7 +271,7 @@ function openVenueWebsite(e,a){
         }
       }catch(err){}
     }
-    showVenueToast("Template copied. Venue opened"+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?" — also opened Google search for Contact Us on that site.":".")+"");
+    showVenueToast("Template body copied — paste into the contact form. Venue opened"+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?" — also opened Google search for Contact Us on that site.":".")+"");
   }
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(text).then(afterCopy).catch(function(){fallbackCopyText(text,afterCopy);});
