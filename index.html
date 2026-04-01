@@ -54,6 +54,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .btn-save{background:var(--accent);color:#fff;border:none;padding:0 18px;height:var(--tap);border-radius:10px;font-family:var(--font);font-size:.8rem;font-weight:700;cursor:pointer}
 .btn-clear{background:none;border:1px solid var(--border2);color:var(--muted);padding:0 14px;height:var(--tap);border-radius:10px;font-family:var(--font);font-size:.78rem;cursor:pointer}
 #tplFlash{font-size:.72rem;color:var(--green);display:none}
+#venue-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 72px);transform:translateX(-50%) translateY(120%);z-index:400;max-width:min(92vw,360px);padding:10px 14px;background:rgba(15,23,42,.92);color:#f8fafc;font-size:.78rem;line-height:1.35;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.25);opacity:0;transition:opacity .25s ease,transform .35s ease;pointer-events:none;text-align:center}
+#venue-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 #idx{padding:10px 16px 12px;background:var(--surface);border-bottom:1px solid var(--border)}
 #idx-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:8px}
 #idx-links{display:flex;flex-wrap:wrap;gap:6px}
@@ -167,6 +169,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 <div id="fab">
   <button id="fab-next" onclick="scrollToNext()">&#8250; Next venue</button>
 </div>
+<div id="venue-toast" role="status" aria-live="polite"></div>
 <script>
 var CITIES=[
   {id:"slc",name:"Salt Lake City, UT",tags:["major","college"],
@@ -223,12 +226,69 @@ var S={},CE={};
 var DEFAULT_SUBJECT="Introducing MeepleUp - Free App for Tabletop Gaming Groups";
 var DEFAULT_BODY="Hi,\n\nI'm an indie developer who just launched MeepleUp, a free app that helps tabletop gaming groups coordinate. It handles RSVPs, owned game title browsing and voting, and event messaging all in one place.\n\nGaming groups that you host will probably like it. Please visit https://meepleup.com to learn more, or just dive right in and download \"MeepleUp\" on the App Store or Google Play.\n\nThank you so much for any feedback you can provide. I've spent over a thousand hours building this app. It would mean so much to me to get it in the hands of people who might appreciate it.\n\nSincerely,\nRhys Smoker";
 var TPL={subject:DEFAULT_SUBJECT,body:DEFAULT_BODY};
+/** When opening a venue site, also open a Google tab: site:that-domain "Contact Us" (browsers block in-page find on other sites). Set false to only open the venue. */
+var OPEN_GOOGLE_CONTACT_SITE_SEARCH=true;
+var venueToastTimer=null;
 function SK(v,f){return v+"__"+f;}
 function gS(v,f){return S[SK(v,f)]||{checked:false,date:"",note:""};}
 function persist(){try{localStorage.setItem("bgv_state",JSON.stringify({s:S,ce:CE,tpl:TPL}));}catch(e){}}
 function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
 function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
-function gmailUrl(email){var u="https://mail.google.com/mail/?view=cm&to="+encodeURIComponent(email);if(TPL.subject)u+="&su="+encodeURIComponent(TPL.subject);if(TPL.body)u+="&body="+encodeURIComponent(TPL.body);return u;}
+/** Web: /mail/u/0/ + tf=cm (legacy view=cm loses fields). Mobile: mailto (Gmail web often opens inbox only). */
+function isMobileMailClient(){return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);}
+function getComposeSubjectBody(){var p=document.getElementById("tplPanel"),sub,bod;if(p&&p.classList.contains("open")){var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");sub=se?se.value:"";bod=be?be.value:"";}else{sub=TPL.subject||"";bod=TPL.body||"";}return{subject:(sub||"").trim(),body:(bod||"").trim()};}
+function mailtoComposeUrl(email){var t=getComposeSubjectBody(),q=[];if(t.subject)q.push("subject="+encodeURIComponent(t.subject));if(t.body)q.push("body="+encodeURIComponent(t.body));return "mailto:"+email+(q.length?"?"+q.join("&"):"");}
+function gmailWebComposeUrl(email){var t=getComposeSubjectBody(),u="https://mail.google.com/mail/u/0/?to="+encodeURIComponent(email);if(t.subject)u+="&su="+encodeURIComponent(t.subject);if(t.body)u+="&body="+encodeURIComponent(t.body);u+="&tf=cm";return u;}
+function openVenueEmail(email){if(!email)return;var url=isMobileMailClient()?mailtoComposeUrl(email):gmailWebComposeUrl(email);if(url.indexOf("mailto:")===0){var a=document.createElement("a");a.href=url;a.rel="noopener noreferrer";document.body.appendChild(a);a.click();document.body.removeChild(a);}else{window.open(url,"_blank","noopener,noreferrer");}}
+function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email);}
+
+function getTemplateClipboardText(){
+  var p=document.getElementById("tplPanel"),sub,bod;
+  if(p&&p.classList.contains("open")){
+    var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");
+    sub=se?se.value:"";bod=be?be.value:"";
+  }else{sub=TPL.subject||"";bod=TPL.body||"";}
+  sub=(sub||"").trim();bod=(bod||"").trim();
+  if(sub&&bod)return sub+"\n\n"+bod;
+  if(bod)return bod;
+  return sub;
+}
+function showVenueToast(msg){
+  var el=document.getElementById("venue-toast");if(!el)return;
+  el.textContent=msg;el.className="show";
+  if(venueToastTimer)clearTimeout(venueToastTimer);
+  venueToastTimer=setTimeout(function(){el.className="";el.textContent="";venueToastTimer=null;},3200);
+}
+function fallbackCopyText(text,cb){
+  var ta=document.createElement("textarea");
+  ta.value=text;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.left="-9999px";
+  document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,text.length);
+  try{document.execCommand("copy");}catch(e){}
+  document.body.removeChild(ta);
+  if(cb)cb();
+}
+function openVenueWebsite(e,a){
+  if(e)e.preventDefault();
+  var href=a&&a.href;if(!href)return false;
+  var text=getTemplateClipboardText();
+  function afterCopy(){
+    window.open(href,"_blank","noopener,noreferrer");
+    if(OPEN_GOOGLE_CONTACT_SITE_SEARCH){
+      try{
+        var u=new URL(href),host=u.hostname;
+        if(host){
+          var q="site:"+host+" Contact Us";
+          window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank","noopener,noreferrer");
+        }
+      }catch(err){}
+    }
+    showVenueToast("Template copied. Venue opened"+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?" — also opened Google search for Contact Us on that site.":".")+"");
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(afterCopy).catch(function(){fallbackCopyText(text,afterCopy);});
+  }else{fallbackCopyText(text,afterCopy);}
+  return false;
+}
 
 function loadState(){
   try{
@@ -323,7 +383,7 @@ function buildEmailMain(vid){
   var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"",s=gS(vid,"email");
   var dtStyle=s.checked&&s.date?"":"display:none";
   var valHtml=email
-    ? "<span class='crow-val crow-val-link'><a class='crow-link crow-link-email' href='#' onclick=\"event.preventDefault();window.open(gmailUrl('"+email+"'),'_blank')\">&#9993; "+email+"</a></span>"
+    ? "<span class='crow-val crow-val-link'><a class='crow-link crow-link-email' href='#' onclick=\"event.preventDefault();openVenueEmailForVenue('"+vid+"')\">&#9993; "+email+"</a></span>"
     : "<span class='crow-val na'>"+(v&&v.emailNote?v.emailNote:"No email found")+"</span>";
   return "<input type='checkbox' class='crow-chk' id='chk_"+vid+"_email'"+(s.checked?" checked":"")+" onchange=\"toggle('"+vid+"','email')\">"
     +"<span class='crow-lbl'>Email</span>"+valHtml
@@ -335,7 +395,7 @@ function buildRow(vid,field,label,value,isLink,linkUrl,fallback){
   var s=gS(vid,field),isSkip=(field==="skip"),hasVal=!!(value&&value.trim());
   var valHtml="";
   if(!hasVal&&fallback){valHtml="<span class='crow-val na'>"+fallback+"</span>";}
-  else if(isLink&&hasVal){var href=linkUrl.indexOf("http")===0?linkUrl:"https://"+linkUrl;valHtml="<span class='crow-val crow-val-link'><a class='crow-link crow-link-website' href='"+href+"' target='_blank' rel='noopener'>&#128279; "+value+"</a></span>";}
+  else if(isLink&&hasVal){var href=linkUrl.indexOf("http")===0?linkUrl:"https://"+linkUrl;valHtml="<span class='crow-val crow-val-link'><a class='crow-link crow-link-website' href='"+href+"' rel='noopener noreferrer' onclick=\"return openVenueWebsite(event,this)\">&#128279; "+value+"</a></span>";}
   else if(hasVal){valHtml="<span class='crow-val'>"+value+"</span>";}
   else{valHtml="<span class='crow-val'>-</span>";}
   var dtStyle=s.checked&&s.date?"":"display:none";
