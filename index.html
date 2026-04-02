@@ -20,6 +20,7 @@
   --cafe-bg:#e3efff;--cafe-fg:#1e3a8a;--store-bg:#dcfce7;--store-fg:#166534;
   --link-email-bg:#dbeafe;--link-email-fg:#0c4a6e;--link-email-border:#2563eb;
   --link-web-bg:#d1fae5;--link-web-fg:#065f46;--link-web-border:#059669;
+  --link-fb-bg:#e7f3ff;--link-fb-fg:#084298;--link-fb-border:#1877f2;
   --r:14px;--tap:48px;
   --font:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   --mono:"SF Mono","Courier New",monospace;
@@ -100,6 +101,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .crow-val-link .crow-link{display:block;width:100%;font-size:1.15rem;font-weight:800;line-height:1.25;padding:14px 16px;border-radius:12px;border:3px solid;text-decoration:none;word-break:break-all;text-align:center;min-height:52px;box-sizing:border-box;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,.12)}
 .crow-link-email{background:var(--link-email-bg);color:var(--link-email-fg);border-color:var(--link-email-border)}
 .crow-link-website{background:var(--link-web-bg);color:var(--link-web-fg);border-color:var(--link-web-border)}
+.crow-link-facebook{background:var(--link-fb-bg);color:var(--link-fb-fg);border-color:var(--link-fb-border)}
 .crow-val.na{color:var(--muted);font-style:italic;font-size:.73rem}
 .crow-date{font-size:.62rem;color:var(--accent);white-space:nowrap;flex-shrink:0;font-family:var(--mono)}
 .crow-date.skip-dt{color:var(--red)}
@@ -176,83 +178,98 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 var CITIES=[
   {id:"slc",name:"Salt Lake City, UT",tags:["major","college"],
    cafes:[
-     {id:"gamehaven",name:"Game Haven Sandy",subloc:"Sandy (S 700 E) - Battle Grounds Coffee inside, private rooms, weekly events",phone:"(801) 849-0945",email:"",website:"yourgamehaven.com",emailNote:"Contact form on site - 5 Utah locations"},
-     {id:"legendarium",name:"The Legendarium",subloc:"Downtown SLC (E 900 S) - sci-fi/fantasy bookstore & cafe with games",phone:"(385) 222-7788",email:"",website:"",emailNote:"Contact via Facebook or call"}
+     {id:"gamehaven",name:"Game Haven Sandy",subloc:"Sandy (S 700 E) - Battle Grounds Coffee inside, private rooms, weekly events",phone:"(801) 849-0945",email:"",website:"yourgamehaven.com",emailNote:"Contact form on site - 5 Utah locations",facebook:"facebook.com/GameHavenSandy"},
+     {id:"legendarium",name:"The Legendarium",subloc:"Downtown SLC (E 900 S) - sci-fi/fantasy bookstore & cafe with games",phone:"(385) 222-7788",email:"",website:"",emailNote:"Contact via Facebook or call",facebook:"facebook.com/p/The-Legendarium-100075618517447"}
    ],
    stores:[
-     {id:"gamenightgames",name:"Game Night Games",subloc:"Sugar House (S 900 E) - board game specialist since 2004",phone:"(801) 467-2400",email:"info@gamenightgames.com",website:"gamenightgames.com",emailNote:"Also on /service/ for order support"},
-     {id:"oasisgames",name:"Oasis Games",subloc:"Downtown (275 E 400 S) - MTG singles + board game library, LGBTQ+ events",phone:"(801) 738-4413",email:"alex@oasisgamesslc.com",website:"oasisgamesslc.com",emailNote:"Listed on store systems; contact page"},
-     {id:"hasturgames",name:"Hastur Games",subloc:"Midvale (S State St) - serving SLC since 1995",phone:"(801) 352-2605",email:"support@hasturgames.com",website:"hasturgames.com"},
-     {id:"saltcitygames",name:"Salt City Games",subloc:"West SLC (W 4700 S) - board games, TCGs, miniatures, RC cars",phone:"(801) 964-4031",email:"",website:"saltcitygames.shop",emailNote:"Contact form on site"},
-     {id:"paragoncitygames",name:"Paragon City Games",subloc:"Sandy (S 1300 E) - largest play space, tournaments, private streaming room",phone:"(801) 727-2466",email:"pcgfrontcounter@gmail.com",website:"paragoncitygames.com"},
-     {id:"riftgategames",name:"Riftgate Games",subloc:"Murray (S 900 E) - RPG dice specialty + board games + TCGs",phone:"",email:"",website:"riftgate.com",emailNote:"Contact form on site"},
-     {id:"mindgames",name:"Mind Games",subloc:"West Valley City (W 3500 S) - Warhammer specialist + board games, 5 gaming tables",phone:"(801) 968-6365",email:"",website:"mind-games.com",emailNote:"No public email - call"}
+     {id:"gamenightgames",name:"Game Night Games",subloc:"Sugar House (S 900 E) - board game specialist since 2004",phone:"(801) 467-2400",email:"info@gamenightgames.com",website:"gamenightgames.com",emailNote:"Also on /service/ for order support",facebook:"facebook.com/gamenightgames"},
+     {id:"oasisgames",name:"Oasis Games",subloc:"Downtown (275 E 400 S) - MTG singles + board game library, LGBTQ+ events",phone:"(801) 738-4413",email:"alex@oasisgamesslc.com",website:"oasisgamesslc.com",emailNote:"Listed on store systems; contact page",facebook:"facebook.com/oasisgames"},
+     {id:"hasturgames",name:"Hastur Games",subloc:"Midvale (S State St) - serving SLC since 1995",phone:"(801) 352-2605",email:"support@hasturgames.com",website:"hasturgames.com",facebook:"facebook.com/HasturGamesUT"},
+     {id:"saltcitygames",name:"Salt City Games",subloc:"West SLC (W 4700 S) - board games, TCGs, miniatures, RC cars",phone:"(801) 964-4031",email:"",website:"saltcitygames.shop",emailNote:"Contact form on site",facebook:"facebook.com/highgearhobby"},
+     {id:"paragoncitygames",name:"Paragon City Games",subloc:"Sandy (S 1300 E) - largest play space, tournaments, private streaming room",phone:"(801) 727-2466",email:"pcgfrontcounter@gmail.com",website:"paragoncitygames.com",facebook:"facebook.com/ParagonCityGames"},
+     {id:"riftgategames",name:"Riftgate Games",subloc:"Murray (S 900 E) - RPG dice specialty + board games + TCGs",phone:"",email:"",website:"riftgate.com",emailNote:"Contact form on site",facebook:"facebook.com/riftgategames"},
+     {id:"mindgames",name:"Mind Games",subloc:"West Valley City (W 3500 S) - Warhammer specialist + board games, 5 gaming tables",phone:"(801) 968-6365",email:"",website:"mind-games.com",emailNote:"No public email - call",facebook:"",facebookNote:"No active page found"}
    ]},
   {id:"abq",name:"Albuquerque, NM",tags:["major","college"],
    cafes:[
-     {id:"empirebgl",name:"Empire Board Game Library",subloc:"Nob Hill (Central Ave NE) - 1000+ game library + cafe",phone:"(505) 232-4263",email:"empirebgl@gmail.com",website:"empireboardgamelibrary.com"},
-     {id:"sliceanddice-w",name:"Slice and Dice Pizzeria (West)",subloc:"West Albuquerque (McMahon Blvd NW) - board game pizzeria with full library",phone:"(505) 361-2058",email:"",website:"sliceanddicepizzeria.com",emailNote:"Contact form on site"},
-     {id:"sliceanddice-e",name:"Slice and Dice Pizzeria (East)",subloc:"East Albuquerque (Wyoming Blvd NE) - 2nd location, same concept",phone:"(505) 361-2058",email:"",website:"sliceanddicepizzeria.com",emailNote:"Same contact as West location"}
+     {id:"empirebgl",name:"Empire Board Game Library",subloc:"Nob Hill (Central Ave NE) - 1000+ game library + cafe",phone:"(505) 232-4263",email:"empirebgl@gmail.com",website:"empireboardgamelibrary.com",facebook:"facebook.com/empirebgl"},
+     {id:"sliceanddice-w",name:"Slice and Dice Pizzeria (West)",subloc:"West Albuquerque (McMahon Blvd NW) - board game pizzeria with full library",phone:"(505) 361-2058",email:"",website:"sliceanddicepizzeria.com",emailNote:"Contact form on site",facebook:"facebook.com/SliceandDicePizzeria"},
+     {id:"sliceanddice-e",name:"Slice and Dice Pizzeria (East)",subloc:"East Albuquerque (Wyoming Blvd NE) - 2nd location, same concept",phone:"(505) 361-2058",email:"",website:"sliceanddicepizzeria.com",emailNote:"Same contact as West location",facebook:"facebook.com/SliceandDicePizzeria"}
    ],
    stores:[
-     {id:"ettingames",name:"Ettin Games and Hobbies",subloc:"Montgomery Blvd NE",phone:"(505) 503-6993",email:"EttinGamesABQ@gmail.com",website:"EttinGamesABQ.com"},
-     {id:"oldtownhobby",name:"Old Town Hobbies and Games",subloc:"Old Town (Rio Grande Blvd NW)",phone:"(505) 340-5651",email:"oldtownhobbiesandgames@gmail.com",website:"oldtownhobbiesandgames.com",emailNote:"Visit Albuquerque / local listings"},
-     {id:"dukecitygames-l",name:"Duke City Games (Lomas)",subloc:"East Albuquerque (Lomas Blvd NE) - top NM store for MTG, Pokemon, board games",phone:"(505) 340-9668",email:"",website:"dukecity.games",emailNote:"Contact form on site"},
-     {id:"dukecitygames-h",name:"Duke City Games (High Street)",subloc:"Downtown ABQ (Central Ave SE) - 2nd location in Warehouse District",phone:"(505) 527-5500",email:"",website:"dukecity.games",emailNote:"Contact form on site - same as Lomas location"}
+     {id:"ettingames",name:"Ettin Games and Hobbies",subloc:"Montgomery Blvd NE",phone:"(505) 503-6993",email:"EttinGamesABQ@gmail.com",website:"EttinGamesABQ.com",facebook:"facebook.com/EttinGamesABQ"},
+     {id:"oldtownhobby",name:"Old Town Hobbies and Games",subloc:"Old Town (Rio Grande Blvd NW)",phone:"(505) 340-5651",email:"oldtownhobbiesandgames@gmail.com",website:"oldtownhobbiesandgames.com",emailNote:"Visit Albuquerque / local listings",facebook:"facebook.com/oldtownhobbiesandgames"},
+     {id:"dukecitygames-l",name:"Duke City Games (Lomas)",subloc:"East Albuquerque (Lomas Blvd NE) - top NM store for MTG, Pokemon, board games",phone:"(505) 340-9668",email:"",website:"dukecity.games",emailNote:"Contact form on site",facebook:"facebook.com/DukeCityGames"},
+     {id:"dukecitygames-h",name:"Duke City Games (High Street)",subloc:"Downtown ABQ (Central Ave SE) - 2nd location in Warehouse District",phone:"(505) 527-5500",email:"",website:"dukecity.games",emailNote:"Contact form on site - same as Lomas location",facebook:"facebook.com/dcghighst"}
    ]},
   {id:"oma",name:"Omaha, NE",tags:["major","college"],
-   cafes:[{id:"spielbound",name:"Spielbound Board Game Cafe",subloc:"Midtown (Harney St) - 3700+ game library, nonprofit",phone:"(402) 763-8444",email:"kaleb@spielbound.org",website:"spielbound.org",emailNote:"Director — general inquiries (spielbound.org/contact-us)"}],
+   cafes:[{id:"spielbound",name:"Spielbound Board Game Cafe",subloc:"Midtown (Harney St) - 3700+ game library, nonprofit",phone:"(402) 763-8444",email:"kaleb@spielbound.org",website:"spielbound.org",emailNote:"Director — general inquiries (spielbound.org/contact-us)",facebook:"facebook.com/Spielbound"}],
    stores:[
-     {id:"geekroom",name:"The Geek Room Hobbies & Games",subloc:"West Omaha (S 180th St)",phone:"(402) 933-6080",email:"jason@geekroomgames.com",website:"geekroomgames.com"},
-     {id:"gameshoppe-bel",name:"The Game Shoppe",subloc:"Bellevue (Harlan Dr) - 20+ years, game nights twice/week",phone:"(402) 292-4263",email:"gamegeekbellevue@thegameshoppe.com",website:"thegameshoppe.com"},
-     {id:"gameshoppe-oma",name:"The Game Shoppe Omaha",subloc:"West Omaha (N 144th St)",phone:"(402) 991-8699",email:"gamegeekomaha@thegameshoppe.com",website:"thegameshoppe.com"},
-     {id:"dragonslairblondo",name:"Dragon's Lair Comics & Games (Blondo)",subloc:"Omaha (N 90th St) - serving Omaha since 1975, weekly game nights",phone:"(402) 399-9141",email:"lair@dragons-lair.com",website:"dragons-lair.com"},
-     {id:"dragonslairmill",name:"Dragon's Lair Comics & Games (Millard)",subloc:"Millard (W Center Rd) - 2nd Omaha location",phone:"(402) 895-5653",email:"lair@dragons-lair.com",website:"dragons-lair.com"}
+     {id:"geekroom",name:"The Geek Room Hobbies & Games",subloc:"West Omaha (S 180th St)",phone:"(402) 933-6080",email:"jason@geekroomgames.com",website:"geekroomgames.com",facebook:"facebook.com/geekroomgames"},
+     {id:"gameshoppe-bel",name:"The Game Shoppe",subloc:"Bellevue (Harlan Dr) - 20+ years, game nights twice/week",phone:"(402) 292-4263",email:"gamegeekbellevue@thegameshoppe.com",website:"thegameshoppe.com",facebook:"facebook.com/TheGameShoppe"},
+     {id:"gameshoppe-oma",name:"The Game Shoppe Omaha",subloc:"West Omaha (N 144th St)",phone:"(402) 991-8699",email:"gamegeekomaha@thegameshoppe.com",website:"thegameshoppe.com",facebook:"facebook.com/thegameshoppeomaha"},
+     {id:"dragonslairblondo",name:"Dragon's Lair Comics & Games (Blondo)",subloc:"Omaha (N 90th St) - serving Omaha since 1975, weekly game nights",phone:"(402) 399-9141",email:"lair@dragons-lair.com",website:"dragons-lair.com",facebook:"facebook.com/thedragonslairs"},
+     {id:"dragonslairmill",name:"Dragon's Lair Comics & Games (Millard)",subloc:"Millard (W Center Rd) - 2nd Omaha location",phone:"(402) 895-5653",email:"lair@dragons-lair.com",website:"dragons-lair.com",facebook:"facebook.com/thedragonslairs"}
    ]},
   {id:"lex",name:"Lexington, KY",tags:["major","college","convention"],
    cafes:[
-     {id:"chaoticgood",name:"Chaotic Good: Coffee, Comics & Games",subloc:"S Broadway (near U of Kentucky) - woman/LGBTQ/veteran owned, D&D one-shots weekly",phone:"(859) 303-8668",email:"chaoticgoodcg@gmail.com",website:"chaoticgoodlex.com",emailNote:"On About page"},
-     {id:"villainous",name:"Villainous",subloc:"Downtown (Jefferson St) - tabletop gaming pub, from-scratch pizza, reservable tables",phone:"",email:"drapplejuice@villainous.club",website:"villainous.club",emailNote:"VisitLex listing mailto"}
+     {id:"chaoticgood",name:"Chaotic Good: Coffee, Comics & Games",subloc:"S Broadway (near U of Kentucky) - woman/LGBTQ/veteran owned, D&D one-shots weekly",phone:"(859) 303-8668",email:"chaoticgoodcg@gmail.com",website:"chaoticgoodlex.com",emailNote:"On About page",facebook:"facebook.com/p/Chaotic-Good-Coffee-Comics-and-Games-100085169479882"},
+     {id:"villainous",name:"Villainous",subloc:"Downtown (Jefferson St) - tabletop gaming pub, from-scratch pizza, reservable tables",phone:"",email:"drapplejuice@villainous.club",website:"villainous.club",emailNote:"VisitLex listing mailto",facebook:"facebook.com/villainouslexington"}
    ],
    stores:[
-     {id:"rustyscabbard",name:"The Rusty Scabbard",subloc:"Lane Allen Rd - Lexington staple since 1982, 50+ game library, Wed game nights",phone:"(859) 278-6634",email:"",website:"",emailNote:"Some directories list old ISP addresses (unverified); Facebook rustyscabbard82"},
-     {id:"legendarygameslex",name:"Legendary Games",subloc:"N Ashland Ave (Warehouse Block) - largest play space in area",phone:"(859) 523-9430",email:"legendarygameslexington@yahoo.com",website:"legendarygameslexington.square.site",emailNote:"VisitLex listing"},
-     {id:"d20hobbies",name:"D20 Hobbies",subloc:"Southland Dr - board games, TCGs, hobby supplies",phone:"(859) 280-3865",email:"",website:"",emailNote:"No public email or website found - call"}
+     {id:"rustyscabbard",name:"The Rusty Scabbard",subloc:"Lane Allen Rd - Lexington staple since 1982, 50+ game library, Wed game nights",phone:"(859) 278-6634",email:"",website:"",emailNote:"Some directories list old ISP addresses (unverified); Facebook rustyscabbard82",facebook:"facebook.com/rustyscabbard82"},
+     {id:"legendarygameslex",name:"Legendary Games",subloc:"N Ashland Ave (Warehouse Block) - largest play space in area",phone:"(859) 523-9430",email:"legendarygameslexington@yahoo.com",website:"legendarygameslexington.square.site",emailNote:"VisitLex listing",facebook:"facebook.com/LegendaryGamesLexington"},
+     {id:"d20hobbies",name:"D20 Hobbies",subloc:"Southland Dr - board games, TCGs, hobby supplies",phone:"(859) 280-3865",email:"",website:"",emailNote:"No public email or website found - call",facebook:"facebook.com/d20hobbies"}
    ]},
   {id:"boi",name:"Boise, ID",tags:["major","college"],
-   cafes:[{id:"chitsandchats",name:"Chits & Chats",subloc:"Boise Bench (W Overland Rd) - neighborhood board game pub opened Sept 2025",phone:"(208) 695-5327",email:"",website:"chitsandchats.com",emailNote:"Contact via website"}],
+   cafes:[{id:"chitsandchats",name:"Chits & Chats",subloc:"Boise Bench (W Overland Rd) - neighborhood board game pub opened Sept 2025",phone:"(208) 695-5327",email:"",website:"chitsandchats.com",emailNote:"Contact via website",facebook:"facebook.com/p/Chits-Chats-61576732505235"}],
    stores:[
-     {id:"abugames",name:"ABU Games",subloc:"SW Boise (W Colonial St) - world-class MTG retailer + huge board game floor + free play",phone:"(208) 376-6019",email:"abu@abugames.com",website:"abugames.com"},
-     {id:"fantasticgames",name:"Fantastic Games",subloc:"Downtown Boise (N 8th St) - largest NW board game + puzzle selection",phone:"(208) 345-0204",email:"",website:"fantasticgamesboise.com",emailNote:"Contact via phone or website"},
-     {id:"allaboutgames",name:"All About Games",subloc:"SW Boise (W Overland Rd) - 150+ demo games, wargame tables, weekly events",phone:"(208) 343-5653",email:"info@aagboise.com",website:"allaboutgames.com",emailNote:"Contact page — Overland"}
+     {id:"abugames",name:"ABU Games",subloc:"SW Boise (W Colonial St) - world-class MTG retailer + huge board game floor + free play",phone:"(208) 376-6019",email:"abu@abugames.com",website:"abugames.com",facebook:"facebook.com/abugames"},
+     {id:"fantasticgames",name:"Fantastic Games",subloc:"Downtown Boise (N 8th St) - largest NW board game + puzzle selection",phone:"(208) 345-0204",email:"",website:"fantasticgamesboise.com",emailNote:"Contact via phone or website",facebook:"facebook.com/thevoiceofgaming"},
+     {id:"allaboutgames",name:"All About Games",subloc:"SW Boise (W Overland Rd) - 150+ demo games, wargame tables, weekly events",phone:"(208) 343-5653",email:"info@aagboise.com",website:"allaboutgames.com",emailNote:"Contact page — Overland",facebook:"facebook.com/AllAboutGames365"}
    ]},
   {id:"den",name:"Denver, CO",tags:["major","college"],
    cafes:[
-     {id:"goldengameguild",name:"Golden Game Guild",subloc:"Golden (Washington Ave) - board game cafe + huge play library, MTG drafts, D&D, after-school programs",phone:"(720) 951-7226",email:"contact@goldengameguild.com",website:"goldengameguild.com"},
-     {id:"mutinyinfocafe",name:"Mutiny Information Cafe",subloc:"South Broadway, Denver - comic cafe with board games, pinball + cereal bar, no phone",phone:"",email:"info@mutinycomics.com",website:"mutinyinfocafe.com"},
-     {id:"thanestable",name:"Thane's Table",subloc:"Arvada (W 88th Ave) - medieval gaming tavern, full bar + kitchen, private D&D rooms",phone:"(720) 381-4200",email:"info@thanestable.com",website:"thanestable.com"}
+     {id:"goldengameguild",name:"Golden Game Guild",subloc:"Golden (Washington Ave) - board game cafe + huge play library, MTG drafts, D&D, after-school programs",phone:"(720) 951-7226",email:"contact@goldengameguild.com",website:"goldengameguild.com",facebook:"",facebookNote:"No Facebook URL in list"},
+     {id:"mutinyinfocafe",name:"Mutiny Information Cafe",subloc:"South Broadway, Denver - comic cafe with board games, pinball + cereal bar, no phone",phone:"",email:"info@mutinycomics.com",website:"mutinyinfocafe.com",facebook:"",facebookNote:"No Facebook URL in list"},
+     {id:"thanestable",name:"Thane's Table",subloc:"Arvada (W 88th Ave) - medieval gaming tavern, full bar + kitchen, private D&D rooms",phone:"(720) 381-4200",email:"info@thanestable.com",website:"thanestable.com",facebook:"",facebookNote:"No Facebook URL in list"}
    ],
    stores:[
-     {id:"totalescapegames",name:"Total Escape Games",subloc:"Broomfield (W 120th Ave) - North Denver's premier LGS since 2009, daily events, open 7 days",phone:"(303) 482-1829",email:"store@totalescapegames.com",website:"totalescapegames.com"},
-     {id:"itsyourmovedenver",name:"It's Your Move (Lakewood)",subloc:"Colorado Mills Mall, Lakewood - Colorado's oldest game store chain since 1976",phone:"(303) 277-1290",email:"products@itsyourmovegames.com",website:"itsyourmovegames.com"},
-     {id:"itsyourmovelone",name:"It's Your Move (Lone Tree)",subloc:"Park Meadows Mall, Lone Tree - 2nd Denver-area location",phone:"(303) 662-1070",email:"products@itsyourmovegames.com",website:"itsyourmovegames.com"}
+     {id:"totalescapegames",name:"Total Escape Games",subloc:"Broomfield (W 120th Ave) - North Denver's premier LGS since 2009, daily events, open 7 days",phone:"(303) 482-1829",email:"store@totalescapegames.com",website:"totalescapegames.com",facebook:"",facebookNote:"No Facebook URL in list"},
+     {id:"itsyourmovedenver",name:"It's Your Move (Lakewood)",subloc:"Colorado Mills Mall, Lakewood - Colorado's oldest game store chain since 1976",phone:"(303) 277-1290",email:"products@itsyourmovegames.com",website:"itsyourmovegames.com",facebook:"",facebookNote:"No Facebook URL in list"},
+     {id:"itsyourmovelone",name:"It's Your Move (Lone Tree)",subloc:"Park Meadows Mall, Lone Tree - 2nd Denver-area location",phone:"(303) 662-1070",email:"products@itsyourmovegames.com",website:"itsyourmovegames.com",facebook:"",facebookNote:"No Facebook URL in list"}
+   ]},
+  {id:"pdx",name:"Portland, OR",tags:["major","college"],
+   cafes:[
+     {id:"paladinsleague",name:"The Paladins League",subloc:"NE Fremont St - 600+ game library, full kitchen + soda fountain, $5 game pass",phone:"(971) 888-4928",email:"",website:"thepaladinsleague.com",emailNote:"Contact form on site only",facebook:"facebook.com/thepaladinsleague"},
+     {id:"battlegroundspdx",name:"Battle Grounds Gaming Cafe",subloc:"NE Sandy Blvd - board game cafe + premium coffee, open Mon-Sat",phone:"(971) 383-3775",email:"quest@battlegroundsgamingcafe.com",website:"battlegroundsgamingcafe.com",facebook:"facebook.com/p/Battle-Grounds-Gaming-Cafe-100094667113186"},
+     {id:"moxportland",name:"Mox Boarding House",subloc:"W Burnside St (Goose Hollow) - Parisian-inspired restaurant + 400+ game library, daily events, private rooms",phone:"(503) 506-0669",email:"support@moxboardinghouse.com",website:"moxboardinghouse.com/pages/portland",facebook:"facebook.com/MoxBoardingHousePortland"},
+     {id:"senetgamebar",name:"Senet Game Bar",subloc:"Tigard (SW Main St) - board game bar + full restaurant, 175+ games, karaoke rooms, private events",phone:"(503) 214-8201",email:"contact@senetgamebar.com",website:"senetgamebar.com",facebook:"facebook.com/senetgamebar"},
+     {id:"redcastlegames",name:"Red Castle Games",subloc:"Foster-Powell (SE Foster Rd) - 16-year institution, Ruby Brews Cafe inside, DM rentals, private rooms",phone:"(503) 774-4263",email:"booking@redcastlegames.com",website:"redcastlegames.com",facebook:"facebook.com/redcastlegames"}
+   ],
+   stores:[
+     {id:"guardiangames",name:"Guardian Games",subloc:"SE Portland (SE Division St) - 10,000 sq ft, 450+ demo games, craft beer bar, huge used selection",phone:"(503) 238-4000",email:"GGPInfo@GuardianGames.com",website:"ggportland.com",facebook:"facebook.com/ggportland"},
+     {id:"rainydaygames",name:"Rainy Day Games",subloc:"Aloha (SW Tualatin Valley Hwy) - Portland area institution since 1998, disc golf + board games",phone:"(503) 642-4100",email:"info@rainy-day-games.com",website:"rainy-day-games.com",facebook:"facebook.com/rainydaygames"},
+     {id:"puddletowngames",name:"Puddletown Games &amp; Puzzles",subloc:"Beaumont (NE Fremont St) - Black & veteran owned, cozy neighborhood shop, used game shelf",phone:"(503) 764-9711",email:"info@puddletowngames.com",website:"puddletowngames.com",facebook:"facebook.com/puddletowngames"},
+     {id:"cloudcapgames",name:"Cloud Cap Games",subloc:"Sellwood (SE Lexington St) - cozy neighborhood shop, game nights Wed, D&D camps, game rentals",phone:"(503) 505-9344",email:"",website:"cloudcapgames.com",emailNote:"Contact form on site only",facebook:"facebook.com/cloudcapgames"},
+     {id:"portlandgamestore",name:"The Portland Game Store",subloc:"N Killingsworth St - North Portland's largest MTG + board game selection, beers on tap, free open play Mon-Fri",phone:"(503) 289-6373",email:"",website:"theportlandgamestore.com",emailNote:"Contact form on site only",facebook:"facebook.com/portlandgamestore"}
    ]},
   {id:"ric",name:"Richmond, VA",tags:["major","college"],
-   cafes:[{id:"unpluggedrva",name:"Unplugged Games Cafe",subloc:"Midlothian (Sycamore Square) - 1000+ game library, full restaurant",phone:"(804) 893-3793",email:"info@unpluggedrva.com",website:"unpluggedrva.com"}],
+   cafes:[{id:"unpluggedrva",name:"Unplugged Games Cafe",subloc:"Midlothian (Sycamore Square) - 1000+ game library, full restaurant",phone:"(804) 893-3793",email:"info@unpluggedrva.com",website:"unpluggedrva.com",facebook:"facebook.com/unpluggedrva"}],
    stores:[
-     {id:"oneeyedjacques",name:"One Eyed Jacques",subloc:"Carytown (W Cary St) - Carytown landmark, board games + MTG + D&D",phone:"(804) 359-5163",email:"contact@oneeyedjacques.com",website:"oneeyedjacques.com"},
-     {id:"battlegroundsrva",name:"Battlegrounds",subloc:"Midlothian Turnpike - 100+ player free gaming space daily, tabletop hub",phone:"(804) 464-1873",email:"",website:"battlegroundsrva.com",emailNote:"Contact via website or Discord"},
-     {id:"moderntabletop",name:"Modern Tabletop Gaming",subloc:"Chesterfield (Route 1 South) - TCG events daily, D&D nights, large play space",phone:"(804) 768-1314",email:"ModernTableTopRVA@gmail.com",website:"moderntabletoprva.com"},
-     {id:"waterloogames",name:"Waterloo Games",subloc:"Mechanicsville Turnpike - wargames specialty (Warhammer, historical), welcoming community",phone:"(804) 466-1172",email:"",website:"waterloogames.com",emailNote:"Contact form on site"}
+     {id:"oneeyedjacques",name:"One Eyed Jacques",subloc:"Carytown (W Cary St) - Carytown landmark, board games + MTG + D&D",phone:"(804) 359-5163",email:"contact@oneeyedjacques.com",website:"oneeyedjacques.com",facebook:"facebook.com/oneeyedjacques"},
+     {id:"battlegroundsrva",name:"Battlegrounds",subloc:"Midlothian Turnpike - 100+ player free gaming space daily, tabletop hub",phone:"(804) 464-1873",email:"",website:"battlegroundsrva.com",emailNote:"Contact via website or Discord",facebook:"facebook.com/BattlegroundsGameStore"},
+     {id:"moderntabletop",name:"Modern Tabletop Gaming",subloc:"Chesterfield (Route 1 South) - TCG events daily, D&D nights, large play space",phone:"(804) 768-1314",email:"ModernTableTopRVA@gmail.com",website:"moderntabletoprva.com",facebook:"facebook.com/moderntabletoprva"},
+     {id:"waterloogames",name:"Waterloo Games",subloc:"Mechanicsville Turnpike - wargames specialty (Warhammer, historical), welcoming community",phone:"(804) 466-1172",email:"",website:"waterloogames.com",emailNote:"Contact form on site",facebook:"facebook.com/p/Waterloo-Games-100048792082280"}
    ]},
   {id:"tus",name:"Tucson & Flagstaff, AZ",tags:["major","college","convention"],
    cafes:[
-     {id:"shortresttavern",name:"Short Rest Tavern",subloc:"Tucson Mall (N Oracle Rd, Level 2) - medieval mead hall inside TG&G, 600+ games",phone:"(520) 460-6891",email:"tucsongamesandgadgets@gmail.com",website:"shortresttavern.com",emailNote:"Email is TG&G parent store"},
-     {id:"goodgamecafe",name:"Good Game Cafe",subloc:"Flagstaff (N Humphreys St) - 800+ game library, espresso + BYOB, opened Nov 2024",phone:"(928) 224-2927",email:"sales@goodgame.cafe",website:"goodgame.cafe"}
+     {id:"shortresttavern",name:"Short Rest Tavern",subloc:"Tucson Mall (N Oracle Rd, Level 2) - medieval mead hall inside TG&G, 600+ games",phone:"(520) 460-6891",email:"tucsongamesandgadgets@gmail.com",website:"shortresttavern.com",emailNote:"Email is TG&G parent store",facebook:"facebook.com/p/Short-Rest-Tavern-100090367633949"},
+     {id:"goodgamecafe",name:"Good Game Cafe",subloc:"Flagstaff (N Humphreys St) - 800+ game library, espresso + BYOB, opened Nov 2024",phone:"(928) 224-2927",email:"sales@goodgame.cafe",website:"goodgame.cafe",facebook:"facebook.com/gg.flagstaff"}
    ],
    stores:[
-     {id:"isleofgames",name:"Isle of Games",subloc:"East Tucson (E Broadway Blvd) - large game library + play space",phone:"(520) 886-4263",email:"store@isleofgamesaz.com",website:"isleofgamesaz.com"},
-     {id:"tucsongag",name:"Tucson Games & Gadgets",subloc:"Multiple Tucson locations (Broadway + Oracle Mall) - hosts Short Rest Tavern",phone:"(520) 603-4037",email:"tucsongamesandgadgets@gmail.com",website:"tucsongamesandgadgets.com"}
+     {id:"isleofgames",name:"Isle of Games",subloc:"East Tucson (E Broadway Blvd) - large game library + play space",phone:"(520) 886-4263",email:"store@isleofgamesaz.com",website:"isleofgamesaz.com",facebook:"facebook.com/isleofgames"},
+     {id:"tucsongag",name:"Tucson Games & Gadgets",subloc:"Multiple Tucson locations (Broadway + Oracle Mall) - hosts Short Rest Tavern",phone:"(520) 603-4037",email:"tucsongamesandgadgets@gmail.com",website:"tucsongamesandgadgets.com",facebook:"facebook.com/tucsongamesandgadgets"}
    ]}
 ];
 
@@ -269,9 +286,18 @@ function persist(){try{localStorage.setItem("bgv_state",JSON.stringify({s:S,ce:C
 function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
 function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
 function getComposeSubjectBody(){var p=document.getElementById("tplPanel"),sub,bod;if(p&&p.classList.contains("open")){var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");sub=se?se.value:"";bod=be?be.value:"";}else{sub=TPL.subject||"";bod=TPL.body||"";}return{subject:(sub||"").trim(),body:(bod||"").trim()};}
-/**
- * Direct Gmail compose: /mail/u/0/?to=…&su=…&body=…&tf=cm (extsrc=mailto often opened inbox without compose).
- */
+function isIOSDevice(){
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+}
+function isAndroid(){return /Android/i.test(navigator.userAgent);}
+function mailtoComposeUrl(email){
+  var t=getComposeSubjectBody(),q=[];
+  if(t.subject)q.push("subject="+encodeURIComponent(t.subject));
+  if(t.body)q.push("body="+encodeURIComponent(t.body));
+  return "mailto:"+email+(q.length?"?"+q.join("&"):"");
+}
+/** Desktop Gmail web: tf=cm + /u/0/ */
 function gmailWebComposeUrl(email){
   var t=getComposeSubjectBody();
   var u="https://mail.google.com/mail/u/0/?to="+encodeURIComponent(email);
@@ -280,17 +306,77 @@ function gmailWebComposeUrl(email){
   u+="&tf=cm";
   return u;
 }
+/** Gmail iOS app — avoids universal-link handoff from https:// that strips compose params. */
+function googlegmailComposeUrl(email){
+  var t=getComposeSubjectBody();
+  var u="googlegmail://co?to="+encodeURIComponent(email);
+  if(t.subject)u+="&subject="+encodeURIComponent(t.subject);
+  if(t.body)u+="&body="+encodeURIComponent(t.body);
+  return u;
+}
 function openVenueEmail(email){
   if(!email)return;
+  if(isIOSDevice()){
+    var a=document.createElement("a");
+    a.href=googlegmailComposeUrl(email);
+    a.rel="noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    return;
+  }
+  if(isAndroid()){
+    var am=document.createElement("a");
+    am.href=mailtoComposeUrl(email);
+    am.rel="noopener noreferrer";
+    document.body.appendChild(am);
+    am.click();
+    document.body.removeChild(am);
+    return;
+  }
   window.open(gmailWebComposeUrl(email),"_blank","noopener,noreferrer");
-  try{
-    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&!sessionStorage.getItem("bgv_gmailWebTip")){
-      sessionStorage.setItem("bgv_gmailWebTip","1");
-      showVenueToast("If Gmail asks to use the app, choose the option to use Gmail in the browser.");
-    }
-  }catch(e){}
 }
 function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email);}
+
+/** Turn facebook.com/... path into Messenger deep link (m.me). Handles /p/Page-Name-ID pages. */
+function facebookPathToMMeUrl(facebookPath){
+  if(!facebookPath)return "";
+  var s=String(facebookPath).trim();
+  if(!s)return "";
+  s=s.replace(/^https?:\/\//i,"").replace(/^www\./i,"");
+  if(s.indexOf("facebook.com/")===0)s=s.slice(13);
+  else if(s.indexOf("fb.com/")===0)s=s.slice(7);
+  s=s.replace(/\/+$/,"");
+  if(!s)return "";
+  var pm=s.match(/^p\/[^\/]+-(\d{10,})$/i);
+  if(pm)return "https://m.me/"+pm[1];
+  if(/^\d+$/.test(s))return "https://m.me/"+s;
+  var first=s.split("/")[0];
+  if(first)return "https://m.me/"+encodeURIComponent(first);
+  return "";
+}
+function openVenueFacebook(mMeUrl){
+  if(!mMeUrl)return;
+  var text=getComposeSubjectBody().body;
+  function afterCopy(){
+    window.open(mMeUrl,"_blank","noopener,noreferrer");
+    showVenueToast("Template body copied — paste into Messenger after the chat opens.");
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(afterCopy).catch(function(){fallbackCopyText(text,afterCopy);});
+  }else{fallbackCopyText(text,afterCopy);}
+}
+function openVenueFacebookForVenue(vid){
+  var v=getVenue(vid),fb=v&&v.facebook?String(v.facebook).trim():"";
+  if(!fb)return;
+  var u=facebookPathToMMeUrl(fb);
+  if(!u)return;
+  openVenueFacebook(u);
+}
+
+function escHtml(str){
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
 
 function showVenueToast(msg){
   var el=document.getElementById("venue-toast");if(!el)return;
@@ -430,6 +516,20 @@ function buildEmailMain(vid){
     +"<span class='crow-date' id='dt_"+vid+"_email' style='"+dtStyle+"'>"+s.date+"</span>";
 }
 
+function buildFacebookMain(vid){
+  var v=getVenue(vid),fb=(v&&v.facebook)?String(v.facebook).trim():"",s=gS(vid,"facebook");
+  var dtStyle=s.checked&&s.date?"":"display:none";
+  var valHtml;
+  if(fb){
+    valHtml="<span class='crow-val crow-val-link'><a class='crow-link crow-link-facebook' href='#' onclick=\"event.preventDefault();openVenueFacebookForVenue('"+vid+"')\">&#128172; "+escHtml(fb)+"</a></span>";
+  }else{
+    valHtml="<span class='crow-val na'>"+escHtml((v&&v.facebookNote)?v.facebookNote:"No Facebook page")+"</span>";
+  }
+  return "<input type='checkbox' class='crow-chk' id='chk_"+vid+"_facebook'"+(s.checked?" checked":"")+" onchange=\"toggle('"+vid+"','facebook')\">"
+    +"<span class='crow-lbl'>FB Msg</span>"+valHtml
+    +"<span class='crow-date' id='dt_"+vid+"_facebook' style='"+dtStyle+"'>"+s.date+"</span>";
+}
+
 function buildRow(vid,field,label,value,isLink,linkUrl,fallback){
   var s=gS(vid,field),isSkip=(field==="skip"),hasVal=!!(value&&value.trim());
   var valHtml="";
@@ -458,6 +558,7 @@ function buildVenue(v,type){
   var pillLbl=type==="cafe"?"Cafe":"Store";
   var webUrl=v.website?(v.website.indexOf("http")===0?v.website:"https://"+v.website):"";
   var eS=gS(v.id,"email");
+  var fbS=gS(v.id,"facebook");
   var doneCls=(isDone(v.id)&&!isSkipped(v.id))?" is-done":isSkipped(v.id)?" is-skip":"";
   return "<div class='vc"+doneCls+"' id='vc_"+v.id+"'>"
     +"<div class='vc-top'>"
@@ -476,7 +577,12 @@ function buildVenue(v,type){
     +"<button class='eadd-btn' onclick=\"saveCustomEmail('"+v.id+"')\">Save</button>"
     +"</div>"
     +buildRow(v.id,"website","Website",v.website||"",!!v.website,webUrl,v.emailNote||"No website")
-    +buildRow(v.id,"facebook","FB Msg","",false,"","Mark when FB messaged")
+    +"<div class='crow'>"
+    +"<div class='crow-main'>"+buildFacebookMain(v.id)+"</div>"
+    +"<div class='crow-note"+(fbS.checked?" open":"")+"' id='note_"+v.id+"_facebook'>"
+    +"<span class='note-dt'>"+fbS.date+"</span>"
+    +"<textarea class='note-ta' placeholder='Add note...' oninput=\"saveNote('"+v.id+"','facebook',this.value)\">"+fbS.note+"</textarea>"
+    +"</div></div>"
     +buildRow(v.id,"skip","Skip","",false,"","Mark to skip this venue")
     +"</div></div>";
 }
