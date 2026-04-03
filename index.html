@@ -277,6 +277,54 @@ var S={},CE={};
 var DEFAULT_SUBJECT="Introducing MeepleUp - Free App for Tabletop Gaming Groups";
 var DEFAULT_BODY="Hi,\n\nI'm an indie developer who just launched MeepleUp, a free app that helps tabletop gaming groups coordinate. It handles RSVPs, owned game title browsing and voting, and event messaging all in one place.\n\nGaming groups that you host will probably like it. Please visit https://meepleup.com to learn more, or just dive right in and download \"MeepleUp\" on the App Store or Google Play.\n\nThank you so much for any feedback you can provide. I've spent over a thousand hours building this app. It would mean so much to me to get it in the hands of people who might appreciate it.\n\nSincerely,\nRhys Smoker";
 var TPL={subject:DEFAULT_SUBJECT,body:DEFAULT_BODY};
+/** Per-venue outreach copy (body). Subject defaults to DEFAULT_SUBJECT when omitted. */
+var VENUE_MESSAGES={
+  empirebgl:{body:"Hey Empire Board Game Library team, hope the library is staying busy today!\n\nI'm an indie developer and a huge fan of the board game cafe model. I just launched a free app called MeepleUp that I think fits perfectly with your 'pay-to-play' library setup. It features an AI-powered cataloging tool that lets your regulars browse your 1,000+ game collection from their phones before they even walk in.\n\nIt handles the 'choice paralysis' at the table by letting groups vote on games and coordinate RSVPs in one spot. I've put over a thousand hours into this as a solo dev—you can check it out at https://meepleup.com or find it on the App Store. I'd love to hear what a premier library like yours thinks of it!\n\nCheers, Rhys Smoker"},
+  "sliceanddice-w":{body:"Hi Slice and Dice team, I love the 'Dine-in and Play' concept you've built in ABQ!\n\nI'm the developer of a new, free app called MeepleUp that helps gaming groups coordinate their sessions. Since you guys have such a unique hybrid of great food and gaming, I thought your customers would appreciate a tool that lets them RSVP for a table and vote on which game to play while they wait for their pizza.\n\nIt's a labor of love I've been building for a long time now. If you have a moment, take a look at https://meepleup.com—it might be a great resource for the folks at your open gaming nights.\n\nBest, Rhys Smoker"},
+  "sliceanddice-e":{body:"Hi Slice and Dice team, I love the 'Dine-in and Play' concept you've built in ABQ!\n\nI'm the developer of a new, free app called MeepleUp that helps gaming groups coordinate their sessions. Since you guys have such a unique hybrid of great food and gaming, I thought your customers would appreciate a tool that lets them RSVP for a table and vote on which game to play while they wait for their pizza.\n\nIt's a labor of love I've been building for a long time now. If you have a moment, take a look at https://meepleup.com—it might be a great resource for the folks at your open gaming nights.\n\nBest, Rhys Smoker"},
+  ettingames:{body:"Hi Ettin Games, hope the Albuquerque tabletop scene is thriving!\n\nI'm an indie dev who recently finished building MeepleUp, a free app designed to help local gaming communities stay organized. I noticed you guys have a really active Discord and a massive space for RPGs and minis—MeepleUp helps those kinds of groups manage their RSVPs and discussion boards in a dedicated space rather than a cluttered chat thread.\n\nI've spent over a thousand hours on this project and would love to see it helping your local league players find each other. You can see the details at https://meepleup.com. Thanks for all the hard work you do for the hobby!\n\nSincerely, Rhys Smoker"},
+  oldtownhobby:{body:"Hello Old Town Hobbies! I hope all is well in the shop today.\n\nI wanted to reach out because I've just launched an app called MeepleUp that I think your board game community would really enjoy. It's a free tool that helps groups schedule their sessions, vote on titles, and message each other in one place.\n\nFor a community-focused shop like yours, it's a great way for players to stay engaged between visits. Feel free to check out the landing page at https://meepleup.com or download it on Google Play/App Store. I'm an indie developer just trying to get this into the hands of people who love the hobby as much as I do.\n\nThanks, Rhys Smoker"},
+  "dukecitygames-l":{body:"Hey Duke City Games team, hope the TCG and board game events are going strong!\n\nI'm an indie developer reaching out because I just went live with MeepleUp, a free app built to take the headache out of organizing game nights. Since you guys host so many events across your locations, I thought your regulars might like a dedicated spot for RSVPs and player-matching.\n\nIt also has a cool feature where users can browse game libraries remotely. Check us out at https://meepleup.com—I've put a massive amount of time into this and would value any feedback from a veteran shop like yours.\n\nBest, Rhys Smoker"},
+  "dukecitygames-h":{body:"Hey Duke City Games team, hope the TCG and board game events are going strong!\n\nI'm an indie developer reaching out because I just went live with MeepleUp, a free app built to take the headache out of organizing game nights. Since you guys host so many events across your locations, I thought your regulars might like a dedicated spot for RSVPs and player-matching.\n\nIt also has a cool feature where users can browse game libraries remotely. Check us out at https://meepleup.com—I've put a massive amount of time into this and would value any feedback from a veteran shop like yours.\n\nBest, Rhys Smoker"},
+  spielbound:{body:"Hi Spielbound team, I'm a huge admirer of the non-profit work you do for the gaming community!\n\nI'm an indie developer and I've just launched MeepleUp, a free app designed to help groups manage their collections and events. Given that you have one of the largest libraries in the country, I think your patrons would find our AI-powered cataloging and remote browsing features incredibly helpful for navigating your 3,000+ titles.\n\nIt's built to help folks at your Demo Nights coordinate their next meet-up effortlessly. Please visit https://meepleup.com to see what I've been working on for the last thousand-plus hours. It would mean a lot to get this in front of the Omaha community.\n\nSincerely, Rhys Smoker"},
+  geekroom:{body:"Hi Geek Room! Hope you're having a great week in the shop.\n\nI'm an indie dev who just launched MeepleUp, a free app for tabletop gamers. It's designed to handle everything from RSVP management to game-title voting in one place. I know you guys have a dedicated local following, and I think the groups who use your tables would find this way easier than juggling text threads.\n\nYou can find more info at https://meepleup.com. I've put a lot of heart into this project and would love to see it helping local players connect at your store.\n\nBest, Rhys Smoker"},
+  "gameshoppe-bel":{body:"Hi Game Shoppe team, hope the tables are full this weekend!\n\nI wanted to share a project I just finished called MeepleUp. It's a free app that helps tabletop groups plan their nights, manage RSVPs, and discuss games. I noticed you guys have a very active Warhammer and TCG scene, and this app is perfect for those players who need to coordinate specific match-ups or pods.\n\nI've spent over a thousand hours building this as a solo developer. If you have a second to check out https://meepleup.com, I'd love to know what you think.\n\nCheers, Rhys Smoker"},
+  "gameshoppe-oma":{body:"Hi Game Shoppe team, hope the tables are full this weekend!\n\nI wanted to share a project I just finished called MeepleUp. It's a free app that helps tabletop groups plan their nights, manage RSVPs, and discuss games. I noticed you guys have a very active Warhammer and TCG scene, and this app is perfect for those players who need to coordinate specific match-ups or pods.\n\nI've spent over a thousand hours building this as a solo developer. If you have a second to check out https://meepleup.com, I'd love to know what you think.\n\nCheers, Rhys Smoker"},
+  dragonslairblondo:{body:"Hello Dragon's Lair team, I hope all is well at both the Blondo and Millard shops!\n\nI'm an indie developer who just released MeepleUp, a free mobile app that helps gaming groups stay organized. It handles event messaging, RSVPs, and library browsing all in one interface. I think the folks who attend your regular open play events would really appreciate a dedicated tool like this.\n\nYou can see how it works at https://meepleup.com. Getting this into the hands of a long-standing community like yours would be a huge milestone for me.\n\nThanks for your time!\nRhys Smoker"},
+  dragonslairmill:{body:"Hello Dragon's Lair team, I hope all is well at both the Blondo and Millard shops!\n\nI'm an indie developer who just released MeepleUp, a free mobile app that helps gaming groups stay organized. It handles event messaging, RSVPs, and library browsing all in one interface. I think the folks who attend your regular open play events would really appreciate a dedicated tool like this.\n\nYou can see how it works at https://meepleup.com. Getting this into the hands of a long-standing community like yours would be a huge milestone for me.\n\nThanks for your time!\nRhys Smoker"},
+  chaoticgood:{body:"Hi Chaotic Good team, I love the energy of your shop and that unique 'Trading Card Library' you've built!\n\nI'm an indie developer who just went live with MeepleUp, a free app that helps tabletop groups stay organized. Since you're such a hub for new D&D players and TCG fans, I thought your community could really use a dedicated tool for RSVPs and finding groups that isn't as cluttered as a standard chat app.\n\nIt also features an AI-powered cataloger to help customers browse your shelves from their phones. I've put over a thousand hours of work into this—check it out at https://meepleup.com. I'd love to see it helping the Lexington scene!\n\nBest, Rhys Smoker"},
+  villainous:{body:"Hey Villainous team, hope the gaming gastropub is hopping tonight!\n\nI'm the developer behind MeepleUp, a new free app designed to help gaming groups coordinate their nights out. I noticed you guys have a curated library and a great social atmosphere—MeepleUp helps those groups vote on which game to play and handle their RSVPs before they even order their first round of cocktails.\n\nIt's a project I've been building for a long time as a solo dev. If you have a moment to look at https://meepleup.com, I think your regular tabletop crowds would really find it useful.\n\nCheers, Rhys Smoker"},
+  rustyscabbard:{body:"Hello Rusty Scabbard team, I hope all is well with the local community!\n\nI'm an indie dev reaching out because I just launched MeepleUp, a free app that simplifies game night planning. Knowing your long-standing history with RPGs and historical wargaming, I built this tool to help those specific types of groups manage long-term campaigns, track RSVPs, and message each other in one place.\n\nIt would mean a lot to get this in the hands of a veteran gaming community like yours. You can find more info at https://meepleup.com.\n\nSincerely, Rhys Smoker"},
+  legendarygameslex:{body:"Hi Legendary Games, hope the shop is having a busy week!\n\nI wanted to share a new tool I built called MeepleUp. It's a free app that helps tabletop players coordinate their meetups, vote on titles, and handle event messaging. For the groups who frequent your Open Play tables, it's a much cleaner way to stay organized than a massive group text.\n\nI've spent over a thousand hours building this as a labor of love. Check us out at https://meepleup.com—I'd value any feedback from your players!\n\nThanks, Rhys Smoker"},
+  d20hobbies:{body:"Hey D20 Hobbies team, hope the dice are rolling in your favor today!\n\nI'm an indie developer who just released MeepleUp, a free mobile app for tabletop coordination. It handles everything from RSVP management to remote library browsing. I think the folks who attend your regular weekly events would really appreciate a dedicated interface for staying connected between games.\n\nYou can see the details at https://meepleup.com. Getting this into the hands of a dedicated shop like yours would be a huge win for me.\n\nBest, Rhys Smoker"},
+  chitsandchats:{body:"Hi Chits & Chats team, hope things are going great at the cafe!\n\nI'm an indie developer and I've just launched MeepleUp, a free app built to help tabletop groups plan their sessions. Since you focus so much on family-friendly gaming and local community, I thought your patrons would love a tool that lets them browse your library and coordinate their next visit from home.\n\nIt features an AI-powered cataloging tool that makes it easy for groups to see what's on your shelves. I've put a massive amount of time into this project—please check it out at https://meepleup.com.\n\nSincerely, Rhys Smoker"},
+  abugames:{body:"Hello ABU Games team, I'm consistently impressed by the scale of your facility in Boise!\n\nI'm an indie dev who recently finished MeepleUp, a free app for tabletop event management. With a space as large as yours, I know coordinating tournaments and open play can be a lot of work. MeepleUp helps players find each other, handle RSVPs, and manage their own collections in one spot.\n\nI've spent over a thousand hours on this as a solo project and would love to see it being used by the massive community at ABU. Details are at https://meepleup.com.\n\nThanks for your time! Rhys Smoker"},
+  fantasticgames:{body:"Hi Fantastic Games! Hope you're having a great week in the shop.\n\nI'm an indie dev who just launched MeepleUp, a free app for tabletop gamers. It's designed to take the stress out of planning game nights by handling RSVPs and game-voting in one dedicated space. I know you have a dedicated local following, and I think the groups who use your gaming tables would find this a lot more intuitive than social media threads.\n\nYou can find the app at https://meepleup.com. I've put a lot of heart into this and would love to hear what your community thinks!\n\nBest, Rhys Smoker"},
+  allaboutgames:{body:"Hey All About Games team, hope all is well in the shop today!\n\nI wanted to reach out because I've just launched an app called MeepleUp that I think your board game community would really enjoy. It's a free tool that helps groups schedule their sessions and message each other without the clutter of a general chat app.\n\nIt also allows players to browse libraries remotely, which is great for keeping them excited about their next visit. Feel free to check us out at https://meepleup.com. I'm an indie developer just trying to help the hobby stay organized!\n\nThanks, Rhys Smoker"},
+  thanestable:{body:"Hey Thane's Table team, I love the 'gaming tavern' atmosphere you've created—those custom tables look incredible!\n\nI'm an indie developer and I just launched MeepleUp, a free app built to help tabletop groups plan their nights out. Since you host so many themed RPG nights and group trivia, I thought your regulars would love a dedicated tool for handling RSVPs and discussion boards that isn't a cluttered Discord or text thread.\n\nIt also features an AI-powered cataloger to help customers browse your library from their phones while they grab a drink. I've put over a thousand hours into this project—check it out at https://meepleup.com. I'd love to see it helping the Denver scene!\n\nCheers, Rhys Smoker"},
+  mutinyinfocafe:{body:"Hi Mutiny team, I'm a big fan of the high-energy, cereal-bar-meets-gaming vibe you have going on!\n\nI'm the developer behind MeepleUp, a new free app designed to help gaming groups coordinate their sessions. I know you guys have a very community-driven space, and MeepleUp helps those groups vote on which game to play and handle their RSVPs in one spot.\n\nIt's a labor of love I've been building for a long time as a solo dev. If you have a moment to look at https://meepleup.com, I think your counter-culture gaming crowd would find it a lot more intuitive than standard social media groups.\n\nBest, Rhys Smoker"},
+  goldengameguild:{body:"Hello Golden Game Guild team, I hope all is well with the local community!\n\nI'm an indie dev reaching out because I just launched MeepleUp, a free app that simplifies game night planning. Knowing your focus on building a dedicated guild of players, I built this tool to help those specific groups manage their sessions, track RSVPs, and message each other in one place.\n\nIt would mean a lot to get this in the hands of a dedicated gaming community like yours. You can find more info at https://meepleup.com.\n\nSincerely, Rhys Smoker"},
+  totalescapegames:{body:"Hi Total Escape Games, hope the shop is having a busy week!\n\nI wanted to share a new tool I built called MeepleUp. It's a free app that helps tabletop players coordinate their meetups, vote on titles, and handle event messaging. For the folks who frequent your community leagues and 'paint and take' events, it's a much cleaner way to stay organized.\n\nI've spent over a thousand hours building this as a labor of love. Check us out at https://meepleup.com—I'd value any feedback from your players!\n\nThanks, Rhys Smoker"},
+  itsyourmovedenver:{body:"Hey It's Your Move team, hope the tables are full at both locations today!\n\nI'm an indie developer who just released MeepleUp, a free mobile app for tabletop coordination. It handles everything from RSVP management to remote library browsing. I think the folks who attend your regular weekly events would really appreciate a dedicated interface for staying connected between games.\n\nYou can see the details at https://meepleup.com. Getting this into the hands of a great local shop like yours would be a huge milestone for me.\n\nBest, Rhys Smoker"},
+  itsyourmovelone:{body:"Hey It's Your Move team, hope the tables are full at both locations today!\n\nI'm an indie developer who just released MeepleUp, a free mobile app for tabletop coordination. It handles everything from RSVP management to remote library browsing. I think the folks who attend your regular weekly events would really appreciate a dedicated interface for staying connected between games.\n\nYou can see the details at https://meepleup.com. Getting this into the hands of a great local shop like yours would be a huge milestone for me.\n\nBest, Rhys Smoker"},
+  moxportland:{body:"Hi Mox Boarding House team, I'm a huge admirer of the premium experience you've brought to the Portland gaming scene!\n\nI'm an indie developer and I've just launched MeepleUp, a free app built to help tabletop groups plan their sessions. Since you have such an impressive library and those beautiful private rooms, I thought your patrons would love a tool that lets them browse your collection and coordinate their next 'reservation' from home.\n\nIt features an AI-powered cataloging tool that makes it easy for groups to see what's on your shelves. I've put a massive amount of time into this project—please check it out at https://meepleup.com.\n\nSincerely, Rhys Smoker"},
+  guardiangames:{body:"Hello Guardian Games team, I've always loved the 'Critical Sip' concept you have in the shop!\n\nI'm an indie dev who recently finished MeepleUp, a free app for tabletop event management. With a space as massive as yours, I know coordinating various gaming groups can be a lot to manage. MeepleUp helps players find each other, handle RSVPs, and manage their own collections in one spot.\n\nI've spent over a thousand hours on this as a solo project and would love to see it being used by the PDX community at Guardian. Details are at https://meepleup.com.\n\nThanks for your time! Rhys Smoker"},
+  senetgamebar:{body:"Hi Senet Game Bar! Hope you're having a great week and the cocktails are flowing.\n\nI'm an indie dev who just launched MeepleUp, a free app for tabletop gamers. It's designed to take the stress out of planning game nights by handling RSVPs and game-voting in one dedicated space. I know you focus on quick games and a social bar setting, and this is perfect for those groups who want to coordinate their meetups before they arrive.\n\nYou can find the app at https://meepleup.com. I've put a lot of heart into this and would love to hear what your bar crowd thinks!\n\nBest, Rhys Smoker"},
+  redcastlegames:{body:"Hey Red Castle Games team, hope all is well at the shop and the cafe!\n\nI wanted to reach out because I've just launched an app called MeepleUp that I think your community would really enjoy. It's a free tool that helps groups schedule their sessions and message each other without the clutter of a general chat app.\n\nSince you also offer game rentals, the remote library browsing feature in MeepleUp is a great way for players to decide what they want to rent or play in-house. Feel free to check us out at https://meepleup.com.\n\nThanks, Rhys Smoker"},
+  rainydaygames:{body:"Hi Rainy Day Games team, I hope you're having a busy week in the shop!\n\nI'm an indie developer who just released MeepleUp, a free mobile app that helps gaming groups stay organized. It handles event messaging, RSVPs, and library browsing all in one interface. I think the folks who attend your regular open gaming and TCG events would really appreciate a dedicated tool like this.\n\nYou can see how it works at https://meepleup.com. Getting this into the hands of a dedicated Portland shop like yours would mean the world to me.\n\nThanks for your time!\nRhys Smoker"},
+  puddletowngames:{body:"Hi Puddletown Games & Puzzles team, I hope you're having a busy week in the shop!\n\nI'm an indie developer who just released MeepleUp, a free mobile app that helps gaming groups stay organized. It handles event messaging, RSVPs, and library browsing all in one interface. I think the folks who attend your regular open gaming and TCG events would really appreciate a dedicated tool like this.\n\nYou can see how it works at https://meepleup.com. Getting this into the hands of a dedicated Portland shop like yours would mean the world to me.\n\nThanks for your time!\nRhys Smoker"},
+  cloudcapgames:{body:"Hi Cloud Cap Games team, I hope you're having a busy week in the shop!\n\nI'm an indie developer who just released MeepleUp, a free mobile app that helps gaming groups stay organized. It handles event messaging, RSVPs, and library browsing all in one interface. I think the folks who attend your regular open gaming and TCG events would really appreciate a dedicated tool like this.\n\nYou can see how it works at https://meepleup.com. Getting this into the hands of a dedicated Portland shop like yours would mean the world to me.\n\nThanks for your time!\nRhys Smoker"},
+  portlandgamestore:{body:"Hi The Portland Game Store team, I hope you're having a busy week in the shop!\n\nI'm an indie developer who just released MeepleUp, a free mobile app that helps gaming groups stay organized. It handles event messaging, RSVPs, and library browsing all in one interface. I think the folks who attend your regular open gaming and TCG events would really appreciate a dedicated tool like this.\n\nYou can see how it works at https://meepleup.com. Getting this into the hands of a dedicated Portland shop like yours would mean the world to me.\n\nThanks for your time!\nRhys Smoker"},
+  unpluggedrva:{body:"Hi Unplugged Games team, I love that your staff is specifically trained to teach games—it's such a great service for the community!\n\nI'm an indie developer who just launched MeepleUp, a free app that helps groups coordinate their sessions. Since you have over 1,300 titles, I thought your patrons would love a tool that lets them browse your library and vote on what to play before they arrive. It's like a digital assistant for your game teachers!\n\nI've put over a thousand hours into this as a solo dev—check it out at https://meepleup.com. I'd love to see it helping the Richmond scene!\n\nBest, Rhys Smoker"},
+  oneeyedjacques:{body:"Hello One Eyed Jacques team, hope things are going great in Carytown!\n\nI'm the developer behind MeepleUp, a new free app designed to help gaming groups coordinate their sessions. I know you guys have a very active community, and MeepleUp helps those groups handle their RSVPs and discussion boards in one dedicated spot rather than a cluttered text thread.\n\nIt's a labor of love I've been building for a long time. If you have a moment to look at https://meepleup.com, I think your regular tabletop crowd would find it a lot more intuitive than standard social media groups.\n\nCheers, Rhys Smoker"},
+  battlegroundsrva:{body:"Hi Battlegrounds team, I hope you're having a busy week in the shop!\n\nI'm an indie dev reaching out because I just launched MeepleUp, a free app that simplifies game night planning. Knowing your focus on organized play and community events, I built this tool to help those groups manage their sessions, track RSVPs, and message each other in one place.\n\nIt would mean a lot to get this in the hands of the Richmond gaming community. You can find more info at https://meepleup.com.\n\nSincerely, Rhys Smoker"},
+  moderntabletop:{body:"Hi Modern Tabletop Gaming team, I hope you're having a busy week in the shop!\n\nI'm an indie dev reaching out because I just launched MeepleUp, a free app that simplifies game night planning. Knowing your focus on organized play and community events, I built this tool to help those groups manage their sessions, track RSVPs, and message each other in one place.\n\nIt would mean a lot to get this in the hands of the Richmond gaming community. You can find more info at https://meepleup.com.\n\nSincerely, Rhys Smoker"},
+  waterloogames:{body:"Hi Waterloo Games team, I hope you're having a busy week in the shop!\n\nI'm an indie dev reaching out because I just launched MeepleUp, a free app that simplifies game night planning. Knowing your focus on organized play and community events, I built this tool to help those groups manage their sessions, track RSVPs, and message each other in one place.\n\nIt would mean a lot to get this in the hands of the Richmond gaming community. You can find more info at https://meepleup.com.\n\nSincerely, Rhys Smoker"},
+  shortresttavern:{body:"Hey Short Rest Tavern team, I love the 'tavern inside the shop' concept you guys have built!\n\nI'm an indie developer and I just launched MeepleUp, a free app built to help tabletop groups plan their nights out. Since you host so many themed 'Quest' nights, I thought your regulars would love a dedicated tool for handling RSVPs and discussion boards.\n\nIt also features an AI-powered cataloger to help customers browse your 600+ game library from their phones while they grab a drink. I've put over a thousand hours into this—check it out at https://meepleup.com.\n\nCheers, Rhys Smoker"},
+  goodgamecafe:{body:"Hi Good Game Cafe team, hope the gaming and food are both going strong today!\n\nI'm the developer behind MeepleUp, a new free app designed to help gaming groups coordinate. Since you have such a welcoming social atmosphere, I thought your customers would appreciate a tool that lets them vote on games and coordinate their next meetup effortlessly.\n\nIt's a project I've been building for a long time as a solo dev. If you have a moment to look at https://meepleup.com, I think your tabletop regulars would really find it useful.\n\nBest, Rhys Smoker"},
+  isleofgames:{body:"Hello Isle of Games team, I hope all is well in Tucson!\n\nI wanted to share a new tool I built called MeepleUp. It's a free app that helps tabletop players coordinate their meetups, vote on titles, and handle event messaging. I know you guys have a massive used game section and a lot of open play—this app is a great way for those players to stay connected between visits.\n\nI've spent over a thousand hours building this as a labor of love. Check us out at https://meepleup.com—I'd value any feedback from your community!\n\nThanks, Rhys Smoker"},
+  tucsongag:{body:"Hi Tucson Games & Gadgets team, hope the shop is having a fantastic week!\n\nI'm an indie developer who just released MeepleUp, a free mobile app for tabletop coordination. It handles everything from RSVP management to remote library browsing. I think the folks who attend your regular weekly events would really appreciate a dedicated interface for staying connected.\n\nYou can see the details at https://meepleup.com. Getting this into the hands of a cornerstone shop like yours would be a huge win for me.\n\nBest, Rhys Smoker"}
+};
 /** When opening a venue site, also open a Google tab: site:that-domain "Contact Us" (browsers block in-page find on other sites). Set false to only open the venue. */
 var OPEN_GOOGLE_CONTACT_SITE_SEARCH=true;
 var venueToastTimer=null;
@@ -285,21 +333,30 @@ function gS(v,f){return S[SK(v,f)]||{checked:false,date:"",note:""};}
 function persist(){try{localStorage.setItem("bgv_state",JSON.stringify({s:S,ce:CE,tpl:TPL}));}catch(e){}}
 function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
 function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
-function getComposeSubjectBody(){var p=document.getElementById("tplPanel"),sub,bod;if(p&&p.classList.contains("open")){var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");sub=se?se.value:"";bod=be?be.value:"";}else{sub=TPL.subject||"";bod=TPL.body||"";}return{subject:(sub||"").trim(),body:(bod||"").trim()};}
+function getComposeSubjectBody(vid){
+  var custom=vid&&VENUE_MESSAGES[vid];
+  if(custom){
+    return{subject:(custom.subject||DEFAULT_SUBJECT).trim(),body:(custom.body||"").trim()};
+  }
+  var p=document.getElementById("tplPanel"),sub,bod;
+  if(p&&p.classList.contains("open")){var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");sub=se?se.value:"";bod=be?be.value:"";}
+  else{sub=TPL.subject||"";bod=TPL.body||"";}
+  return{subject:(sub||"").trim(),body:(bod||"").trim()};
+}
 function isIOSDevice(){
   return /iPhone|iPad|iPod/i.test(navigator.userAgent)
     || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
 }
 function isAndroid(){return /Android/i.test(navigator.userAgent);}
-function mailtoComposeUrl(email){
-  var t=getComposeSubjectBody(),q=[];
+function mailtoComposeUrl(email,vid){
+  var t=getComposeSubjectBody(vid),q=[];
   if(t.subject)q.push("subject="+encodeURIComponent(t.subject));
   if(t.body)q.push("body="+encodeURIComponent(t.body));
   return "mailto:"+email+(q.length?"?"+q.join("&"):"");
 }
 /** Desktop Gmail web: tf=cm + /u/0/ */
-function gmailWebComposeUrl(email){
-  var t=getComposeSubjectBody();
+function gmailWebComposeUrl(email,vid){
+  var t=getComposeSubjectBody(vid);
   var u="https://mail.google.com/mail/u/0/?to="+encodeURIComponent(email);
   if(t.subject)u+="&su="+encodeURIComponent(t.subject);
   if(t.body)u+="&body="+encodeURIComponent(t.body);
@@ -307,18 +364,18 @@ function gmailWebComposeUrl(email){
   return u;
 }
 /** Gmail iOS app — avoids universal-link handoff from https:// that strips compose params. */
-function googlegmailComposeUrl(email){
-  var t=getComposeSubjectBody();
+function googlegmailComposeUrl(email,vid){
+  var t=getComposeSubjectBody(vid);
   var u="googlegmail://co?to="+encodeURIComponent(email);
   if(t.subject)u+="&subject="+encodeURIComponent(t.subject);
   if(t.body)u+="&body="+encodeURIComponent(t.body);
   return u;
 }
-function openVenueEmail(email){
+function openVenueEmail(email,vid){
   if(!email)return;
   if(isIOSDevice()){
     var a=document.createElement("a");
-    a.href=googlegmailComposeUrl(email);
+    a.href=googlegmailComposeUrl(email,vid);
     a.rel="noopener noreferrer";
     document.body.appendChild(a);
     a.click();
@@ -327,16 +384,16 @@ function openVenueEmail(email){
   }
   if(isAndroid()){
     var am=document.createElement("a");
-    am.href=mailtoComposeUrl(email);
+    am.href=mailtoComposeUrl(email,vid);
     am.rel="noopener noreferrer";
     document.body.appendChild(am);
     am.click();
     document.body.removeChild(am);
     return;
   }
-  window.open(gmailWebComposeUrl(email),"_blank","noopener,noreferrer");
+  window.open(gmailWebComposeUrl(email,vid),"_blank","noopener,noreferrer");
 }
-function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email);}
+function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email,vid);}
 
 /** Turn facebook.com/... path into Messenger deep link (m.me). Handles /p/Page-Name-ID pages. */
 function facebookPathToMMeUrl(facebookPath){
@@ -355,9 +412,9 @@ function facebookPathToMMeUrl(facebookPath){
   if(first)return "https://m.me/"+encodeURIComponent(first);
   return "";
 }
-function openVenueFacebook(mMeUrl){
+function openVenueFacebook(mMeUrl,vid){
   if(!mMeUrl)return;
-  var text=getComposeSubjectBody().body;
+  var text=getComposeSubjectBody(vid).body;
   function afterCopy(){
     window.open(mMeUrl,"_blank","noopener,noreferrer");
     showVenueToast("Template body copied — paste into Messenger after the chat opens.");
@@ -371,7 +428,7 @@ function openVenueFacebookForVenue(vid){
   if(!fb)return;
   var u=facebookPathToMMeUrl(fb);
   if(!u)return;
-  openVenueFacebook(u);
+  openVenueFacebook(u,vid);
 }
 
 function escHtml(str){
@@ -392,10 +449,10 @@ function fallbackCopyText(text,cb){
   document.body.removeChild(ta);
   if(cb)cb();
 }
-function openVenueWebsite(e,a){
+function openVenueWebsite(e,a,vid){
   if(e)e.preventDefault();
   var href=a&&a.href;if(!href)return false;
-  var text=getComposeSubjectBody().body;
+  var text=getComposeSubjectBody(vid).body;
   function afterCopy(){
     window.open(href,"_blank","noopener,noreferrer");
     if(OPEN_GOOGLE_CONTACT_SITE_SEARCH){
@@ -534,7 +591,7 @@ function buildRow(vid,field,label,value,isLink,linkUrl,fallback){
   var s=gS(vid,field),isSkip=(field==="skip"),hasVal=!!(value&&value.trim());
   var valHtml="";
   if(!hasVal&&fallback){valHtml="<span class='crow-val na'>"+fallback+"</span>";}
-  else if(isLink&&hasVal){var href=linkUrl.indexOf("http")===0?linkUrl:"https://"+linkUrl;valHtml="<span class='crow-val crow-val-link'><a class='crow-link crow-link-website' href='"+href+"' rel='noopener noreferrer' onclick=\"return openVenueWebsite(event,this)\">&#128279; "+value+"</a></span>";}
+  else if(isLink&&hasVal){var href=linkUrl.indexOf("http")===0?linkUrl:"https://"+linkUrl;valHtml="<span class='crow-val crow-val-link'><a class='crow-link crow-link-website' href='"+href+"' rel='noopener noreferrer' onclick=\"return openVenueWebsite(event,this,'"+vid+"')\">&#128279; "+value+"</a></span>";}
   else if(hasVal){valHtml="<span class='crow-val'>"+value+"</span>";}
   else{valHtml="<span class='crow-val'>-</span>";}
   var dtStyle=s.checked&&s.date?"":"display:none";
