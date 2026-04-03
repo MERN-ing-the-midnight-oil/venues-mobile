@@ -134,6 +134,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
     <button class="hbtn" id="tplToggle" onclick="toggleTpl()">&#9993; Template</button>
     <button class="hbtn" id="saveBtn" onclick="downloadHTML()">&#10003; Save progress</button>
     <button class="hbtn danger" onclick="resetAll()">&#8635; Reset</button>
+    <button class="hbtn danger" onclick="clearStoredState()">&#128465; Clear storage</button>
   </div>
   <div id="srch-wrap">
     <svg id="srch-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -749,7 +750,17 @@ function toggleTpl(){
 }
 function saveTpl(){TPL.subject=document.getElementById("tplSub").value;TPL.body=document.getElementById("tplBody").value;persist();var f=document.getElementById("tplFlash");f.style.display="inline";setTimeout(function(){f.style.display="none";},2000);}
 function clearTpl(){TPL={subject:"",body:""};document.getElementById("tplSub").value="";document.getElementById("tplBody").value="";}
-function resetAll(){if(!confirm("Reset all outreach progress? This cannot be undone."))return;S={};CE={};var c=document.getElementById("container");c.innerHTML="";for(var i=0;i<CITIES.length;i++)c.innerHTML+=buildCity(CITIES[i]);buildIdx();updateUI();}
+function resetAll(){if(!confirm("Reset all outreach progress? This cannot be undone."))return;S={};CE={};var c=document.getElementById("container");c.innerHTML="";for(var i=0;i<CITIES.length;i++)c.innerHTML+=buildCity(CITIES[i]);buildIdx();updateUI();persist();}
+function clearStoredState(){
+  if(!confirm("Clear all saved data on this device? This removes progress, custom emails, and your template. This cannot be undone."))return;
+  try{localStorage.removeItem("bgv_state");}catch(e){}
+  S={};CE={};TPL={subject:DEFAULT_SUBJECT,body:DEFAULT_BODY};
+  var c=document.getElementById("container");c.innerHTML="";for(var i=0;i<CITIES.length;i++)c.innerHTML+=buildCity(CITIES[i]);
+  buildIdx();updateUI();
+  var ts=document.getElementById("tplSub"),tb=document.getElementById("tplBody");
+  if(ts)ts.value=TPL.subject;if(tb)tb.value=TPL.body;
+  showVenueToast("Storage cleared.");
+}
 function downloadHTML(){
   // On GitHub Pages we use localStorage — auto-saves on every change
   // This button just confirms to the user that progress is saved
