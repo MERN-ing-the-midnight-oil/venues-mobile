@@ -9,7 +9,8 @@ const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DOWNLOADS = `${process.env.HOME}/Downloads`;
 
 const VENUES_HTML = `${DOWNLOADS}/venues.html`;
-const MSG_MAIN = `${DOWNLOADS}/venue-messages.json`;
+const MSG_MAIN_DOWNLOADS = `${DOWNLOADS}/venue-messages.json`;
+const MSG_MAIN_PROJECT = `${ROOT}/venue-messages.json`;
 const MSG_NEW = `${DOWNLOADS}/venue-messages-new-cities.json`;
 
 /** JSON export keys -> ids used in venues.html cityData */
@@ -87,7 +88,9 @@ function main() {
   const cityData = parseCityData(html);
   const venueIds = collectVenueIds(cityData);
 
-  const msgMain = JSON.parse(fs.readFileSync(MSG_MAIN, "utf8"));
+  const msgMainPath = fs.existsSync(MSG_MAIN_DOWNLOADS) ? MSG_MAIN_DOWNLOADS : MSG_MAIN_PROJECT;
+  if (!fs.existsSync(msgMainPath)) throw new Error("No base venue-messages.json (Downloads or project)");
+  const msgMain = JSON.parse(fs.readFileSync(msgMainPath, "utf8"));
   const msgNew = JSON.parse(fs.readFileSync(MSG_NEW, "utf8"));
   const merged = { ...msgMain, ...msgNew };
 
