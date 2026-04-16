@@ -1,7 +1,9 @@
 /**
- * Builds city set three from Downloads/venue-messages.json + venue-messages-set3.json
- * (set3 wins on duplicate keys). Venues must exist in CITIES_SET_TWO; keys are normalized
- * with the same aliases as rebuild-nationwide-set-two.mjs.
+ * City set three = full cityData from ~/Downloads/venues.html (all cities/venues).
+ * Contact fields: prefers venues.html; fills empty email/facebook/phone/website/notes from index CITIES_SET_TWO when missing.
+ * Facebook URLs are normalized to host/path (no https://) for the mobile app.
+ * Messages: ~/Downloads/venue-messages-new-cities.json merged with venue-messages-set3.json (set3 wins on duplicate keys).
+ * Keys are normalized with the same aliases as rebuild-nationwide-set-two.mjs.
  */
 import fs from "fs";
 import { fileURLToPath } from "url";
@@ -10,8 +12,9 @@ const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DOWNLOADS = `${process.env.HOME}/Downloads`;
 const INDEX = `${ROOT}/index.html`;
 
-const MSG_A = `${DOWNLOADS}/venue-messages.json`;
-const MSG_B = `${DOWNLOADS}/venue-messages-set3.json`;
+const VENUES_HTML = `${DOWNLOADS}/venues.html`;
+const MSG_NEW_CITIES = `${DOWNLOADS}/venue-messages-new-cities.json`;
+const MSG_SET3 = `${DOWNLOADS}/venue-messages-set3.json`;
 
 const MESSAGE_KEY_ALIASES = {
   "zulu-lynnwood": "zulu-lynwood",
@@ -29,6 +32,29 @@ const MESSAGE_KEY_ALIASES = {
   battlegroundcafe: "battleground-mpls",
   "gamekeep-nash": "gamekeep",
 };
+
+function parseCityData(html) {
+  const prefix = "const cityData = ";
+  const idx = html.indexOf(prefix);
+  if (idx < 0) throw new Error("const cityData not found in venues.html");
+  let arrStart = idx + prefix.length;
+  while (html[arrStart] === " " || html[arrStart] === "\n") arrStart++;
+  let depth = 0;
+  let i = arrStart;
+  for (; i < html.length; i++) {
+    const c = html[i];
+    if (c === "[") depth++;
+    else if (c === "]") {
+      depth--;
+      if (depth === 0) {
+        i++;
+        break;
+      }
+    }
+  }
+  const expr = html.slice(arrStart, i);
+  return (0, eval)(`(${expr})`);
+}
 
 function extractJsArraySource(html, varName) {
   const prefix = `var ${varName}=`;
@@ -52,6 +78,61 @@ function extractJsArraySource(html, varName) {
     }
   }
   return { start, end: i, expr: html.slice(start, i) };
+}
+
+function indexVenueMap(cityData) {
+  const m = new Map();
+  for (const c of cityData) {
+    for (const v of c.cafes || []) m.set(v.id, v);
+    for (const v of c.stores || []) m.set(v.id, v);
+  }
+  return m;
+}
+
+function pickStr(a, b) {
+  const A = a != null && String(a).trim() !== "" ? String(a).trim() : "";
+  const B = b != null && String(b).trim() !== "" ? String(b).trim() : "";
+  return A || B;
+}
+
+/** Strip scheme/www so paths match mobile facebookPathToMMeUrl expectations. */
+function normalizeFacebook(fb) {
+  if (!fb || !String(fb).trim()) return "";
+  return String(fb)
+    .trim()
+    .replace(/^https?:\/\//i, "")
+    .replace(/^www\./i, "");
+}
+
+function mergeVenue(htmlVenue, oldVenue) {
+  if (!oldVenue) {
+    return {
+      ...htmlVenue,
+      email: htmlVenue.email != null ? String(htmlVenue.email) : "",
+      facebook: normalizeFacebook(htmlVenue.facebook),
+      phone: htmlVenue.phone != null ? String(htmlVenue.phone) : "",
+      website: htmlVenue.website != null ? String(htmlVenue.website) : "",
+      emailNote: htmlVenue.emailNote != null ? String(htmlVenue.emailNote) : "",
+      facebookNote: htmlVenue.facebookNote != null ? String(htmlVenue.facebookNote) : "",
+    };
+  }
+  return {
+    ...htmlVenue,
+    email: pickStr(htmlVenue.email, oldVenue.email),
+    facebook: normalizeFacebook(pickStr(htmlVenue.facebook, oldVenue.facebook)),
+    phone: pickStr(htmlVenue.phone, oldVenue.phone),
+    website: pickStr(htmlVenue.website, oldVenue.website),
+    emailNote: pickStr(htmlVenue.emailNote, oldVenue.emailNote),
+    facebookNote: pickStr(htmlVenue.facebookNote, oldVenue.facebookNote),
+  };
+}
+
+function mergeCityData(htmlCities, indexMap) {
+  return htmlCities.map((c) => ({
+    ...c,
+    cafes: (c.cafes || []).map((v) => mergeVenue(v, indexMap.get(v.id))),
+    stores: (c.stores || []).map((v) => mergeVenue(v, indexMap.get(v.id))),
+  }));
 }
 
 function escapeJsString(s) {
@@ -84,33 +165,25 @@ function collectVenueIds(cityData) {
   return ids;
 }
 
-function filterCitiesForVenues(cityData, keepIds) {
-  const out = [];
-  for (const c of cityData) {
-    const cafes = (c.cafes || []).filter((v) => keepIds.has(v.id));
-    const stores = (c.stores || []).filter((v) => keepIds.has(v.id));
-    if (!cafes.length && !stores.length) continue;
-    out.push({
-      ...c,
-      cafes,
-      stores,
-    });
-  }
-  return out;
-}
-
 function main() {
-  if (!fs.existsSync(MSG_A)) throw new Error(`Missing ${MSG_A}`);
-  if (!fs.existsSync(MSG_B)) throw new Error(`Missing ${MSG_B}`);
+  if (!fs.existsSync(VENUES_HTML)) throw new Error(`Missing ${VENUES_HTML}`);
+  if (!fs.existsSync(MSG_NEW_CITIES)) throw new Error(`Missing ${MSG_NEW_CITIES}`);
+  if (!fs.existsSync(MSG_SET3)) throw new Error(`Missing ${MSG_SET3}`);
+
+  const venuesHtml = fs.readFileSync(VENUES_HTML, "utf8");
+  const htmlCities = parseCityData(venuesHtml);
 
   let index = fs.readFileSync(INDEX, "utf8");
   const { expr: cities2expr } = extractJsArraySource(index, "CITIES_SET_TWO");
-  const cityData = (0, eval)(cities2expr);
-  const allVenueIds = collectVenueIds(cityData);
+  const citiesTwo = (0, eval)(cities2expr);
+  const indexMap = indexVenueMap(citiesTwo);
 
-  const msgA = JSON.parse(fs.readFileSync(MSG_A, "utf8"));
-  const msgB = JSON.parse(fs.readFileSync(MSG_B, "utf8"));
-  const mergedRaw = { ...msgA, ...msgB };
+  const citiesThree = mergeCityData(htmlCities, indexMap);
+  const venueIds = collectVenueIds(citiesThree);
+
+  const msgNew = JSON.parse(fs.readFileSync(MSG_NEW_CITIES, "utf8"));
+  const msgSet3 = JSON.parse(fs.readFileSync(MSG_SET3, "utf8"));
+  const mergedRaw = { ...msgNew, ...msgSet3 };
 
   const bodiesByCanon = {};
   const skipped = [];
@@ -121,24 +194,20 @@ function main() {
       skipped.push({ jsonKey, reason: "no body" });
       continue;
     }
-    if (!allVenueIds.has(canon)) {
-      skipped.push({ jsonKey, canon, reason: "not in CITIES_SET_TWO" });
+    if (!venueIds.has(canon)) {
+      skipped.push({ jsonKey, canon, reason: "not in venues.html cityData" });
       continue;
     }
     bodiesByCanon[canon] = text;
   }
-  if (skipped.length) console.warn("Skipped keys:", skipped);
+  if (skipped.length) console.warn("Skipped message keys:", skipped.length, skipped.slice(0, 15));
 
-  const keepIds = new Set(Object.keys(bodiesByCanon));
-  const citiesThree = filterCitiesForVenues(cityData, keepIds);
-  const filteredIds = collectVenueIds(citiesThree);
-
-  const citiesJs = `/** City set three — venues with repaired email / Facebook (catch-up list) */\nvar CITIES_SET_THREE=[\n${citiesThree.map(cityToJs).join(",\n")}\n];`;
+  const citiesJs = `/** City set three — full list from venues.html; contacts merged with city set two when missing; FB URLs normalized */\nvar CITIES_SET_THREE=[\n${citiesThree.map(cityToJs).join(",\n")}\n];`;
 
   const entries = Object.entries(bodiesByCanon)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([id, body]) => `  ${JSON.stringify(id)}:{body:${escapeJsString(body)}}`);
-  const messagesJs = `/** Per-venue messages for city set three (same shape as set one). */\nvar VENUE_MESSAGES_SET_THREE={\n${entries.join(",\n")}\n};`;
+  const messagesJs = `/** Per-venue messages for city set three (new-cities + set3; set3 wins overlaps). */\nvar VENUE_MESSAGES_SET_THREE={\n${entries.join(",\n")}\n};`;
 
   if (index.includes("var CITIES_SET_THREE=")) {
     index = index.replace(/\/\*\* City set three[\s\S]*?\];\n/, citiesJs + "\n");
@@ -147,16 +216,7 @@ function main() {
     if (m3Start < 0 || m3End < 0) throw new Error("VENUE_MESSAGES_SET_THREE block not found for replace");
     index = index.slice(0, m3Start) + messagesJs + index.slice(m3End + "\n};".length);
   } else {
-    const { end: cities2End } = extractJsArraySource(index, "CITIES_SET_TWO");
-    index = index.slice(0, cities2End) + "\n\n" + citiesJs + index.slice(cities2End);
-
-    const m2 = index.indexOf("var VENUE_MESSAGES_SET_TWO=");
-    if (m2 < 0) throw new Error("VENUE_MESSAGES_SET_TWO not found");
-    const msg2Close = "\n};\nfunction getCities";
-    const closeIdx = index.indexOf(msg2Close, m2);
-    if (closeIdx < 0) throw new Error("VENUE_MESSAGES_SET_TWO close anchor not found");
-    const messages2End = closeIdx + "\n};".length;
-    index = index.slice(0, messages2End) + "\n\n" + messagesJs + index.slice(messages2End);
+    throw new Error("CITIES_SET_THREE not found — add block once or restore index.html");
   }
 
   fs.writeFileSync(INDEX, index, "utf8");
@@ -164,10 +224,10 @@ function main() {
     "City set three:",
     citiesThree.length,
     "cities,",
-    filteredIds.size,
+    venueIds.size,
     "venues,",
     Object.keys(bodiesByCanon).length,
-    "messages"
+    "custom messages"
   );
 }
 
