@@ -1319,6 +1319,19 @@ function getVenueMessages(){
   if(ACTIVE_SET==="3")return VENUE_MESSAGES_SET_THREE;
   return ACTIVE_SET==="2"?VENUE_MESSAGES_SET_TWO:VENUE_MESSAGES_SET_ONE;
 }
+/** City set three: hide venues with no email (dataset or saved) and no Facebook URL. */
+function venueHasEmailOrFacebook(v){
+  var em=(CE[v.id]||(v.email||"")).trim();
+  var fb=(v.facebook||"").trim();
+  return em.length>0||fb.length>0;
+}
+function venuesListForCity(c){
+  if(ACTIVE_SET!=="3")return{cafes:c.cafes||null,stores:c.stores||null};
+  var cf=[],sf=[],i;
+  if(c.cafes)for(i=0;i<c.cafes.length;i++)if(venueHasEmailOrFacebook(c.cafes[i]))cf.push(c.cafes[i]);
+  if(c.stores)for(i=0;i<c.stores.length;i++)if(venueHasEmailOrFacebook(c.stores[i]))sf.push(c.stores[i]);
+  return{cafes:cf.length?cf:null,stores:sf.length?sf:null};
+}
 /** When opening a venue site, also open a Google tab: site:that-domain "Contact Us" (browsers block in-page find on other sites). Set false to only open the venue. */
 var OPEN_GOOGLE_CONTACT_SITE_SEARCH=true;
 var venueToastTimer=null;
@@ -1516,7 +1529,7 @@ function loadState(){
   applyActiveBucket();
 }
 
-function allVenues(){var out=[],C=getCities();for(var i=0;i<C.length;i++){var c=C[i];if(c.cafes)for(var j=0;j<c.cafes.length;j++)out.push(c.cafes[j]);if(c.stores)for(var j=0;j<c.stores.length;j++)out.push(c.stores[j]);}return out;}
+function allVenues(){var out=[],C=getCities();for(var i=0;i<C.length;i++){var c=C[i],vl=venuesListForCity(c);if(vl.cafes)for(var j=0;j<vl.cafes.length;j++)out.push(vl.cafes[j]);if(vl.stores)for(var j=0;j<vl.stores.length;j++)out.push(vl.stores[j]);}return out;}
 function isDone(vid){var fs=["phone","email","website","facebook"];for(var i=0;i<fs.length;i++)if(gS(vid,fs[i]).checked)return true;return false;}
 function isSkipped(vid){return gS(vid,"skip").checked;}
 function isFresh(vid){return !isDone(vid)&&!isSkipped(vid);}
@@ -1531,8 +1544,8 @@ function updateUI(){
   document.getElementById("s-left").innerHTML="<em>"+left+"</em> remaining";
   var Ci=getCities();
   for(var i=0;i<Ci.length;i++){
-    var c=Ci[i],arr=[],d=0,s=0;
-    if(c.cafes)arr=arr.concat(c.cafes);if(c.stores)arr=arr.concat(c.stores);
+    var c=Ci[i],vl=venuesListForCity(c),arr=[],d=0,s=0;
+    if(vl.cafes)arr=arr.concat(vl.cafes);if(vl.stores)arr=arr.concat(vl.stores);
     for(var j=0;j<arr.length;j++){if(isDone(arr[j].id))d++;else if(isSkipped(arr[j].id))s++;}
     var pct=arr.length?Math.round((d+s)/arr.length*100):0;
     var pb=document.getElementById("pb_"+c.id);if(pb)pb.style.width=pct+"%";
@@ -1550,8 +1563,9 @@ function updateUI(){
 function buildIdx(){
   var html="",C=getCities();
   for(var i=0;i<C.length;i++){
-    var c=C[i],arr=[],d=0,s=0;
-    if(c.cafes)arr=arr.concat(c.cafes);if(c.stores)arr=arr.concat(c.stores);
+    var c=C[i],vl=venuesListForCity(c),arr=[],d=0,s=0;
+    if(vl.cafes)arr=arr.concat(vl.cafes);if(vl.stores)arr=arr.concat(vl.stores);
+    if(!arr.length)continue;
     for(var j=0;j<arr.length;j++){if(isDone(arr[j].id))d++;else if(isSkipped(arr[j].id))s++;}
     var tot=arr.length,allDone=(d+s===tot&&tot>0),partial=(d+s>0&&!allDone);
     var cls=allDone?"done":partial?"partial":"";
@@ -1703,15 +1717,17 @@ function buildVenue(v,type){
 }
 
 function buildCity(c){
+  var vl=venuesListForCity(c),cafes=vl.cafes,stores=vl.stores;
   var arr=[],d=0,s=0;
-  if(c.cafes)arr=arr.concat(c.cafes);if(c.stores)arr=arr.concat(c.stores);
+  if(cafes)arr=arr.concat(cafes);if(stores)arr=arr.concat(stores);
+  if(!arr.length)return"";
   for(var i=0;i<arr.length;i++){if(isDone(arr[i].id))d++;else if(isSkipped(arr[i].id))s++;}
   var pct=arr.length?Math.round((d+s)/arr.length*100):0;
   var tagMap={major:["tag-major","Metro"],college:["tag-college","College"],convention:["tag-conv","Conv."]};
   var tagHtml="";for(var i=0;i<c.tags.length;i++){var t=tagMap[c.tags[i]];if(t)tagHtml+="<span class='tag "+t[0]+"'>"+t[1]+"</span>";}
   var body="";
-  if(c.cafes&&c.cafes.length){body+="<div class='sub-lbl'>Cafes &amp; Pubs ("+c.cafes.length+")</div>";for(var i=0;i<c.cafes.length;i++)body+=buildVenue(c.cafes[i],"cafe");}
-  if(c.stores&&c.stores.length){body+="<div class='sub-lbl' style='margin-top:4px'>Stores ("+c.stores.length+")</div>";for(var i=0;i<c.stores.length;i++)body+=buildVenue(c.stores[i],"store");}
+  if(cafes&&cafes.length){body+="<div class='sub-lbl'>Cafes &amp; Pubs ("+cafes.length+")</div>";for(var i=0;i<cafes.length;i++)body+=buildVenue(cafes[i],"cafe");}
+  if(stores&&stores.length){body+="<div class='sub-lbl' style='margin-top:4px'>Stores ("+stores.length+")</div>";for(var i=0;i<stores.length;i++)body+=buildVenue(stores[i],"store");}
   return "<div class='city-sec' id='city_"+c.id+"'>"
     +"<div class='city-top'><div class='city-name'>"+c.name+"</div><div class='city-cnt'>"+arr.length+" venues</div></div>"
     +"<div class='city-tags'>"+tagHtml+"</div>"
