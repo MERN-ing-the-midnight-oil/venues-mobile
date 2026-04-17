@@ -1108,11 +1108,16 @@ function venueHasEmailOrFacebook(v){
   var fb=(v.facebook||"").trim();
   return em.length>0||fb.length>0;
 }
+/** Set three roster = keys in VENUE_MESSAGES_SET_THREE (the export); still require a contact channel. */
+function isVenueInSetThreeExport(vid){
+  var vm=getVenueMessages();
+  return vid&&vm[vid]!=null;
+}
 function venuesListForCity(c){
   if(ACTIVE_SET!=="3")return{cafes:c.cafes||null,stores:c.stores||null};
-  var cf=[],sf=[],i;
-  if(c.cafes)for(i=0;i<c.cafes.length;i++)if(venueHasEmailOrFacebook(c.cafes[i]))cf.push(c.cafes[i]);
-  if(c.stores)for(i=0;i<c.stores.length;i++)if(venueHasEmailOrFacebook(c.stores[i]))sf.push(c.stores[i]);
+  var cf=[],sf=[],i,v;
+  if(c.cafes)for(i=0;i<c.cafes.length;i++){v=c.cafes[i];if(isVenueInSetThreeExport(v.id)&&venueHasEmailOrFacebook(v))cf.push(v);}
+  if(c.stores)for(i=0;i<c.stores.length;i++){v=c.stores[i];if(isVenueInSetThreeExport(v.id)&&venueHasEmailOrFacebook(v))sf.push(v);}
   return{cafes:cf.length?cf:null,stores:sf.length?sf:null};
 }
 /** When opening a venue site, also open a Google tab: site:that-domain "Contact Us" (browsers block in-page find on other sites). Set false to only open the venue. */

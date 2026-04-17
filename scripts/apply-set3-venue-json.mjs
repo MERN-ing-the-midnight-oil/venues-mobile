@@ -2,6 +2,9 @@
  * Merges a venue export (name, email, facebook, message) into index.html
  * CITIES_SET_THREE + VENUE_MESSAGES_SET_THREE.
  *
+ * City set 3 in the app only lists venues whose id appears in VENUE_MESSAGES_SET_THREE
+ * (plus email or Facebook for contact). Add a row to the export to show a venue.
+ *
  * Usage: node scripts/apply-set3-venue-json.mjs /path/to/venue-messages-set3.json
  */
 import fs from "fs";
