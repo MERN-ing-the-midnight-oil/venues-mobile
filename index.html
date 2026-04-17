@@ -54,13 +54,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 #tplFlash{font-size:.72rem;color:var(--green);display:none}
 #venue-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 72px);transform:translateX(-50%) translateY(120%);z-index:400;max-width:min(92vw,360px);padding:10px 14px;background:rgba(15,23,42,.92);color:#f8fafc;font-size:.78rem;line-height:1.35;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.25);opacity:0;transition:opacity .25s ease,transform .35s ease;pointer-events:none;text-align:center}
 #venue-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#idx{padding:10px 16px 12px;background:var(--surface);border-bottom:1px solid var(--border)}
-#idx-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:8px}
-#idx-links{display:flex;flex-wrap:wrap;gap:6px}
-.ibtn{padding:0 12px;height:34px;border-radius:17px;background:var(--card);border:1px solid var(--border2);color:var(--sub);font-family:var(--font);font-size:.71rem;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center}
-.ibtn:active{opacity:.7}
-.ibtn.done{background:#ecfdf5;border-color:var(--green);color:var(--green)}
-.ibtn.partial{background:#fffbeb;border-color:var(--accent-dim);color:var(--accent)}
 .city-sec{border-bottom:3px solid var(--bg)}
 .city-top{padding:18px 16px 0;display:flex;align-items:flex-start;gap:10px}
 .city-name{font-size:1rem;font-weight:800;letter-spacing:-.02em;flex:1;line-height:1.2}
@@ -156,10 +149,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
       <span id="tplFlash">Saved!</span>
     </div>
   </div>
-</div>
-<div id="idx">
-  <div id="idx-lbl">Jump to City</div>
-  <div id="idx-links"></div>
 </div>
 <div id="container"></div>
 <div id="all-done">
@@ -1360,27 +1349,11 @@ function updateUI(){
     var el=document.getElementById("vc_"+all[i].id);if(!el)continue;
     el.className="vc"+(isDone(all[i].id)&&!isSkipped(all[i].id)?" is-done":isSkipped(all[i].id)?" is-skip":"");
   }
-  buildIdx();
   var gone=(left===0);
   document.getElementById("all-done").style.display=gone?"flex":"none";
   document.getElementById("fab").style.display=gone?"none":"";
 }
 
-function buildIdx(){
-  var html="",C=getCities();
-  for(var i=0;i<C.length;i++){
-    var c=C[i],vl=venuesListForCity(c),arr=[],d=0,s=0;
-    if(vl.cafes)arr=arr.concat(vl.cafes);if(vl.stores)arr=arr.concat(vl.stores);
-    if(!arr.length)continue;
-    for(var j=0;j<arr.length;j++){if(isDone(arr[j].id))d++;else if(isSkipped(arr[j].id))s++;}
-    var tot=arr.length,allDone=(d+s===tot&&tot>0),partial=(d+s>0&&!allDone);
-    var cls=allDone?"done":partial?"partial":"";
-    var badge=allDone?" v":partial?" "+(d+s)+"/"+tot:"";
-    html+="<button class='ibtn "+cls+"' onclick=\"jumpTo('city_"+c.id+"')\">"+c.name.split(",")[0]+badge+"</button>";
-  }
-  document.getElementById("idx-links").innerHTML=html;
-}
-function jumpTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
 function scrollToNext(skipVid){
   var all=allVenues();
   for(var i=0;i<all.length;i++){
@@ -1561,7 +1534,7 @@ function resetAll(){
   var c=document.getElementById("container");c.innerHTML="";
   var C=getCities();
   for(var i=0;i<C.length;i++)c.innerHTML+=buildCity(C[i]);
-  buildIdx();updateUI();persist();
+  updateUI();persist();
 }
 function clearStoredState(){
   if(!confirm("Clear all saved data on this device? Progress, custom emails, and templates for all city sets will be removed. This cannot be undone."))return;
@@ -1576,7 +1549,7 @@ function clearStoredState(){
   var c=document.getElementById("container");c.innerHTML="";
   var C=getCities();
   for(var i=0;i<C.length;i++)c.innerHTML+=buildCity(C[i]);
-  buildIdx();updateUI();
+  updateUI();
   updateCitySetButtons();
   var ts=document.getElementById("tplSub"),tb=document.getElementById("tplBody");
   if(ts)ts.value=TPL.subject;if(tb)tb.value=TPL.body;
@@ -1607,7 +1580,7 @@ function switchCitySet(id){
   var c=document.getElementById("container");c.innerHTML="";
   var C=getCities();
   for(var i=0;i<C.length;i++)c.innerHTML+=buildCity(C[i]);
-  buildIdx();updateUI();persist();
+  updateUI();persist();
   updateCitySetButtons();
   syncTemplateUiForCitySet();
   var p=document.getElementById("tplPanel");
@@ -1627,7 +1600,6 @@ var container=document.getElementById("container");
 var html="",Ci=getCities();
 for(var i=0;i<Ci.length;i++)html+=buildCity(Ci[i]);
 container.innerHTML=html;
-buildIdx();
 updateUI();
 setTimeout(scrollToNext,400);
 </script>
