@@ -1035,12 +1035,10 @@ var CITIES_SET_THREE=[
    stores:[]}
 ];
 
-var DEFAULT_SUBJECT="Introducing MeepleUp - Free App for Tabletop Gaming Groups";
-var DEFAULT_BODY="Hi,\n\nI'm an indie developer who just launched MeepleUp, a free app that helps tabletop gaming groups coordinate. It handles RSVPs, owned game title browsing and voting, and event messaging all in one place.\n\nGaming groups that you host will probably like it. Please visit https://meepleup.com to learn more, or just dive right in and download \"MeepleUp\" on the App Store or Google Play.\n\nThank you so much for any feedback you can provide. I've spent over a thousand hours building this app. It would mean so much to me to get it in the hands of people who might appreciate it.\n\nSincerely,\nRhys Smoker";
 var SET_STATE={
-  "1":{s:{},ce:{},tpl:{subject:DEFAULT_SUBJECT,body:DEFAULT_BODY}},
-  "2":{s:{},ce:{},tpl:{subject:DEFAULT_SUBJECT,body:DEFAULT_BODY}},
-  "3":{s:{},ce:{},tpl:{subject:DEFAULT_SUBJECT,body:DEFAULT_BODY}}
+  "1":{s:{},ce:{},tpl:{subject:"",body:""}},
+  "2":{s:{},ce:{},tpl:{subject:"",body:""}},
+  "3":{s:{},ce:{},tpl:{subject:"",body:""}}
 };
 var ACTIVE_SET="1";
 var S,CE,TPL;
@@ -1050,7 +1048,7 @@ function applyActiveBucket(){
   TPL=SET_STATE[ACTIVE_SET].tpl;
 }
 applyActiveBucket();
-/** Per-venue outreach copy for city set one (body). Subject defaults to DEFAULT_SUBJECT when omitted. */
+/** Per-venue outreach copy for city set one (body). Omitted subject stays blank. */
 var VENUE_MESSAGES_SET_ONE={};
 /** Per-venue messages for city set two (same shape as set one). */
 var VENUE_MESSAGES_SET_TWO={};
@@ -1140,9 +1138,14 @@ function persist(){
 function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
 function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
 function getComposeSubjectBody(vid){
+  if(ACTIVE_SET==="3"){
+    var c3=vid&&getVenueMessages()[vid];
+    if(!c3)return{subject:"",body:""};
+    return{subject:(c3.subject||"").trim(),body:(c3.body||"").trim()};
+  }
   var custom=vid&&getVenueMessages()[vid];
   if(custom){
-    return{subject:(custom.subject||DEFAULT_SUBJECT).trim(),body:(custom.body||"").trim()};
+    return{subject:(custom.subject||"").trim(),body:(custom.body||"").trim()};
   }
   var p=document.getElementById("tplPanel"),sub,bod;
   if(p&&p.classList.contains("open")){var se=document.getElementById("tplSub"),be=document.getElementById("tplBody");sub=se?se.value:"";bod=be?be.value:"";}
@@ -1287,6 +1290,20 @@ function mergeRecord(dst,src){
     if(Object.prototype.hasOwnProperty.call(src,k))dst[k]=src[k];
   }
 }
+/** City set 3 uses only per-venue JSON bodies — hide Gmail template UI. */
+function syncTemplateUiForCitySet(){
+  var tb=document.getElementById("tplToggle"),p=document.getElementById("tplPanel");
+  if(!tb||!p)return;
+  if(ACTIVE_SET==="3"){
+    p.classList.remove("open");
+    tb.className="hbtn";
+    tb.style.display="none";
+    p.style.display="none";
+  }else{
+    tb.style.display="";
+    p.style.display="";
+  }
+}
 function loadState(){
   try{
     var raw=localStorage.getItem("bgv_state");
@@ -1299,8 +1316,8 @@ function loadState(){
           if(b.s)mergeRecord(SET_STATE[k].s,b.s);
           if(b.ce)mergeRecord(SET_STATE[k].ce,b.ce);
           if(b.tpl){
-            SET_STATE[k].tpl.subject=b.tpl.subject!=null?b.tpl.subject:DEFAULT_SUBJECT;
-            SET_STATE[k].tpl.body=b.tpl.body!=null?b.tpl.body:DEFAULT_BODY;
+            SET_STATE[k].tpl.subject=b.tpl.subject!=null?b.tpl.subject:"";
+            SET_STATE[k].tpl.body=b.tpl.body!=null?b.tpl.body:"";
           }
         }
         mergeSet("1");mergeSet("2");mergeSet("3");
@@ -1308,13 +1325,14 @@ function loadState(){
         if(emb.s)mergeRecord(SET_STATE["1"].s,emb.s);
         if(emb.ce)mergeRecord(SET_STATE["1"].ce,emb.ce);
         if(emb.tpl){
-          SET_STATE["1"].tpl.subject=emb.tpl.subject!=null?emb.tpl.subject:DEFAULT_SUBJECT;
-          SET_STATE["1"].tpl.body=emb.tpl.body!=null?emb.tpl.body:DEFAULT_BODY;
+          SET_STATE["1"].tpl.subject=emb.tpl.subject!=null?emb.tpl.subject:"";
+          SET_STATE["1"].tpl.body=emb.tpl.body!=null?emb.tpl.body:"";
         }
       }
     }
   }catch(e){}
   applyActiveBucket();
+  syncTemplateUiForCitySet();
 }
 
 function allVenues(){var out=[],C=getCities();for(var i=0;i<C.length;i++){var c=C[i],vl=venuesListForCity(c);if(vl.cafes)for(var j=0;j<vl.cafes.length;j++)out.push(vl.cafes[j]);if(vl.stores)for(var j=0;j<vl.stores.length;j++)out.push(vl.stores[j]);}return out;}
@@ -1525,6 +1543,7 @@ function buildCity(c){
 }
 
 function toggleTpl(){
+  if(ACTIVE_SET==="3")return;
   var p=document.getElementById("tplPanel"),b=document.getElementById("tplToggle");
   var open=p.classList.toggle("open");
   b.className="hbtn"+(open?" active":"");
@@ -1548,9 +1567,9 @@ function clearStoredState(){
   if(!confirm("Clear all saved data on this device? Progress, custom emails, and templates for all city sets will be removed. This cannot be undone."))return;
   try{localStorage.removeItem("bgv_state");}catch(e){}
   SET_STATE={
-    "1":{s:{},ce:{},tpl:{subject:DEFAULT_SUBJECT,body:DEFAULT_BODY}},
-    "2":{s:{},ce:{},tpl:{subject:DEFAULT_SUBJECT,body:DEFAULT_BODY}},
-    "3":{s:{},ce:{},tpl:{subject:DEFAULT_SUBJECT,body:DEFAULT_BODY}}
+    "1":{s:{},ce:{},tpl:{subject:"",body:""}},
+    "2":{s:{},ce:{},tpl:{subject:"",body:""}},
+    "3":{s:{},ce:{},tpl:{subject:"",body:""}}
   };
   ACTIVE_SET="1";
   applyActiveBucket();
@@ -1561,6 +1580,7 @@ function clearStoredState(){
   updateCitySetButtons();
   var ts=document.getElementById("tplSub"),tb=document.getElementById("tplBody");
   if(ts)ts.value=TPL.subject;if(tb)tb.value=TPL.body;
+  syncTemplateUiForCitySet();
   showVenueToast("Storage cleared.");
 }
 function downloadHTML(){
@@ -1589,6 +1609,7 @@ function switchCitySet(id){
   for(var i=0;i<C.length;i++)c.innerHTML+=buildCity(C[i]);
   buildIdx();updateUI();persist();
   updateCitySetButtons();
+  syncTemplateUiForCitySet();
   var p=document.getElementById("tplPanel");
   if(p&&p.classList.contains("open")){
     var ts=document.getElementById("tplSub"),tb=document.getElementById("tplBody");
@@ -1601,6 +1622,7 @@ function switchCitySet(id){
 loadState();
 persist();
 updateCitySetButtons();
+syncTemplateUiForCitySet();
 var container=document.getElementById("container");
 var html="",Ci=getCities();
 for(var i=0;i<Ci.length;i++)html+=buildCity(Ci[i]);

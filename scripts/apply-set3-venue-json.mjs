@@ -6,6 +6,8 @@
  * (plus email or Facebook for contact). Add a row to the export to show a venue.
  *
  * Usage: node scripts/apply-set3-venue-json.mjs /path/to/venue-messages-set3.json
+ *
+ * City set 3 compose ignores saved templates; only VENUE_MESSAGES_SET_THREE bodies are used.
  */
 import fs from "fs";
 import { fileURLToPath } from "url";
