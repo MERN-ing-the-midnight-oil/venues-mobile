@@ -130,6 +130,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
       <option value="2">City set two</option>
       <option value="3">City set three</option>
       <option value="4">City set four</option>
+      <option value="5">City set five</option>
     </select>
     <button class="hbtn" id="tplToggle" onclick="toggleTpl()">&#9993; Template</button>
     <button class="hbtn" id="saveBtn" onclick="downloadHTML()">&#10003; Save progress</button>
@@ -1055,11 +1056,971 @@ var CITIES_SET_FOUR=[
    stores:[]}
 ];
 
+var CITIES_SET_FIVE=[
+  {
+    "id": "lexington-ky",
+    "name": "Lexington, KY",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "rustyscabbard",
+        "name": "The Rusty Scabbard",
+        "subloc": "Lane Allen Rd — Lexington staple since 1982, 50+ game library, Wed game nights",
+        "phone": "(859) 278-6634",
+        "email": "",
+        "website": "",
+        "emailNote": "Some directories list old ISP addresses (unverified); Facebook rustyscabbard82",
+        "facebook": "facebook.com/rustyscabbard82/",
+        "facebookNote": ""
+      },
+      {
+        "id": "legendarygames-lex",
+        "name": "Legendary Games",
+        "subloc": "N Ashland Ave (Warehouse Block) — largest play space in area",
+        "phone": "(859) 523-9430",
+        "email": "",
+        "website": "legendarygameslexington.square.site",
+        "emailNote": "VisitLex listing",
+        "facebook": "facebook.com/LegendaryGamesLexington/",
+        "facebookNote": ""
+      },
+      {
+        "id": "tabletoptavern-lex",
+        "name": "Tabletop Tavern",
+        "subloc": "Lexington",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/p/Tabletop-Tavern-61568435997700/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "knoxville-tn",
+    "name": "Knoxville, TN",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "scificity-knox",
+        "name": "Sci-Fi City",
+        "subloc": "Knoxville",
+        "phone": "",
+        "email": "orders@sci-fi-city.com",
+        "website": "",
+        "emailNote": "orders@sci-fi-city.com",
+        "facebook": "facebook.com/SciFiCityKnoxville/",
+        "facebookNote": ""
+      },
+      {
+        "id": "tokengametavern",
+        "name": "Token Game Tavern",
+        "subloc": "Knoxville (Seven Oaks Dr) — tabletop lounge, bar, arcade",
+        "phone": "(865) 770-3870",
+        "email": "",
+        "website": "tokengametavern.com",
+        "emailNote": "Contact form on site",
+        "facebook": "facebook.com/tokengametavern/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "chattanooga-tn",
+    "name": "Chattanooga, TN",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "infinityflux",
+        "name": "Infinity Flux",
+        "subloc": "Chattanooga",
+        "phone": "",
+        "email": "info@infinityflux.net",
+        "website": "infinityflux.net",
+        "emailNote": "",
+        "facebook": "facebook.com/InfinityFluxChattanooga/",
+        "facebookNote": ""
+      },
+      {
+        "id": "epikosccg",
+        "name": "Epikos CCG",
+        "subloc": "Chattanooga area (Brainerd / Northgate)",
+        "phone": "(423) 531-4184",
+        "email": "",
+        "website": "epikosccg.com",
+        "emailNote": "",
+        "facebook": "facebook.com/EpikosCCG/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "buffalo-ny",
+    "name": "Buffalo, NY",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "darkforest-buf",
+        "name": "Dark Forest Games",
+        "subloc": "North Tonawanda — Buffalo area; Oliver St",
+        "phone": "(716) 243-2849",
+        "email": "darkforestgamesnt@gmail.com",
+        "website": "darkforestgamesnt.com",
+        "emailNote": "Wargames.com / store listing",
+        "facebook": "facebook.com/darkforestgames",
+        "facebookNote": ""
+      },
+      {
+        "id": "casualdragon-buf",
+        "name": "Casual Dragon Games",
+        "subloc": "Buffalo area",
+        "phone": "",
+        "email": "",
+        "website": "casualdragongames.com",
+        "emailNote": "",
+        "facebook": "facebook.com/casualdragongames/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "boise-id",
+    "name": "Boise, ID",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "fantasticgames",
+        "name": "Fantastic Games",
+        "subloc": "Downtown Boise (N 8th St) — large board game + puzzle selection",
+        "phone": "(208) 345-0204",
+        "email": "",
+        "website": "fantasticgamesboise.com",
+        "emailNote": "Contact via phone or website",
+        "facebook": "facebook.com/thevoiceofgaming/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "madison-wi",
+    "name": "Madison, WI",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "rollplay-mad2",
+        "name": "Roll Play",
+        "subloc": "Garver Green, Madison",
+        "phone": "(608) 960-8286",
+        "email": "",
+        "website": "rollplay.shop",
+        "emailNote": "Community game nights",
+        "facebook": "facebook.com/rollplaygarver/",
+        "facebookNote": ""
+      },
+      {
+        "id": "netherworld",
+        "name": "Netherworld Games",
+        "subloc": "Madison, WI",
+        "phone": "(608) 255-4263",
+        "email": "",
+        "website": "",
+        "emailNote": "No website — call",
+        "facebook": "facebook.com/NetherWorld/",
+        "facebookNote": ""
+      },
+      {
+        "id": "nobleknight",
+        "name": "Noble Knight Games",
+        "subloc": "Fitchburg / Madison area",
+        "phone": "(608) 758-9901",
+        "email": "",
+        "website": "nobleknight.com",
+        "emailNote": "",
+        "facebook": "facebook.com/nobleknightgames/",
+        "facebookNote": ""
+      },
+      {
+        "id": "imboard-mid",
+        "name": "I'm Board!",
+        "subloc": "Middleton / Madison area",
+        "phone": "",
+        "email": "",
+        "website": "imboardgames.com",
+        "emailNote": "",
+        "facebook": "facebook.com/ImBoardGames/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "des-moines-ia",
+    "name": "Des Moines, IA",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "rookroom-dsm",
+        "name": "Rook Room Game Lounge & Cafe",
+        "subloc": "Des Moines",
+        "phone": "",
+        "email": "",
+        "website": "therookroom.com",
+        "emailNote": "",
+        "facebook": "facebook.com/therookroom/",
+        "facebookNote": ""
+      },
+      {
+        "id": "mayhem-dsm",
+        "name": "Mayhem Comics & Games",
+        "subloc": "Des Moines",
+        "phone": "",
+        "email": "",
+        "website": "mayhemcomics.com",
+        "emailNote": "",
+        "facebook": "facebook.com/mayhemcomics/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "wichita-ks",
+    "name": "Wichita, KS",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "sente-ict",
+        "name": "Sente: Games & Refreshments",
+        "subloc": "Wichita",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/senteICT/",
+        "facebookNote": ""
+      },
+      {
+        "id": "pinkelephant-ict",
+        "name": "Pink Elephant Games & Cafe",
+        "subloc": "Wichita",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/p/Pink-Elephant-Games-and-Cafe-100039086185124/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "columbus-oh",
+    "name": "Columbus, OH area",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "hexagonalley-col",
+        "name": "Hexagon Alley",
+        "subloc": "Columbus area",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/hexagonalley/",
+        "facebookNote": ""
+      },
+      {
+        "id": "firefly-col",
+        "name": "Firefly Toys & Games",
+        "subloc": "Westerville / Columbus area",
+        "phone": "",
+        "email": "FireflyToysandGames@gmail.com",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/FireflyToysandGames/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "ne-ohio",
+    "name": "Northeast Ohio",
+    "tags": [
+      "major"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "cavernsforests",
+        "name": "Caverns & Forests Board Game Cafe",
+        "subloc": "Minerva / NE Ohio board game cafe",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/cavernsandforests/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "huntsville-al",
+    "name": "Huntsville, AL",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "highground-hsv",
+        "name": "High Ground Hobbies and Cafe",
+        "subloc": "Huntsville",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/HighGroundHobbies/",
+        "facebookNote": ""
+      },
+      {
+        "id": "thedeep-hsv",
+        "name": "The Deep Comics & Games",
+        "subloc": "Huntsville",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/deepcomics/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "hartford-ct",
+    "name": "Hartford, CT area",
+    "tags": [
+      "major"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "backagain-ct",
+        "name": "Back Again Board Game Cafe",
+        "subloc": "Newington, CT",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/backagaincafe/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "tacoma-wa",
+    "name": "Tacoma, WA",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "fifteenpct-tac",
+        "name": "The 15% Board Game Cafe",
+        "subloc": "Tacoma",
+        "phone": "",
+        "email": "15percentbgcafe@gmail.com",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/p/The-15-Board-Game-Café-100091505171382/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "greensboro-nc",
+    "name": "Greensboro, NC",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "dragonshoard-gso",
+        "name": "Dragon's Hoard",
+        "subloc": "Greensboro, NC",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/dragonshoardnc/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "fayetteville-nc",
+    "name": "Fayetteville, NC",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "gameon-fay",
+        "name": "Game On! Cards and Coffee",
+        "subloc": "Fayetteville, NC",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/GameOnNC/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "el-paso-tx",
+    "name": "El Paso, TX",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "gamevault-ep",
+        "name": "Game Vault",
+        "subloc": "El Paso",
+        "phone": "",
+        "email": "gamevaultelpaso@gmail.com",
+        "website": "gamevaultelpaso.com",
+        "emailNote": "",
+        "facebook": "facebook.com/gamevaultelpaso/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "baton-rouge-la",
+    "name": "Baton Rouge, LA",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "littlewars-br",
+        "name": "Little Wars",
+        "subloc": "Baton Rouge",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/littlewarsbr/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "sioux-falls-sd",
+    "name": "Sioux Falls, SD",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "gamechest-sf",
+        "name": "SF Game Chest",
+        "subloc": "Sioux Falls",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/sfgamechest/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "tucson-az",
+    "name": "Tucson, AZ",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "hauntedgamecafe",
+        "name": "The Haunted Game Cafe",
+        "subloc": "Tucson",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/thehauntedgamecafe/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "pittsburgh-pa",
+    "name": "Pittsburgh, PA area",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "villagemeeple",
+        "name": "Village Meeple Board Game Cafe",
+        "subloc": "McMurray / Pittsburgh area",
+        "phone": "",
+        "email": "info@villagemeeple.com",
+        "website": "villagemeeple.com",
+        "emailNote": "",
+        "facebook": "facebook.com/VillageMeepleBoardGameCafe/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "peoria-il",
+    "name": "Peoria, IL",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "justforfun-peoria",
+        "name": "Just For Fun Games",
+        "subloc": "Peoria, IL",
+        "phone": "(309) 686-7720",
+        "email": "",
+        "website": "justforfungames.net",
+        "emailNote": "Contact form on site; Peoria's largest hobby game store",
+        "facebook": "facebook.com/JustForFunGames",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "grand-rapids-mi",
+    "name": "Grand Rapids, MI",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "houserules-gr",
+        "name": "House Rules Board Game Lounge",
+        "subloc": "Grand Rapids, MI",
+        "phone": "",
+        "email": "play@houseruleslounge.com",
+        "website": "houseruleslounge.com",
+        "emailNote": "",
+        "facebook": "facebook.com/houseruleslounge/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "lynn-ma",
+    "name": "Lynn, MA",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "meeples-lyn",
+        "name": "Meeples! Cafe & Games",
+        "subloc": "Lynn, MA",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/usmeeples/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "tallahassee-fl",
+    "name": "Tallahassee, FL",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "courtyardcafe-tal",
+        "name": "Courtyard Cafe & Games",
+        "subloc": "Tallahassee",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/greatgameslibrary/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "gainesville-fl",
+    "name": "Gainesville, FL",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "punkouter-gnv",
+        "name": "PunkOuter Games",
+        "subloc": "Gainesville, FL",
+        "phone": "(352) 234-3415",
+        "email": "support@punkouter.com",
+        "website": "punkouter.com",
+        "emailNote": "Contact page on site",
+        "facebook": "facebook.com/PunkOuterGames",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "duluth-mn",
+    "name": "Duluth, MN",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "lochcafe-dul",
+        "name": "The Loch Café & Games",
+        "subloc": "Duluth, MN",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/thelochcafeduluth/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "appleton-wi",
+    "name": "Appleton, WI",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "boardlandia-app",
+        "name": "Boardlandia",
+        "subloc": "Appleton, WI",
+        "phone": "",
+        "email": "appleton@boardlandia.com",
+        "website": "boardlandia.com",
+        "emailNote": "",
+        "facebook": "",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "green-bay-wi",
+    "name": "Green Bay, WI",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "gnomegames-gb",
+        "name": "Gnome Games Green Bay West",
+        "subloc": "Green Bay, WI",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/GnomeGames/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "fort-wayne-in",
+    "name": "Fort Wayne, IN",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "summit-fw",
+        "name": "Summit Comics & Games",
+        "subloc": "Fort Wayne, IN",
+        "phone": "",
+        "email": "",
+        "website": "",
+        "emailNote": "Contact via Facebook",
+        "facebook": "facebook.com/SummitComicsGames/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "spokane-wa",
+    "name": "Spokane, WA",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "sagesportal-spk",
+        "name": "Sage's Portal Board Game Café",
+        "subloc": "Spokane",
+        "phone": "",
+        "email": "",
+        "website": "sagesportalcafe.com",
+        "emailNote": "",
+        "facebook": "facebook.com/sagesportal/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "indianapolis-in",
+    "name": "Indianapolis, IN",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "elfnmoon",
+        "name": "Elf & Moon",
+        "subloc": "Indianapolis",
+        "phone": "",
+        "email": "hello@elfandmoon.com",
+        "website": "elfandmoon.com",
+        "emailNote": "",
+        "facebook": "",
+        "facebookNote": ""
+      },
+      {
+        "id": "hitherto",
+        "name": "Hitherto",
+        "subloc": "Greenfield / Indianapolis area",
+        "phone": "",
+        "email": "info@hithertogames.com",
+        "website": "hithertogames.com",
+        "emailNote": "",
+        "facebook": "",
+        "facebookNote": ""
+      },
+      {
+        "id": "goodgames-indy",
+        "name": "Good Games Indianapolis",
+        "subloc": "Indianapolis",
+        "phone": "",
+        "email": "indy@goodgamesna.com",
+        "website": "goodgamesna.com",
+        "emailNote": "",
+        "facebook": "",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "portland-or",
+    "name": "Portland, OR",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "battlegrounds-pdx",
+        "name": "Battle Grounds Gaming Cafe",
+        "subloc": "NE Sandy Blvd, Portland",
+        "phone": "(971) 383-3775",
+        "email": "quest@battlegroundsgamingcafe.com",
+        "website": "battlegroundsgamingcafe.com",
+        "emailNote": "",
+        "facebook": "facebook.com/p/Battle-Grounds-Gaming-Cafe-100094667113186/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "eugene-or",
+    "name": "Eugene, OR",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "funagain-eugene",
+        "name": "Funagain Games",
+        "subloc": "Eugene, OR",
+        "phone": "",
+        "email": "carym@funagain.com",
+        "website": "funagain.com",
+        "emailNote": "",
+        "facebook": "facebook.com/FunagainGamesEugene/",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  },
+  {
+    "id": "seattle-wa",
+    "name": "Seattle, WA area",
+    "tags": [
+      "major",
+      "college"
+    ],
+    "researched": true,
+    "cafes": [
+      {
+        "id": "mox-sea",
+        "name": "Mox Boarding House",
+        "subloc": "Ballard, Seattle",
+        "phone": "(206) 523-9605",
+        "email": "",
+        "website": "moxboardinghouse.com/pages/seattle",
+        "emailNote": "Contact form on site",
+        "facebook": "facebook.com/MoxBoardingHouseSeattle/",
+        "facebookNote": ""
+      },
+      {
+        "id": "mox-bel",
+        "name": "Mox Boarding House",
+        "subloc": "Bellevue, WA",
+        "phone": "(425) 326-3050",
+        "email": "",
+        "website": "moxboardinghouse.com/pages/bellevue",
+        "emailNote": "Contact form on site",
+        "facebook": "facebook.com/MoxBoardingHouseBellevue/",
+        "facebookNote": ""
+      },
+      {
+        "id": "meeples",
+        "name": "Meeples Games",
+        "subloc": "West Seattle",
+        "phone": "(206) 535-7896",
+        "email": "info@meeplesgames.com",
+        "website": "meeplesgames.com",
+        "emailNote": "",
+        "facebook": "",
+        "facebookNote": ""
+      }
+    ],
+    "stores": []
+  }
+];
+
 var SET_STATE={
   "1":{s:{},ce:{},tpl:{subject:"",body:""}},
   "2":{s:{},ce:{},tpl:{subject:"",body:""}},
   "3":{s:{},ce:{},tpl:{subject:"",body:""}},
-  "4":{s:{},ce:{},tpl:{subject:"",body:""}}
+  "4":{s:{},ce:{},tpl:{subject:"",body:""}},
+  "5":{s:{},ce:{},tpl:{subject:"",body:""}}
 };
 var ACTIVE_SET="1";
 var S,CE,TPL;
@@ -1077,17 +2038,21 @@ var VENUE_MESSAGES_SET_TWO={"mox-sea":{"subject":"","body":"Hi there, hope all i
 /** Per-venue messages for city set three (from venue export JSON). */
 var VENUE_MESSAGES_SET_THREE={"battleground-mpls":{"body":"Hi there, hope the battleground is full tonight.\n\nI'm writing to ask if you'd try MeepleUp with your Monday night crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. If The Battleground Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it clicks with your crowd, the best thing you could do is mention it to another venue owner you think would get it. A rating on the App Store or Google Play is always welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"battlegrounds-pdx":{"subject":"Battle Stations: MeepleUp","body":"Hi there, hope the battlegrounds are keeping your coffee warm.\n\nI'm writing to ask if you'd give MeepleUp a try with your open gaming crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Battle Grounds Gaming Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours building this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix problems, not have them show up in ratings. If it resonates, the thing that would help most is a word to another venue owner who runs game nights. A rating on the App Store or Google Play is a bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"blackpotion":{"subject":"","body":"Hi there potion pals, hope all is well in your cauldron.\n\nI'm writing to ask if you'd be willing to give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks, so they show up knowing what they're playing instead of working it out when they sit down. Your library can be synced straight from BoardGameGeek, or the app can read it from photos of your shelves.\n\nI've spent over a thousand hours on this and I'm in early release — which means I almost certainly still have bugs I don't know about yet. If anything feels off, please email contact@meepleup.com before leaving a review. I'd much rather fix it. If it works well, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"boardbard":{"body":"Hi there, hope the bard is singing well over in Montavilla.\n\nI'm writing to ask if you'd try MeepleUp with your open gaming crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. If Board Bard Games is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it lands well, passing it along to another owner you respect would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"boardtobeers":{"subject":"","body":"Hi there, hope the beers are cold and the boards are full.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If Board to Beers is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it all works, a rating on the App Store or Google Play would genuinely help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"bonusround":{"body":"Hi there, hope you're hitting the bonus round every day over on Clark.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Bonus Round Game Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nOver a thousand hours in and I'm in early release — which means I'm probably still sitting on bugs I don't know about. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works for your regulars, telling another owner about it would mean more to me than anything. And a rating on the App Store or Google Play, if you're so inclined, helps as well.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"brooklynstrategist":{"body":"Hi there, hope the strategists are out in force in downtown Brooklyn.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. If The Brooklyn Strategist is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nOver a thousand hours in and I'm in early release — which means I'm probably still sitting on bugs I don't know about. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works for your regulars, telling another owner about it would mean more to me than anything. And a rating on the App Store or Google Play, if you're so inclined, helps as well.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"commonground":{"body":"Hi there, hope you're finding plenty of common ground in Dallas today.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it clicks with your crowd, the best thing you could do is mention it to another venue owner you think would get it. A rating on the App Store or Google Play is always welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"coralsword":{"body":"Hi there, hope the coral sword is glowing in the East End today.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. If Coral Sword is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it lands well, passing it along to another owner you respect would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"darbysdungeon":{"subject":"","body":"Hello there dungeon crawlers.\n\nI'm writing to ask if you'd try MeepleUp with your open gaming crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they walk in knowing what they're playing instead of figuring it out after they sit down.\n\nI've spent over a thousand hours on this and I'm in early release — there are probably still bugs to find. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works well, a rating on either app store would be a real help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"dogooder":{"body":"Hi there, hope the doing of good is going well today.\n\nI'm writing to ask if you'd give MeepleUp a try with your open gaming crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If Do Gooder Games Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nOver a thousand hours in and I'm in early release — which means I'm probably still sitting on bugs I don't know about. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works for your regulars, telling another owner about it would mean more to me than anything. And a rating on the App Store or Google Play, if you're so inclined, helps as well.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"enchanted-hr":{"body":"Hi there, hope the grounds are as enchanted as ever.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Enchanted Grounds is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it clicks with your crowd, the best thing you could do is mention it to another venue owner you think would get it. A rating on the App Store or Google Play is always welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"foxden":{"body":"Hi there, hope the den is cozy today.\n\nI'm writing to ask if you'd give MeepleUp a try with your open gaming crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Fox Den Board Game Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nThis has been over a thousand hours of work and I'm still in early release. If anything breaks, please email contact@meepleup.com before leaving a review. I'd rather fix it quietly. If it lands, mentioning it to someone else in the space would go further than a review. Though a rating on the App Store or Google Play is still very welcome.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gamengrounds":{"body":"Hi there, hope the grounds are good and the games are flowing.\n\nWould you give MeepleUp a try with your open gaming crowd? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If Game n' Grounds is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it clicks with your crowd, the best thing you could do is mention it to another venue owner you think would get it. A rating on the App Store or Google Play is always welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"geekyteas":{"body":"Hi there, hope the teas are geeky and the cats are content.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it lands well, passing it along to another owner you respect would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"goldenguild":{"body":"Hi there, hope the guild is thriving in downtown Golden.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. If Golden Game Guild is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours building this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix problems, not have them show up in ratings. If it resonates, the thing that would help most is a word to another venue owner who runs game nights. A rating on the App Store or Google Play is a bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"goldenkeep-lou":{"subject":"","body":"Hello Golden folks, hope the keep is keeping.\n\nWould you be up for trying MeepleUp with your Monday crowd? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they arrive knowing what they're playing instead of figuring it out when everyone sits down.\n\nI've spent over a thousand hours on this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I'd rather fix it quietly. If everything works well, a rating on the App Store or Google Play would go a long way.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"javagamehaus":{"subject":"","body":"Hope everything is good in your Haus.\n\nDo you have groups that come back regularly and have to figure out what to play together when they arrive? That's the scenario I built MeepleUp around — it's a free app where members RSVP between sessions, nominate games from a shared library, and vote on each other's picks, so they arrive knowing what they're playing instead of browsing after they sit down. If Java Game Haus is on BoardGameGeek, the library syncs in one shot — or the app can read it from photos of your shelves.\n\nI've spent over a thousand hours on this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix bugs, not have them show up in ratings. If it works well, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"kitchentable":{"body":"Hi there, hope the kitchen table is full of good games and good food.\n\nI'm writing to ask if you'd give MeepleUp a try with your gametender crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If The Kitchen Table is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours building this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix problems, not have them show up in ratings. If it resonates, the thing that would help most is a word to another venue owner who runs game nights. A rating on the App Store or Google Play is a bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"labyrinthdc":{"body":"Hi there, hope Capitol Hill is finding its way through the labyrinth today.\n\nI'm writing to ask if you'd give MeepleUp a try with your open gaming crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If Labyrinth Game Shop is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nThis has been over a thousand hours of work and I'm still in early release. If anything breaks, please email contact@meepleup.com before leaving a review. I'd rather fix it quietly. If it lands, mentioning it to someone else in the space would go further than a review. Though a rating on the App Store or Google Play is still very welcome.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"lodestone":{"body":"Hi there, hope the lodestone is drawing a good crowd.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it lands well, passing it along to another owner you respect would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"meepleville":{"subject":"","body":"Greetings from outside the ville.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they show up knowing what they're playing instead of spending time in front of the shelves. With a collection your size that decision can take a while, so the voting does real work. If Meepleville is on BoardGameGeek the library syncs in one shot — if not, AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review. I'd much rather fix it first. If it all works, a rating on the App Store or Google Play would be genuinely meaningful.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"missing":{"body":"Hi there, hope you found your piece today.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If The Missing Piece Games is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it lands well, passing it along to another owner you respect would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"motherofdragons":{"body":"Hi there, hope the dragons are behaving themselves in South Charlotte.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've spent over a thousand hours building this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix problems, not have them show up in ratings. If it resonates, the thing that would help most is a word to another venue owner who runs game nights. A rating on the App Store or Google Play is a bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"offtheshelf":{"body":"Hi there, hope the shelves are full and the tables are busy in El Cajon.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Off the Shelf Games is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nThis has been over a thousand hours of work and I'm still in early release. If anything breaks, please email contact@meepleup.com before leaving a review. I'd rather fix it quietly. If it lands, mentioning it to someone else in the space would go further than a review. Though a rating on the App Store or Google Play is still very welcome.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"paladins":{"body":"Hi there, hope the league is full tonight.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. If The Paladins League is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nOver a thousand hours in and I'm in early release — which means I'm probably still sitting on bugs I don't know about. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works for your regulars, telling another owner about it would mean more to me than anything. And a rating on the App Store or Google Play, if you're so inclined, helps as well.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"pawnpint":{"body":"Hi there, hope the pawn is holding strong and the pint is cold.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If Pawn and Pint is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nOver a thousand hours in and I'm in early release — which means I'm probably still sitting on bugs I don't know about. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works for your regulars, telling another owner about it would mean more to me than anything. And a rating on the App Store or Google Play, if you're so inclined, helps as well.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"redcastle":{"body":"Hi there, hope the castle is well defended today.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nThis has been over a thousand hours of work and I'm still in early release. If anything breaks, please email contact@meepleup.com before leaving a review. I'd rather fix it quietly. If it lands, mentioning it to someone else in the space would go further than a review. Though a rating on the App Store or Google Play is still very welcome.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"sagesportal":{"subject":"","body":"Hi there, hope the portal is open and the boba is good.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've spent over a thousand hours building this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix problems, not have them show up in ratings. If everything works well, a rating on the App Store or Google Play would be a real help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"shufflestulsa":{"subject":"Shuffle Up and MeepleUp","body":"Hi there, hope the shuffling is going well in the Arts District.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Shuffles Board Game Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it works well, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"silverkey":{"body":"Hi there, hope the silver key is unlocking a good night in Mesa.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've spent over a thousand hours building this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix problems, not have them show up in ratings. If it resonates, the thing that would help most is a word to another venue owner who runs game nights. A rating on the App Store or Google Play is a bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"spielbound":{"subject":"","body":"Hi there, hope you're all still bound to play.\n\nI'm writing to ask if you'd try MeepleUp with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they show up knowing what they're playing instead of browsing after they sit down. With a collection your size, the fastest path is probably syncing straight from BoardGameGeek if Spielbound is already listed there — if not, AI photo recognition can read the shelves.\n\nI've spent over a thousand hours on this and I'm in early release. If anything feels off, please email contact@meepleup.com before leaving a review — I want to get this right. If it works well, a rating on either app store would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"tabletopcleve":{"subject":"","body":"Hi there, hope everyone's nicely unplugged over on West 25th.\n\nI'm writing to ask if you'd give MeepleUp a try with your crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If Tabletop Board Game Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it all works, a rating on the App Store or Google Play would genuinely help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"tanuki":{"body":"Hi there, hope the tanuki is bringing good fortune today.\n\nI'm writing to ask if you'd try MeepleUp with your open gaming crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it clicks with your crowd, the best thing you could do is mention it to another venue owner you think would get it. A rating on the App Store or Google Play is always welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"unpluggedrva":{"subject":"","body":"Hi there, hope everyone's nicely unplugged out in Midlothian.\n\nWould you give MeepleUp a try with your Board Game Social crowd? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Unplugged Games Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it works well, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"victorypointcafe":{"body":"Hi there, hope the victory points are piling up in Berkeley.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. If Victory Point Cafe is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nThis has been over a thousand hours of work and I'm still in early release. If anything breaks, please email contact@meepleup.com before leaving a review. I'd rather fix it quietly. If it lands, mentioning it to someone else in the space would go further than a review. Though a rating on the App Store or Google Play is still very welcome.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"knightwatch":{"subject":"","body":"Hello Knights, hope the watching is going well.\n\nWould you give MeepleUp a spin with your open play crowd? It's a free app I built for groups that game together regularly — members RSVP, nominate games from a shared library, and vote, so the game is decided before anyone walks in.\n\nI've spent over a thousand hours on this and I'm in early release, so there are probably still bugs I haven't found. If anything breaks, please email contact@meepleup.com before leaving a review — I'd rather fix it than have it count against me. If it works well, a rating on the App Store or Google Play would genuinely help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"nolandbeyond":{"subject":"Beyond the Table: MeepleUp","body":"Hope all is well in your Land.\n\nI'm writing to ask if you'd be willing to give MeepleUp a try. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they arrive knowing what they're playing instead of working it out after they sit down. If No Land Beyond is on BoardGameGeek, the whole library syncs in one go — or the app can read your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release, still chasing bugs. If anything feels off, please email contact@meepleup.com before leaving a review. I'd rather fix it. If it works well, a rating on either app store would go a long way.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"misosgameroom":{"subject":"Miso Hungry for MeepleUp","body":"Hi there, hope the room is full.\n\nI'm writing to ask if you'd give MeepleUp a try with your open play regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks, so they show up knowing what they're playing instead of working it out after they sit down. If Miso's is on BoardGameGeek, the library comes in fast — or the app can scan your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release, so there are probably bugs I haven't found yet. If anything breaks, please email contact@meepleup.com before leaving a review — I want to fix them, not bury them. If it works well, a rating on either app store would be a real help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"galaxygamecafe":{"subject":"","body":"Greetings from across the galaxy.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between visits, nominate games from a shared library, and vote on each other's picks, so they arrive knowing what they're playing instead of browsing after they sit down. If Galaxy Game Cafe is on BoardGameGeek the library syncs straight in — or AI can read the shelves from photos.\n\nI've spent over a thousand hours on this and I'm still finding bugs in early release. If you hit one, please email contact@meepleup.com before leaving a review — happy to fix it fast. If it all works, a rating on the App Store or Google Play would mean a lot to a solo dev.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gamegetaway":{"subject":"The App for Your Game Getaway","body":"Hope the getaway is going well.\n\nI'm writing to ask if you'd try MeepleUp with your Friday night crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from the Wall, and vote, so by Friday everyone already knows what they're playing instead of working it out when they arrive. If The Game Getaway is on BoardGameGeek it syncs straight in — or AI photo recognition can read the Wall directly.\n\nI've spent over a thousand hours on this and I'm in early release. If anything feels off, please email contact@meepleup.com before leaving a review — I'd rather fix it than have it show up in a rating. If it works well, a rating on the App Store or Google Play would be a real help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"sidequestokc":{"subject":"","body":"Hi there, hope the side quest is going well.\n\nWould you give MeepleUp a try? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they arrive knowing what they're playing instead of figuring it out after they sit down. If Side Quest is on BoardGameGeek the library syncs in easily — or the app can read your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release. If anything breaks, please email contact@meepleup.com before leaving a review — I want to fix bugs, not have them count against me. If it works well, a rating on the App Store or Google Play would be genuinely meaningful.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"shortrest":{"subject":"","body":"Hope you're all rested — or at least short-rested.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they show up knowing what they're playing instead of working it out after they sit down. If Short Rest Tavern is on BoardGameGeek the library comes in fast — or AI can read your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — I'd rather fix it. If it works well, a rating on the App Store or Google Play would genuinely help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"empirebgl":{"subject":"","body":"Greetings from the empire's outer reaches.\n\nWould you be willing to give MeepleUp a try? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they arrive knowing what they're playing and your staff can focus on teaching rather than helping the group decide. Your collection is already catalogued on BoardGameGeek, which means getting it into the app would take almost no time at all.\n\nI've spent over a thousand hours on this and I'm in early release. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it first. If it works well, a rating on the App Store or Google Play would be a real help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"dungeonsjavas":{"subject":"Dungeons, Javas, and MeepleUp","body":"Hi there, hope the javas are strong and the dungeons are clear.\n\nI'm writing to ask if you'd try MeepleUp with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they show up knowing what they're playing instead of deciding after they sit down. If Dungeons & Javas is on BoardGameGeek it syncs in quickly — or AI can read your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release, still squashing bugs. If anything doesn't feel right, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it works well, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"beerforthemeeples":{"subject":"Beer for the Meeples, App for the Group","body":"Hi there, hope the beer is cold and the meeples are thirsty.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they arrive knowing what they're playing instead of spending time at the shelves. Getting 800+ games into the app is easier than it sounds — if Beer for the Meeples is on BoardGameGeek it syncs in one shot, or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release. If anything breaks, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it works well, a rating on the App Store or Google Play would go a long way.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"owlbearsrest":{"subject":"","body":"Hi there, hope all is restful at the owlbear's.\n\nI'm writing to ask if you'd give MeepleUp a try. It's a free app I built for groups that game together regularly — members RSVP between visits, nominate games from a shared library, and vote, so they arrive knowing what they're playing instead of figuring it out after they sit down. If Owlbear's Rest is on BoardGameGeek the library syncs in easily — or AI can read your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release, still finding bugs. If anything doesn't work right, please email contact@meepleup.com before leaving a review — I'd rather fix it. If it all works, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"rollwithit":{"subject":"","body":"Hi there, hope you're rolling well.\n\nWould you try MeepleUp with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote, so they show up knowing what they're playing instead of working it out after they sit down. If Roll with It is on BoardGameGeek the library comes in fast — or the app can scan your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it first. If it works well, a rating on either app store would go a long way.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"wellplayed":{"subject":"Well Played — Now Try MeepleUp","body":"Hi there, hope it's all been well played.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between visits, nominate games from a shared library, and vote, so they arrive already knowing what they're playing and your Gamemasters can focus on teaching rather than helping the group decide. If Well Played is on BoardGameGeek the library syncs straight in — or AI can read your shelves from photos.\n\nI've spent over a thousand hours on this and I'm in early release. If anything breaks, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it works well, a rating on the App Store or Google Play would really help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"knightanddaygames":{"subject":"MeepleUp, Day and Knight","body":"Hi there, hope every day at Knight & Day is a good one.\n\nI'm writing to ask if you'd give MeepleUp a try with your board game night crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Knight & Day Games is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it works well, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"edmondunplugged":{"subject":"","body":"Hi there, hope everyone's happily unplugged over in Edmond.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If Edmond Unplugged is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've put over a thousand hours into this and I'm in early release. If anything doesn't work right, please email contact@meepleup.com before leaving a review — a bug I know about is one I can fix. If it all works, a rating on the App Store or Google Play would genuinely help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"isleofgames":{"subject":"","body":"Hi there, hope the isle is full of good games today.\n\nI'm writing to ask if you'd try MeepleUp with your open play crowd. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so the game is decided before anyone walks in. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nOver a thousand hours in and I'm in early release — which means I'm probably still sitting on bugs I don't know about. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works well, a rating on either app store would go a long way.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"fiftyNiner":{"subject":"","body":"Hi there, hope the fifty-niners are finding gold tonight.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. Getting your library in is easy — AI reads games from shelf photos, or syncs from BoardGameGeek if you're already listed there.\n\nI've spent over a thousand hours building this and I'm in early release. If something doesn't feel right, please email contact@meepleup.com before leaving a review — I want to fix problems, not have them show up in ratings. If everything works well, a rating on the App Store or Google Play would be a real help.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"onehaven":{"subject":"","body":"Hi there, hope One Haven is living up to its name today.\n\nI'm writing to ask if you'd give MeepleUp a try with your regulars. It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote on each other's picks — so they show up knowing what they're playing instead of working it out when they sit down. If One Haven is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nThis has been over a thousand hours of work and I'm still in early release. If anything breaks, please email contact@meepleup.com before leaving a review. I'd rather fix it quietly. If it works well, a rating on the App Store or Google Play would mean a lot to a solo dev.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"cantongames":{"subject":"Canton's Next Move: MeepleUp","body":"Hi there, hope Canton is treating you well.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Canton Games is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nI've spent over a thousand hours on this and I'm in early release, so there are almost certainly bugs I haven't found yet. If anything feels off, please email contact@meepleup.com before leaving a review — I'd much rather fix it. If it works well, a rating on the App Store or Google Play would mean a lot.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gamehavenslc":{"subject":"","body":"Hi there, hope the haven is living up to its name.\n\nWould you give MeepleUp a try with your open gaming crowd? It's a free app I built for groups that game together regularly — members RSVP between sessions, nominate games from a shared library, and vote — so they arrive knowing what they're playing instead of figuring it out after they sit down. If Game Haven is on BoardGameGeek the library syncs in one shot — or AI photo recognition can read the shelves directly.\n\nOver a thousand hours in and I'm in early release — which means I'm probably still sitting on bugs I don't know about. If you hit one, please email contact@meepleup.com before leaving a review. Much better for both of us if I can fix it first. If it works well, a rating on either app store would go a long way.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"}};
 var VENUE_MESSAGES_SET_FOUR={"villainous-lex":{"subject":"","body":"Hi there — love the name. Every great villain deserves a worthy crew.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — the idea is that your people RSVP, nominate games from a shared library, vote on what to play, and show up already knowing what's hitting the table. Cuts out the usual twenty minutes of \"so what are we playing tonight.\"\n\nFull disclosure: MeepleUp is an early release, and it's been 1,000+ hours of solo work. If something feels off, I'd genuinely rather hear it directly at contact@meepleup.com than see it in a review.\n\nIf it lands well with your regulars, passing it along to another owner you trust would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"chaoticgood-lex":{"subject":"Chaotic Good, Orderly App","body":"Hi there — Chaotic Good is an alignment I can respect. The good part, at least.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — players RSVP, nominate games from a shared library, vote on what to play, and arrive knowing what's on the table. Less chaos before the game, more of it during.\n\nI'll be upfront — this is an early release and a solo build, probably 1,000+ hours in. If you hit anything rough around the edges, please reach out at contact@meepleup.com before leaving a review.\n\nIf your crowd takes to it, a word to another owner you respect would honestly mean more to me than a five-star review. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"goodtimes-knox":{"subject":"Good Times, Great App","body":"Hi there — good times and good games. Hard to argue with that combination.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's on the table. The good times start before anyone's sat down.\n\nOne honest note: it's an early release, built solo over 1,000+ hours. If anything doesn't land right, I'd much rather hear from you directly at contact@meepleup.com than lose you to a one-star review.\n\nIf it clicks with your group, sharing it with another owner in your network would go a long way — further than any rating. Though if you want to leave one on the App Store or Google Play, I won't say no.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gameonchatt":{"subject":"","body":"Hi there — game on is exactly the right attitude.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together regularly — players RSVP, nominate from a shared game library, vote on what to play, and arrive knowing what's hitting the table. Getting everyone from \"game on\" to actually playing faster.\n\nWorth saying: it's an early release and I built it alone — somewhere north of 1,000 hours. If it's not quite right yet, contact@meepleup.com beats a bad review every time.\n\nIf it earns a place in your regulars' routine, telling another owner about it would mean the world — more than any review. A rating on the App Store or Google Play is a nice bonus if you feel so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gatherandgame-buf":{"subject":"","body":"Hi there — gather and game. That's exactly the loop MeepleUp is built around.\n\nWould you give it a try with your regulars? It's a free app I built for groups that play together consistently — they RSVP, nominate games from a shared library, vote on what to play, and show up already knowing what's on the table. The gathering gets a little smoother, the gaming starts sooner.\n\nHonest disclosure: solo project, early release, 1,000+ hours. If something needs fixing, contact@meepleup.com is the right place — not a review.\n\nIf your people enjoy it, the best thing you could do is mention it to another owner you know. That kind of peer word-of-mouth is how this grows. A rating on the App Store or Google Play is welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"funagain-eugene":{"subject":"Fun Again — with MeepleUp","body":"Hi there — the name says it all. Making games fun again is exactly the right mission.\n\nWould you give MeepleUp a try with your game parlor regulars? It's a free app I built for groups that play together consistently — players RSVP, nominate games from a shared library, vote on what to play, and arrive knowing what's on the table. The app can also sync with BoardGameGeek or scan a collection by photo, which makes it handy for venues with an in-house library.\n\nOne more thing: early release, built solo, 1,000+ hours in. If anything feels unfinished, contact@meepleup.com is where I want to hear it — before it becomes a review.\n\nIf it works for your crowd, a recommendation to another owner you respect would mean more to me than a hundred reviews. And if you do want to leave a rating on the App Store or Google Play, I'd be grateful.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"chitsandchats":{"subject":"","body":"Hi there — chits and chats is a perfect name for what a great game night actually is.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's on the table. More time for the chats, less time figuring out the chits.\n\nFair warning: it's an early release, and I've been building it alone for 1,000+ hours. If something's not right, please email me at contact@meepleup.com rather than leaving a review.\n\nIf it resonates with your regulars, passing it on to another owner in your circle would honestly be the biggest thing you could do for me. A rating on the App Store or Google Play is a welcome bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"}};
+var VENUE_MESSAGES_SET_FIVE={"rustyscabbard":{"subject":"","body":"Hi there — I hope your scabbards are rusty and your patrons are thirsty.\n\nWould you give MeepleUp a try with your board game crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's on the table. Less guessing, more gaming.\n\nFull disclosure: MeepleUp is an early release, and it's been 1,000+ hours of solo work. If something feels off, I'd genuinely rather hear it directly at contact@meepleup.com than see it in a review.\n\nIf it lands well with your regulars, passing it along to another owner you trust would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"legendarygames-lex":{"subject":"","body":"Hi there — I hope your days are staying legendary.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's hitting the table. With Kentucky's largest play space, you've got the room — MeepleUp helps your crowd fill it with the right game.\n\nI'll be upfront — this is an early release and a solo build, probably 1,000+ hours in. If you hit anything rough around the edges, please reach out at contact@meepleup.com before leaving a review.\n\nIf your crowd takes to it, a word to another owner you respect would honestly mean more to me than a five-star review. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"tabletoptavern-lex":{"subject":"","body":"Hi there — I hope your tabletops are full and your taps are flowing.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. The tavern supplies the atmosphere; MeepleUp helps the crew decide what's getting played.\n\nOne honest note: it's an early release, built solo over 1,000+ hours. If anything doesn't land right, I'd much rather hear from you directly at contact@meepleup.com than lose you to a one-star review.\n\nIf it clicks with your group, sharing it with another owner in your network would go a long way — further than any rating. Though if you want to leave one on the App Store or Google Play, I won't say no.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"scificity-knox":{"subject":"Sci-Fi City, Meet MeepleUp","body":"Hi there — I hope all is well in your city.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's on the table.\n\nWorth saying: it's an early release and I built it alone — somewhere north of 1,000 hours. If it's not quite right yet, contact@meepleup.com beats a bad review every time.\n\nIf it earns a place in your regulars' routine, telling another owner about it would mean the world — more than any review. A rating on the App Store or Google Play is a nice bonus if you feel so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"tokengametavern":{"subject":"","body":"Hi there — I hope the tokens are flowing and the tavern is hopping.\n\nWould you give MeepleUp a try with your board game regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's hitting the table. Less deliberating, more gaming.\n\nHonest disclosure: solo project, early release, 1,000+ hours. If something needs fixing, contact@meepleup.com is the right place — not a review.\n\nIf your people enjoy it, the best thing you could do is mention it to another owner you know. That kind of peer word-of-mouth is how this grows. A rating on the App Store or Google Play is welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"infinityflux":{"subject":"Infinite Possibilities: MeepleUp at Infinity Flux","body":"Hi there — I hope things are fluxing your way today. Get it?\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up knowing what's hitting the table. For a shop with the depth of selection yours has, it's a nice way to help groups cut through the options.\n\nOne more thing: early release, built solo, 1,000+ hours in. If anything feels unfinished, contact@meepleup.com is where I want to hear it — before it becomes a review.\n\nIf it works for your crowd, a recommendation to another owner you respect would mean more to me than a hundred reviews. And if you do want to leave a rating on the App Store or Google Play, I'd be grateful.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"epikosccg":{"subject":"","body":"Hi there — I hope things are staying epikos over there.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. Keeps the pre-game chaos to a minimum so the actual gaming can start sooner.\n\nFair warning: it's an early release, and I've been building it alone for 1,000+ hours. If something's not right, please email me at contact@meepleup.com rather than leaving a review.\n\nIf it resonates with your regulars, passing it on to another owner in your circle would honestly be the biggest thing you could do for me. A rating on the App Store or Google Play is a welcome bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"darkforest-buf":{"subject":"","body":"Hi there — I hope the forest is dark, the games are bright, and the customers keep finding the path.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games from a shared library, vote on what to play, and show up knowing what's hitting the table.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nHeads up: early release, solo dev, 1,000+ hours poured in. If anything needs work, contact@meepleup.com will reach me faster than a review ever would.\n\nIf it lands well, the biggest favor you could do me is tell another owner you respect about it. A rating on the App Store or Google Play is a great bonus if you're so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"casualdragon-buf":{"subject":"","body":"Hi there — I hope the dragon is staying casual.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. All the casual energy, with just enough structure to actually get the game started.\n\nA quick note: it's an early release built entirely by me over 1,000+ hours. If something's not quite there yet, contact@meepleup.com is the right call — not a review.\n\nIf your regulars get into it, sharing it with another owner in your network is the most valuable thing you could do for me. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"fantasticgames":{"subject":"","body":"Hi there — I hope things are as fantastic as advertised.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's hitting the table.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"rollplay-mad2":{"subject":"","body":"Hi there — I hope the dice are rolling and the play is plentiful.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games from a shared library, vote on what to play, and arrive knowing what's on the table. Works beautifully alongside the community game nights you already host.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nFull disclosure: MeepleUp is an early release, and it's been 1,000+ hours of solo work. If something feels off, I'd genuinely rather hear it directly at contact@meepleup.com than see it in a review.\n\nIf it lands well with your regulars, passing it along to another owner you trust would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"rookroom-dsm":{"subject":"","body":"Hi there — I hope the rooks are well-positioned over there.\n\nWould you give MeepleUp a try with your crowd? It's a free app I built for groups that game together regularly — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's hitting the table. With 700+ games on your wall, MeepleUp helps narrow the field before anyone walks in the door.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nI'll be upfront — this is an early release and a solo build, probably 1,000+ hours in. If you hit anything rough around the edges, please reach out at contact@meepleup.com before leaving a review.\n\nIf your crowd takes to it, a word to another owner you respect would honestly mean more to me than a five-star review. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"mayhem-dsm":{"subject":"","body":"Hi there — I hope the mayhem is appropriately controlled.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's on the table. For a store running events in the gameroom every day, it's a nice way to help your regulars plan ahead.\n\nOne honest note: it's an early release, built solo over 1,000+ hours. If anything doesn't land right, I'd much rather hear from you directly at contact@meepleup.com than lose you to a one-star review.\n\nIf it clicks with your group, sharing it with another owner in your network would go a long way — further than any rating. Though if you want to leave one on the App Store or Google Play, I won't say no.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"sente-ict":{"subject":"","body":"Hi there — I hope you're keeping the sente.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's hitting the table. Keeps the energy moving from the moment they decide to come.\n\nWorth saying: it's an early release and I built it alone — somewhere north of 1,000 hours. If it's not quite right yet, contact@meepleup.com beats a bad review every time.\n\nIf it earns a place in your regulars' routine, telling another owner about it would mean the world — more than any review. A rating on the App Store or Google Play is a nice bonus if you feel so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"pinkelephant-ict":{"subject":"","body":"Hi there — I hope the pink elephant in your shop is drawing all the right attention.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's on the table. Less debate, more pizza and games.\n\nHonest disclosure: solo project, early release, 1,000+ hours. If something needs fixing, contact@meepleup.com is the right place — not a review.\n\nIf your people enjoy it, the best thing you could do is mention it to another owner you know. That kind of peer word-of-mouth is how this grows. A rating on the App Store or Google Play is welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"hexagonalley-col":{"subject":"","body":"Hi there — I hope the alley is staying hex-cellent.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. The brews and bites are on you; MeepleUp handles the pregame.\n\nOne more thing: early release, built solo, 1,000+ hours in. If anything feels unfinished, contact@meepleup.com is where I want to hear it — before it becomes a review.\n\nIf it works for your crowd, a recommendation to another owner you respect would mean more to me than a hundred reviews. And if you do want to leave a rating on the App Store or Google Play, I'd be grateful.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"cavernsforests":{"subject":"","body":"Hi there — I hope the caverns are cozy and the forests are fully stocked.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from your 850+ game library, vote on what to play, and show up already knowing what's hitting the table. Better to have a plan before the adventure starts.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nFair warning: it's an early release, and I've been building it alone for 1,000+ hours. If something's not right, please email me at contact@meepleup.com rather than leaving a review.\n\nIf it resonates with your regulars, passing it on to another owner in your circle would honestly be the biggest thing you could do for me. A rating on the App Store or Google Play is a welcome bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"highground-hsv":{"subject":"","body":"Hi there — I hope the high ground is treating you well.\n\nWould you give MeepleUp a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. Pairs nicely with the kind of daily events and cozy atmosphere you've built.\n\nHeads up: early release, solo dev, 1,000+ hours poured in. If anything needs work, contact@meepleup.com will reach me faster than a review ever would.\n\nIf it lands well, the biggest favor you could do me is tell another owner you respect about it. A rating on the App Store or Google Play is a great bonus if you're so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"thedeep-hsv":{"subject":"","body":"Hi there — I hope things are deep and thriving over there.\n\nWould you give MeepleUp a try with your open gaming crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games from a shared library, vote on what to play, and show up knowing what's hitting the table. With over 100 free-play games and a massive open space, MeepleUp helps your regulars get more intentional about what they play.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nA quick note: it's an early release built entirely by me over 1,000+ hours. If something's not quite there yet, contact@meepleup.com is the right call — not a review.\n\nIf your regulars get into it, sharing it with another owner in your network is the most valuable thing you could do for me. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"backagain-ct":{"subject":"","body":"Hi there — glad to be back again, so to speak.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and arrive knowing what's on the table. With 1,000+ games, MeepleUp helps your crowd choose before they even walk in.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"fifteenpct-tac":{"subject":"The 15% Difference — Plus MeepleUp","body":"Hi there — I hope you're getting a good 15% on everything today.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's on the table. Café in the front, board game party in the back — MeepleUp helps plan the party.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nFull disclosure: MeepleUp is an early release, and it's been 1,000+ hours of solo work. If something feels off, I'd genuinely rather hear it directly at contact@meepleup.com than see it in a review.\n\nIf it lands well with your regulars, passing it along to another owner you trust would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"dragonshoard-gso":{"subject":"","body":"Hi there — I hope the hoard is growing.\n\nWould you give MeepleUp a try with them? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's hitting the table. Helps your community build on the momentum you've created since opening.\n\nI'll be upfront — this is an early release and a solo build, probably 1,000+ hours in. If you hit anything rough around the edges, please reach out at contact@meepleup.com before leaving a review.\n\nIf your crowd takes to it, a word to another owner you respect would honestly mean more to me than a five-star review. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"firefly-col":{"subject":"Firefly Meets MeepleUp","body":"Hi there — I hope the firefly is still shining bright.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a library, vote on what to play, and show up already knowing what's on the table. Your 200+ free demo games are a perfect library to pull from.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nOne honest note: it's an early release, built solo over 1,000+ hours. If anything doesn't land right, I'd much rather hear from you directly at contact@meepleup.com than lose you to a one-star review.\n\nIf it clicks with your group, sharing it with another owner in your network would go a long way — further than any rating. Though if you want to leave one on the App Store or Google Play, I won't say no.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gameon-fay":{"subject":"","body":"Hi there — game on, as they say.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's hitting the table. Cards and coffee — and now a plan.\n\nWorth saying: it's an early release and I built it alone — somewhere north of 1,000 hours. If it's not quite right yet, contact@meepleup.com beats a bad review every time.\n\nIf it earns a place in your regulars' routine, telling another owner about it would mean the world — more than any review. A rating on the App Store or Google Play is a nice bonus if you feel so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gamevault-ep":{"subject":"Unlocking the Vault with MeepleUp","body":"Hi there — I hope the vault is well-stocked and the combination is working.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's on the table. El Paso's home away from home deserves an app that keeps the good times rolling.\n\nHonest disclosure: solo project, early release, 1,000+ hours. If something needs fixing, contact@meepleup.com is the right place — not a review.\n\nIf your people enjoy it, the best thing you could do is mention it to another owner you know. That kind of peer word-of-mouth is how this grows. A rating on the App Store or Google Play is welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"littlewars-br":{"subject":"","body":"Hi there — I hope the little wars are staying manageable.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's hitting the table. Board games and brew nights seem like a natural fit.\n\nOne more thing: early release, built solo, 1,000+ hours in. If anything feels unfinished, contact@meepleup.com is where I want to hear it — before it becomes a review.\n\nIf it works for your crowd, a recommendation to another owner you respect would mean more to me than a hundred reviews. And if you do want to leave a rating on the App Store or Google Play, I'd be grateful.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gamechest-sf":{"subject":"","body":"Hi there — I hope the chest is full and the lid is open.\n\nWould you give MeepleUp a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. Bringing Sioux Falls back to the table — MeepleUp helps make sure the table's ready.\n\nFair warning: it's an early release, and I've been building it alone for 1,000+ hours. If something's not right, please email me at contact@meepleup.com rather than leaving a review.\n\nIf it resonates with your regulars, passing it on to another owner in your circle would honestly be the biggest thing you could do for me. A rating on the App Store or Google Play is a welcome bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"hauntedgamecafe":{"subject":"","body":"Hi there — I hope things aren't too haunted over there today.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's hitting the table. The spooky atmosphere is on you; MeepleUp handles the pregame.\n\nHeads up: early release, solo dev, 1,000+ hours poured in. If anything needs work, contact@meepleup.com will reach me faster than a review ever would.\n\nIf it lands well, the biggest favor you could do me is tell another owner you respect about it. A rating on the App Store or Google Play is a great bonus if you're so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"villagemeeple":{"subject":"Village Meeple, Meet MeepleUp","body":"Hi there — I hope the village is meeple-ing along nicely.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library of 420+ games, vote on what to play, and arrive knowing what's on the table. Women-owned, community-driven, game-first — a perfect match.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nA quick note: it's an early release built entirely by me over 1,000+ hours. If something's not quite there yet, contact@meepleup.com is the right call — not a review.\n\nIf your regulars get into it, sharing it with another owner in your network is the most valuable thing you could do for me. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"justforfun-peoria":{"subject":"","body":"Hi there — I hope things are staying just for fun.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's hitting the table. Peoria's largest hobby game store deserves regulars who come prepared.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"houserules-gr":{"subject":"House Rules, Meet MeepleUp","body":"Hi there — I hope the house rules are in your favor today.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library of 600+ games, vote on what to play, and arrive knowing what's hitting the table. West Michigan's first board game lounge deserves a crew that comes in ready.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nFull disclosure: MeepleUp is an early release, and it's been 1,000+ hours of solo work. If something feels off, I'd genuinely rather hear it directly at contact@meepleup.com than see it in a review.\n\nIf it lands well with your regulars, passing it along to another owner you trust would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"meeples-lyn":{"subject":"","body":"Hi there — I hope the meeples are behaving.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library of 800+ games, vote on what to play, and arrive knowing what's on the table.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nI'll be upfront — this is an early release and a solo build, probably 1,000+ hours in. If you hit anything rough around the edges, please reach out at contact@meepleup.com before leaving a review.\n\nIf your crowd takes to it, a word to another owner you respect would honestly mean more to me than a five-star review. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"courtyardcafe-tal":{"subject":"","body":"Hi there — I hope the courtyard is open and the games are ready.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's hitting the table. Coffee, baked goods, and a plan — the ideal game day.\n\nOne honest note: it's an early release, built solo over 1,000+ hours. If anything doesn't land right, I'd much rather hear from you directly at contact@meepleup.com than lose you to a one-star review.\n\nIf it clicks with your group, sharing it with another owner in your network would go a long way — further than any rating. Though if you want to leave one on the App Store or Google Play, I won't say no.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"punkouter-gnv":{"subject":"","body":"Hi there — I hope the punk is outer and the games are inner.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. With private rooms, open tables, and a craft beer bar, your space is set up for real game nights — MeepleUp helps your regulars plan them.\n\nWorth saying: it's an early release and I built it alone — somewhere north of 1,000 hours. If it's not quite right yet, contact@meepleup.com beats a bad review every time.\n\nIf it earns a place in your regulars' routine, telling another owner about it would mean the world — more than any review. A rating on the App Store or Google Play is a nice bonus if you feel so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"lochcafe-dul":{"subject":"","body":"Hi there — I hope the loch is unlocked and the coffee is on.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and arrive knowing what's on the table. Duluth's first cafe-gameshop and MeepleUp seem made for each other.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nHonest disclosure: solo project, early release, 1,000+ hours. If something needs fixing, contact@meepleup.com is the right place — not a review.\n\nIf your people enjoy it, the best thing you could do is mention it to another owner you know. That kind of peer word-of-mouth is how this grows. A rating on the App Store or Google Play is welcome too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"boardlandia-app":{"subject":"Boardlandia Meets MeepleUp","body":"Hi there — I hope Boardlandia is a fine land to be in today.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's hitting the table. Tim and Karissa have built something special in Appleton — MeepleUp is a free tool to help your regulars make the most of every visit.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nOne more thing: early release, built solo, 1,000+ hours in. If anything feels unfinished, contact@meepleup.com is where I want to hear it — before it becomes a review.\n\nIf it works for your crowd, a recommendation to another owner you respect would mean more to me than a hundred reviews. And if you do want to leave a rating on the App Store or Google Play, I'd be grateful.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"gnomegames-gb":{"subject":"","body":"Hi there — I hope the gnomes are behaving.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. With half the floor dedicated to game tables, you've clearly built a space for regulars — MeepleUp gives them a tool to match.\n\nFair warning: it's an early release, and I've been building it alone for 1,000+ hours. If something's not right, please email me at contact@meepleup.com rather than leaving a review.\n\nIf it resonates with your regulars, passing it on to another owner in your circle would honestly be the biggest thing you could do for me. A rating on the App Store or Google Play is a welcome bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"summit-fw":{"subject":"","body":"Hi there — I hope the summit is as high as ever.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's hitting the table. Fort Wayne's all-in-one pop culture paradise deserves an app with the same energy.\n\nHeads up: early release, solo dev, 1,000+ hours poured in. If anything needs work, contact@meepleup.com will reach me faster than a review ever would.\n\nIf it lands well, the biggest favor you could do me is tell another owner you respect about it. A rating on the App Store or Google Play is a great bonus if you're so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"sagesportal-spk":{"subject":"","body":"Hi there — I hope the portal is open and the sage advice is flowing.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and arrive knowing what's on the table. Best boba in Spokane plus a plan for what to play — a perfect combination.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nA quick note: it's an early release built entirely by me over 1,000+ hours. If something's not quite there yet, contact@meepleup.com is the right call — not a review.\n\nIf your regulars get into it, sharing it with another owner in your network is the most valuable thing you could do for me. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"elfnmoon":{"subject":"Elf & Moon Meets MeepleUp","body":"Hi there — I hope the elf and the moon are both doing well.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table. Indy's most beloved independent game store deserves regulars who come in ready to play.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"hitherto":{"subject":"Hitherto — and MeepleUp","body":"Hi there — I hope all is well hitherto.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's hitting the table.\n\nFull disclosure: MeepleUp is an early release, and it's been 1,000+ hours of solo work. If something feels off, I'd genuinely rather hear it directly at contact@meepleup.com than see it in a review.\n\nIf it lands well with your regulars, passing it along to another owner you trust would mean more to me than any review. And if you feel like leaving a rating on the App Store or Google Play, that helps too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"goodgames-indy":{"subject":"Good Games + MeepleUp","body":"Hi there — I hope the games are, as advertised, good.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table.\n\nI'll be upfront — this is an early release and a solo build, probably 1,000+ hours in. If you hit anything rough around the edges, please reach out at contact@meepleup.com before leaving a review.\n\nIf your crowd takes to it, a word to another owner you respect would honestly mean more to me than a five-star review. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"battlegrounds-pdx":{"subject":"","body":"Hi there — I hope the battle is going your way.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and arrive knowing what's on the table.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nWorth saying: it's an early release and I built it alone — somewhere north of 1,000 hours. If it's not quite right yet, contact@meepleup.com beats a bad review every time.\n\nIf it earns a place in your regulars' routine, telling another owner about it would mean the world — more than any review. A rating on the App Store or Google Play is a nice bonus if you feel so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"netherworld":{"subject":"","body":"Hi there — I hope the netherworld is treating you well.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's hitting the table.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nFair warning: it's an early release, and I've been building it alone for 1,000+ hours. If something's not right, please email me at contact@meepleup.com rather than leaving a review.\n\nIf it resonates with your regulars, passing it on to another owner in your circle would honestly be the biggest thing you could do for me. A rating on the App Store or Google Play is a welcome bonus.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"nobleknight":{"subject":"","body":"Hi there — I hope the knight is riding noble today.\n\nWould you give it a try with your crowd? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and arrive knowing what's on the table.\n\nHeads up: early release, solo dev, 1,000+ hours poured in. If anything needs work, contact@meepleup.com will reach me faster than a review ever would.\n\nIf it lands well, the biggest favor you could do me is tell another owner you respect about it. A rating on the App Store or Google Play is a great bonus if you're so inclined.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"imboard-mid":{"subject":"","body":"Hi there — I hope nobody in your shop is bored.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and show up already knowing what's hitting the table. Madison's go-to game store and MeepleUp seem like a natural pairing.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nA quick note: it's an early release built entirely by me over 1,000+ hours. If something's not quite there yet, contact@meepleup.com is the right call — not a review.\n\nIf your regulars get into it, sharing it with another owner in your network is the most valuable thing you could do for me. A rating on the App Store or Google Play is always appreciated too.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"funagain-eugene":{"subject":"Fun Again — with MeepleUp","body":"Hi there — I hope the fun is happening again, and again, and again.\n\nWould you give it a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and arrive knowing what's on the table. Eugene's favorite game store deserves regulars who come in with a plan.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"mox-sea":{"subject":"","body":"Hi there — I hope the boarding house is fully booked with gamers.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and arrive knowing what's on the table.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"mox-bel":{"subject":"","body":"Hi there — I hope the missing piece has been found today.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate games, vote on what to play, and show up already knowing what's hitting the table.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"},"meeples":{"subject":"","body":"Hi there — I hope the ray gun is charged and the lounge is full.\n\nWould you give MeepleUp a try with your regulars? It's a free app I built for groups that game together consistently — players RSVP, nominate from a shared library, vote on what to play, and arrive knowing what's on the table.\n\nThe app can also sync with BoardGameGeek or scan a collection by photo, which is handy for venues with an in-house game library.\n\nWorth mentioning: solo build, early release, somewhere past 1,000 hours. If something's rough, contact@meepleup.com is where I'd love to hear it first.\n\nIf it works well with your crowd, mentioning it to another owner you know would mean more to me than any review. A rating on the App Store or Google Play is a welcome extra.\n\nmeepleup.com or search \"MeepleUp\" on the App Store / Google Play.\n\nThanks,\nRhys Smoker"}};
+
 function getCities(){
+  if(ACTIVE_SET==="5")return CITIES_SET_FIVE;
   if(ACTIVE_SET==="4")return CITIES_SET_FOUR;
   if(ACTIVE_SET==="3")return CITIES_SET_THREE;
   return ACTIVE_SET==="2"?CITIES_SET_TWO:CITIES_SET_ONE;
 }
 function getVenueMessages(){
+  if(ACTIVE_SET==="5")return VENUE_MESSAGES_SET_FIVE;
   if(ACTIVE_SET==="4")return VENUE_MESSAGES_SET_FOUR;
   if(ACTIVE_SET==="3")return VENUE_MESSAGES_SET_THREE;
   return ACTIVE_SET==="2"?VENUE_MESSAGES_SET_TWO:VENUE_MESSAGES_SET_ONE;
 }
-/** City sets 3 & 4: hide venues with no email (dataset or saved) and no Facebook URL. */
+/** City sets 3–5: hide venues with no email (dataset or saved) and no Facebook URL. */
 function venueHasEmailOrFacebook(v){
   var em=(CE[v.id]||(v.email||"")).trim();
   var fb=(v.facebook||"").trim();
@@ -1099,7 +2064,7 @@ function isVenueInSetThreeExport(vid){
   return vid&&vm[vid]!=null;
 }
 function venuesListForCity(c){
-  if(ACTIVE_SET!=="3"&&ACTIVE_SET!=="4")return{cafes:c.cafes||null,stores:c.stores||null};
+  if(ACTIVE_SET!=="3"&&ACTIVE_SET!=="4"&&ACTIVE_SET!=="5")return{cafes:c.cafes||null,stores:c.stores||null};
   var cf=[],sf=[],i,v;
   if(c.cafes)for(i=0;i<c.cafes.length;i++){v=c.cafes[i];if(isVenueInSetThreeExport(v.id)&&venueHasEmailOrFacebook(v))cf.push(v);}
   if(c.stores)for(i=0;i<c.stores.length;i++){v=c.stores[i];if(isVenueInSetThreeExport(v.id)&&venueHasEmailOrFacebook(v))sf.push(v);}
@@ -1118,7 +2083,8 @@ function persist(){
         "1":{s:SET_STATE["1"].s,ce:SET_STATE["1"].ce,tpl:SET_STATE["1"].tpl},
         "2":{s:SET_STATE["2"].s,ce:SET_STATE["2"].ce,tpl:SET_STATE["2"].tpl},
         "3":{s:SET_STATE["3"].s,ce:SET_STATE["3"].ce,tpl:SET_STATE["3"].tpl},
-        "4":{s:SET_STATE["4"].s,ce:SET_STATE["4"].ce,tpl:SET_STATE["4"].tpl}
+        "4":{s:SET_STATE["4"].s,ce:SET_STATE["4"].ce,tpl:SET_STATE["4"].tpl},
+        "5":{s:SET_STATE["5"].s,ce:SET_STATE["5"].ce,tpl:SET_STATE["5"].tpl}
       }
     }));
   }catch(e){}
@@ -1126,7 +2092,7 @@ function persist(){
 function sS(v,f,u){var o=gS(v,f);S[SK(v,f)]={checked:u.checked!==undefined?u.checked:o.checked,date:u.date!==undefined?u.date:o.date,note:u.note!==undefined?u.note:o.note};persist();}
 function today(){return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});}
 function getComposeSubjectBody(vid){
-  if(ACTIVE_SET==="3"||ACTIVE_SET==="4"){
+  if(ACTIVE_SET==="3"||ACTIVE_SET==="4"||ACTIVE_SET==="5"){
     var c3=vid&&getVenueMessages()[vid];
     if(!c3)return{subject:"",body:""};
     return{subject:(c3.subject||"").trim(),body:(c3.body||"").trim()};
@@ -1291,11 +2257,11 @@ function mergeRecord(dst,src){
     if(Object.prototype.hasOwnProperty.call(src,k))dst[k]=src[k];
   }
 }
-/** City sets 3 & 4 use only per-venue JSON copy — hide Gmail template UI. */
+/** City sets 3–5 use only per-venue JSON copy — hide Gmail template UI. */
 function syncTemplateUiForCitySet(){
   var tb=document.getElementById("tplToggle"),p=document.getElementById("tplPanel");
   if(!tb||!p)return;
-  if(ACTIVE_SET==="3"||ACTIVE_SET==="4"){
+  if(ACTIVE_SET==="3"||ACTIVE_SET==="4"||ACTIVE_SET==="5"){
     p.classList.remove("open");
     tb.className="hbtn";
     tb.style.display="none";
@@ -1311,7 +2277,7 @@ function loadState(){
     if(raw){
       var emb=JSON.parse(raw);
       if(emb.sets){
-        if(emb.activeSet==="1"||emb.activeSet==="2"||emb.activeSet==="3"||emb.activeSet==="4")ACTIVE_SET=emb.activeSet;
+        if(emb.activeSet==="1"||emb.activeSet==="2"||emb.activeSet==="3"||emb.activeSet==="4"||emb.activeSet==="5")ACTIVE_SET=emb.activeSet;
         function mergeSet(k){
           var b=emb.sets[k];if(!b)return;
           if(b.s)mergeRecord(SET_STATE[k].s,b.s);
@@ -1321,7 +2287,7 @@ function loadState(){
             SET_STATE[k].tpl.body=b.tpl.body!=null?b.tpl.body:"";
           }
         }
-        mergeSet("1");mergeSet("2");mergeSet("3");mergeSet("4");
+        mergeSet("1");mergeSet("2");mergeSet("3");mergeSet("4");mergeSet("5");
       }else{
         if(emb.s)mergeRecord(SET_STATE["1"].s,emb.s);
         if(emb.ce)mergeRecord(SET_STATE["1"].ce,emb.ce);
@@ -1556,7 +2522,7 @@ function buildCity(c){
 }
 
 function toggleTpl(){
-  if(ACTIVE_SET==="3"||ACTIVE_SET==="4")return;
+  if(ACTIVE_SET==="3"||ACTIVE_SET==="4"||ACTIVE_SET==="5")return;
   var p=document.getElementById("tplPanel"),b=document.getElementById("tplToggle");
   var open=p.classList.toggle("open");
   b.className="hbtn"+(open?" active":"");
@@ -1583,7 +2549,8 @@ function clearStoredState(){
     "1":{s:{},ce:{},tpl:{subject:"",body:""}},
     "2":{s:{},ce:{},tpl:{subject:"",body:""}},
     "3":{s:{},ce:{},tpl:{subject:"",body:""}},
-    "4":{s:{},ce:{},tpl:{subject:"",body:""}}
+    "4":{s:{},ce:{},tpl:{subject:"",body:""}},
+    "5":{s:{},ce:{},tpl:{subject:"",body:""}}
   };
   ACTIVE_SET="1";
   applyActiveBucket();
@@ -1613,7 +2580,7 @@ function updateCitySetSelect(){
   if(sel)sel.value=ACTIVE_SET;
 }
 function switchCitySet(id){
-  if((id!=="1"&&id!=="2"&&id!=="3"&&id!=="4")||id===ACTIVE_SET)return;
+  if((id!=="1"&&id!=="2"&&id!=="3"&&id!=="4"&&id!=="5")||id===ACTIVE_SET)return;
   ACTIVE_SET=id;
   applyActiveBucket();
   var c=document.getElementById("container");c.innerHTML="";
@@ -1627,7 +2594,7 @@ function switchCitySet(id){
     var ts=document.getElementById("tplSub"),tb=document.getElementById("tplBody");
     if(ts)ts.value=TPL.subject;if(tb)tb.value=TPL.body;
   }
-  var setLabels={"1":"City set one","2":"City set two","3":"City set three","4":"City set four"};
+  var setLabels={"1":"City set one","2":"City set two","3":"City set three","4":"City set four","5":"City set five"};
   showVenueToast(setLabels[ACTIVE_SET]||"");
 }
 
