@@ -2160,14 +2160,30 @@ function facebookPathToMMeUrl(facebookPath){
 }
 function openVenueFacebook(mMeUrl,vid){
   if(!mMeUrl)return;
-  var text=getComposeSubjectBody(vid).body;
-  function afterCopy(){
+  var text=String((getComposeSubjectBody(vid)||{}).body||"").trim();
+  if(!text){
+    showVenueToast("Add a message in Template (body), tap Save, then try Messenger again.");
     openUrlNewTabRespectingIOSReturn(mMeUrl);
-    showVenueToast("Template body copied — paste into Messenger after the chat opens.");
+    return;
+  }
+  function openMessengerAfterClipboardFlush(){
+    var ms=isIOSDevice()?500:180;
+    setTimeout(function(){
+      openUrlNewTabRespectingIOSReturn(mMeUrl);
+      showVenueToast("In Messenger: long-press the message field, then tap Paste.");
+    },ms);
+  }
+  if(copyToClipboardSync(text)){
+    openMessengerAfterClipboardFlush();
+    return;
   }
   if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(afterCopy).catch(function(){fallbackCopyText(text,afterCopy);});
-  }else{fallbackCopyText(text,afterCopy);}
+    navigator.clipboard.writeText(text).then(openMessengerAfterClipboardFlush).catch(function(){
+      fallbackCopyText(text,openMessengerAfterClipboardFlush);
+    });
+    return;
+  }
+  fallbackCopyText(text,openMessengerAfterClipboardFlush);
 }
 function openVenueFacebookForVenue(vid){
   var v=getVenue(vid),fb=v&&v.facebook?String(v.facebook).trim():"";
@@ -2187,19 +2203,33 @@ function showVenueToast(msg){
   if(venueToastTimer)clearTimeout(venueToastTimer);
   venueToastTimer=setTimeout(function(){el.className="";el.textContent="";venueToastTimer=null;},3200);
 }
-function fallbackCopyText(text,cb){
+/** Same-tab copy for mobile: must stay in view + focused; async Clipboard API often loses the write if we open Messenger in the same tick. */
+function copyToClipboardSync(text){
+  text=text==null?"":String(text);
   var ta=document.createElement("textarea");
-  ta.value=text;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.left="-9999px";
-  document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,text.length);
-  try{document.execCommand("copy");}catch(e){}
+  ta.value=text;
+  ta.setAttribute("readonly","readonly");
+  ta.style.cssText="position:fixed;top:0;left:0;width:2px;height:2px;padding:0;border:0;outline:0;opacity:0.02;z-index:2147483646;";
+  document.body.appendChild(ta);
+  var ok=false;
+  try{
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0,text.length);
+    ok=document.execCommand("copy");
+  }catch(e){}
   document.body.removeChild(ta);
+  return ok;
+}
+function fallbackCopyText(text,cb){
+  copyToClipboardSync(text);
   if(cb)cb();
 }
 function openVenueWebsite(e,a,vid){
   if(e)e.preventDefault();
   var href=a&&a.href;if(!href)return false;
-  var text=getComposeSubjectBody(vid).body;
-  function afterCopy(){
+  var text=String((getComposeSubjectBody(vid)||{}).body||"").trim();
+  function afterDelay(){
     openUrlNewTabRespectingIOSReturn(href);
     if(OPEN_GOOGLE_CONTACT_SITE_SEARCH){
       try{
@@ -2210,11 +2240,24 @@ function openVenueWebsite(e,a,vid){
         }
       }catch(err){}
     }
-    showVenueToast("Template body copied — paste into the contact form. Venue opened"+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?" — also opened Google search for Contact Us on that site.":".")+"");
+    showVenueToast(text?"Long-press in the site field and tap Paste."+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?" Google Contact search opened too.":""):"Venue opened"+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?" — Google Contact search opened.":"."));
   }
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(afterCopy).catch(function(){fallbackCopyText(text,afterCopy);});
-  }else{fallbackCopyText(text,afterCopy);}
+  var ms=isIOSDevice()?450:120;
+  if(text){
+    if(copyToClipboardSync(text)){
+      setTimeout(afterDelay,ms);
+      return false;
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){setTimeout(afterDelay,ms);}).catch(function(){
+        fallbackCopyText(text,function(){setTimeout(afterDelay,ms);});
+      });
+      return false;
+    }
+    fallbackCopyText(text,function(){setTimeout(afterDelay,ms);});
+    return false;
+  }
+  setTimeout(afterDelay,ms);
   return false;
 }
 
