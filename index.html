@@ -2159,7 +2159,9 @@ function googlegmailComposeUrl(email,vid){
 }
 function openVenueEmail(email,vid){
   if(!email)return;
-  markContactLinkOpened(vid,"email");
+  function markEmailOpenedDeferred(){
+    setTimeout(function(){ markContactLinkOpened(vid,"email"); },0);
+  }
   if(isIOSDevice()){
     var a=document.createElement("a");
     a.href=googlegmailComposeUrl(email,vid);
@@ -2168,6 +2170,7 @@ function openVenueEmail(email,vid){
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    markEmailOpenedDeferred();
     return;
   }
   if(isAndroid()){
@@ -2178,9 +2181,11 @@ function openVenueEmail(email,vid){
     document.body.appendChild(am);
     am.click();
     document.body.removeChild(am);
+    markEmailOpenedDeferred();
     return;
   }
   window.open(gmailWebComposeUrl(email,vid),"_blank","noopener,noreferrer");
+  markEmailOpenedDeferred();
 }
 function openVenueEmailForVenue(vid){var v=getVenue(vid),email=CE[vid]||(v?v.email:"")||"";openVenueEmail(email,vid);}
 
@@ -2198,23 +2203,27 @@ function facebookPathToMMeUrl(facebookPath){
   if(pm)return "https://m.me/"+pm[1];
   if(/^\d+$/.test(s))return "https://m.me/"+s;
   var first=s.split("/")[0];
-  if(first)return "https://m.me/"+encodeURIComponent(first);
-  return "";
+  if(!first)return "";
+  if(first.indexOf(".")>=0)
+    return "https://www.facebook.com/messages/t/"+encodeURIComponent(first).replace(/%2F/g,"/");
+  return "https://m.me/"+encodeURIComponent(first);
 }
 function openVenueFacebook(mMeUrl,vid){
   if(!mMeUrl)return;
   var text=String((getComposeSubjectBody(vid)||{}).body||"").trim();
+  function markFbDeferred(){
+    setTimeout(function(){ markContactLinkOpened(vid,"facebook"); },0);
+  }
   if(!text){
     showVenueToast("No message body for this venue — check per-venue messages in the source.");
     openUrlNewTabRespectingIOSReturn(mMeUrl);
+    markFbDeferred();
     return;
   }
-  var ms=isIOSDevice()?450:150;
+  openUrlNewTabRespectingIOSReturn(mMeUrl);
+  markFbDeferred();
   copyTextBestEffort(text,function(ok){
-    setTimeout(function(){
-      openUrlNewTabRespectingIOSReturn(mMeUrl);
-      showVenueToast(ok?"In Messenger: long-press the message field, then tap Paste.":"Messenger opened — clipboard was blocked. In Safari: (aA) → Website Settings → allow Pasteboard, or copy the draft from another app.");
-    },ms);
+    showVenueToast(ok?"In Messenger: long-press the message field, then tap Paste.":"Messenger opened — clipboard was blocked. In Safari: (aA) → Website Settings → allow Pasteboard, or copy the draft from another app.");
   });
 }
 function openVenueFacebookForVenue(vid){
@@ -2274,30 +2283,26 @@ function openVenueWebsite(e,a,vid){
   if(e)e.preventDefault();
   var href=a&&a.href;if(!href)return false;
   var text=String((getComposeSubjectBody(vid)||{}).body||"").trim();
-  var copyOk=true;
-  function afterDelay(){
-    openUrlNewTabRespectingIOSReturn(href);
-    if(OPEN_GOOGLE_CONTACT_SITE_SEARCH){
-      try{
-        var u=new URL(href),host=u.hostname;
-        if(host){
-          var q="site:"+host+" Contact Us";
-          openUrlNewTabRespectingIOSReturn("https://www.google.com/search?q="+encodeURIComponent(q));
-        }
-      }catch(err){}
-    }
-    var openMsg=text?(copyOk?"Long-press in the site field and tap Paste.":"Site opened — clipboard blocked; allow Pasteboard for this site or copy the draft elsewhere."):"Venue opened";
-    showVenueToast(openMsg+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?(text?" Google Contact search opened too.":" — Google Contact search opened."):""));
+  openUrlNewTabRespectingIOSReturn(href);
+  function openGoogleContactSearch(){
+    if(!OPEN_GOOGLE_CONTACT_SITE_SEARCH)return;
+    try{
+      var u=new URL(href),host=u.hostname;
+      if(host){
+        var q="site:"+host+" Contact Us";
+        openUrlNewTabRespectingIOSReturn("https://www.google.com/search?q="+encodeURIComponent(q));
+      }
+    }catch(err){}
   }
-  var ms=isIOSDevice()?450:120;
+  setTimeout(openGoogleContactSearch,0);
   if(text){
     copyTextBestEffort(text,function(ok){
-      copyOk=ok;
-      setTimeout(afterDelay,ms);
+      var openMsg=ok?"Long-press in the site field and tap Paste.":"Site opened — clipboard blocked; allow Pasteboard for this site or copy the draft elsewhere.";
+      showVenueToast(openMsg+(OPEN_GOOGLE_CONTACT_SITE_SEARCH?" Google Contact search opened too.":""));
     });
-    return false;
+  }else{
+    showVenueToast(OPEN_GOOGLE_CONTACT_SITE_SEARCH?"Venue opened — Google Contact search opened.":"Venue opened");
   }
-  setTimeout(afterDelay,ms);
   return false;
 }
 
